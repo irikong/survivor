@@ -1,10 +1,16 @@
 #include "Game.h"
 #include "GL/glew.h"
+#include "Actor.h"
+#include "Component.h"
 
 Game::Game() :
+	MIN_TICK(16),
+	MAX_DELTA_TIME(0.05f),
 	mWindow(nullptr),
-	mIsRunning(true)
+	mIsRunning(true),
+	mUpdatingActors(false)
 {
+
 }
 
 bool Game::Initialize()
@@ -64,6 +70,31 @@ void Game::Shutdown()
 	SDL_Quit();
 }
 
+void Game::AddActor(Actor* actor)
+{
+	if (mUpdatingActors) {
+		mPendingActors.emplace_back(actor);
+	}
+	else {
+		mActors.emplace_back(actor);
+	}
+}
+
+void Game::RemoveActor(Actor* actor)
+{
+	auto iter = std::find(mPendingActors.begin(), mPendingActors.end(), actor);
+	if (iter != mPendingActors.end()) {
+		std::iter_swap(iter, mPendingActors.end() - 1);
+		mPendingActors.pop_back();
+	}
+
+	iter = std::find(mActors.begin(), mActors.end(), actor);
+	if (iter != mActors.end()) {
+		std::iter_swap(iter, mActors.end() - 1);
+		mActors.pop_back();
+	}
+}
+
 void Game::ProcessInput()
 {
 	SDL_Event event;
@@ -83,6 +114,34 @@ void Game::ProcessInput()
 
 void Game::UpdateGame()
 {
+	while (!SDL_TICKS_PASSED(SDL_GetTicks(), mTicksCount + MIN_TICK));
+
+	float deltaTime = (SDL_GetTicks() - mTicksCount) / 1000.0f;
+	if (deltaTime > MAX_DELTA_TIME)
+		deltaTime = MAX_DELTA_TIME;
+	mTicksCount = SDL_GetTicks();
+
+	mUpdatingActors = true;
+	for (Actor* actor : mActors) {
+		actor->Update(deltaTime);
+	}
+	mUpdatingActors = false;
+
+	for (Actor* pendingActor : mPendingActors) {
+		mActors.emplace_back(pendingActor);
+	}
+	mPendingActors.clear();
+
+	std::vector<Actor*> deadActors;
+	for (Actor* actor : mActors) {
+		if (actor->GetState() == Actor::State::EDead) {
+			deadActors.emplace_back(actor);
+		}
+	}
+
+	for (Actor* deadActor : deadActors) {
+		delete deadActor;
+	}
 }
 
 void Game::GenerateOutput()
