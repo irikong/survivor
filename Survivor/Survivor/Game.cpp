@@ -2,6 +2,7 @@
 #include "GL/glew.h"
 #include "Actor.h"
 #include "Component.h"
+#include "SpriteComponent.h"
 
 Game::Game() :
 	MIN_TICK(16),
@@ -20,7 +21,7 @@ bool Game::Initialize()
 		return false;
 	}
 
-	// OpenGL ¼³Á¤
+	// OpenGL ï¿½ï¿½ï¿½ï¿½
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 3);
@@ -92,6 +93,27 @@ void Game::RemoveActor(Actor* actor)
 	if (iter != mActors.end()) {
 		std::iter_swap(iter, mActors.end() - 1);
 		mActors.pop_back();
+	}
+}
+
+void Game::AddSprite(SpriteComponent* sprite)
+{
+	int order = sprite->GetDrawOrder();
+	auto iter = mSprites.begin();
+	while (iter != mSprites.end()) {
+		if (order < (*iter)->GetDrawOrder()) break;
+
+		iter++;
+	}
+
+	mSprites.insert(iter, sprite);
+}
+
+void Game::RemoveSprite(SpriteComponent* sprite)
+{
+	auto iter = std::find(mSprites.begin(), mSprites.end(), sprite);
+	if (iter != mSprites.end()) {
+		mSprites.erase(iter);
 	}
 }
 

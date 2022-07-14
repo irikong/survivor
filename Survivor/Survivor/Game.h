@@ -12,6 +12,8 @@ public:
 
 	void AddActor(class Actor* actor);
 	void RemoveActor(class Actor* actor);
+	void AddSprite(class SpriteComponent* sprite);
+	void RemoveSprite(class SpriteComponent* sprite);
 
 private:
 	const int MIN_TICK;
@@ -29,4 +31,5 @@ private:
 
 	std::vector<class Actor*> mActors;
 	std::vector<class Actor*> mPendingActors;
+	std::vector<class SpriteComponent*> mSprites;
 };

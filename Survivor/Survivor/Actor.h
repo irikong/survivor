@@ -21,6 +21,7 @@ public:
 	void RemoveComponent(class Component* component);
 
 	State GetState() { return mState; }
+	class Game* GetGame() { return mGame; }
 
 private:
 	State mState;
