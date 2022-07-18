@@ -3,6 +3,7 @@
 #include "Actor.h"
 #include "Component.h"
 #include "SpriteComponent.h"
+#include "Shader.h"
 
 Game::Game() :
 	MIN_TICK(16),
@@ -48,6 +49,11 @@ bool Game::Initialize()
 		return false;
 	}
 	glGetError();
+
+	if (!LoadShaders()) {
+		SDL_Log("Failed to load shaders.");
+		return false;
+	}
 
 	mTicksCount = SDL_GetTicks();
 
@@ -170,5 +176,23 @@ void Game::GenerateOutput()
 {
 	glClearColor(0.25f, 0.25f, 0.25f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT);
+
+	mSpriteShader->SetActive();
+
+	for (auto sprite : mSprites)
+	{
+		sprite->Draw(mSpriteShader);
+	}
+
 	SDL_GL_SwapWindow(mWindow);
 }
+
+bool Game::LoadShaders()
+{
+	mSpriteShader = new Shader();
+	if (!mSpriteShader->Load("Shaders/Sprite.vert", "Shaders/Sprite.frag")) return false;
+	mSpriteShader->SetActive();
+
+	return true;
+}
+

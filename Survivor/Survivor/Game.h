@@ -1,6 +1,6 @@
 #pragma once
-#include "SDL/SDL.h"
 #include <vector>
+#include "SDL/SDL.h"
 
 class Game {
 public:
@@ -22,6 +22,7 @@ private:
 	void ProcessInput();
 	void UpdateGame();
 	void GenerateOutput();
+	bool LoadShaders();
 
 	SDL_Window* mWindow;
 	SDL_GLContext mContext;
@@ -32,4 +33,7 @@ private:
 	std::vector<class Actor*> mActors;
 	std::vector<class Actor*> mPendingActors;
 	std::vector<class SpriteComponent*> mSprites;
+
+	class Shader* mSpriteShader;
+	class VertexArray* mSpriteVerts;
 };

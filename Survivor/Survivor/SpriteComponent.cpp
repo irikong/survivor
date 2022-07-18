@@ -2,6 +2,7 @@
 #include "Actor.h"
 #include "Game.h"
 #include "Texture.h"
+#include "Shader.h"
 
 SpriteComponent::SpriteComponent(Actor* owner, int drawOrder) :
 	Component(owner),
@@ -18,10 +19,13 @@ SpriteComponent::~SpriteComponent()
 	mOwner->GetGame()->RemoveSprite(this);
 }
 
-void SpriteComponent::Draw()
+void SpriteComponent::Draw(Shader* shader)
 {
-	if (mTexture != nullptr) {
-		// TODO: shader 관련 코드 추가
+	if (mTexture) {
+		mTexture->SetActive();
+
+		// TODO: vertex array object 관련 코드
+		//glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
 	}
 }
 
