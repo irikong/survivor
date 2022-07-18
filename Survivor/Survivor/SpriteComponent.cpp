@@ -24,7 +24,7 @@ void SpriteComponent::Draw(Shader* shader)
 	if (mTexture) {
 		mTexture->SetActive();
 
-		// TODO: vertex array object 관련 코드
+		// TODO: vertex array object 肄붾뱶
 		//glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
 	}
 }
