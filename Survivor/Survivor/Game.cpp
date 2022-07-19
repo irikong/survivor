@@ -4,6 +4,7 @@
 #include "Component.h"
 #include "SpriteComponent.h"
 #include "Shader.h"
+#include "VertexArray.h"
 
 Game::Game() :
 	MIN_TICK(16),
@@ -54,6 +55,10 @@ bool Game::Initialize()
 		SDL_Log("Failed to load shaders.");
 		return false;
 	}
+
+	CreateSpriteVerts();
+
+	LoadTestData();
 
 	mTicksCount = SDL_GetTicks();
 
@@ -178,6 +183,7 @@ void Game::GenerateOutput()
 	glClear(GL_COLOR_BUFFER_BIT);
 
 	mSpriteShader->SetActive();
+	mSpriteVerts->SetActive();
 
 	for (auto sprite : mSprites)
 	{
@@ -187,6 +193,23 @@ void Game::GenerateOutput()
 	SDL_GL_SwapWindow(mWindow);
 }
 
+void Game::CreateSpriteVerts()
+{
+	float vertices[] = {
+		-0.5f,  0.5f, 0.f,
+		 0.5f,  0.5f, 0.f,
+		 0.5f, -0.5f, 0.f,
+		-0.5f, -0.5f, 0.f,
+	};
+
+	unsigned int indices[] = {
+		0, 1, 2,
+		2, 3, 0
+	};
+
+	mSpriteVerts = new VertexArray(vertices, 4, indices, 6);
+}
+
 bool Game::LoadShaders()
 {
 	mSpriteShader = new Shader();
@@ -194,5 +217,11 @@ bool Game::LoadShaders()
 	mSpriteShader->SetActive();
 
 	return true;
+}
+
+void Game::LoadTestData()
+{
+	Actor* a = new Actor(this);
+	SpriteComponent* sc = new SpriteComponent(a);
 }
 

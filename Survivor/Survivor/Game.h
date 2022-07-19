@@ -22,7 +22,10 @@ private:
 	void ProcessInput();
 	void UpdateGame();
 	void GenerateOutput();
+
+	void CreateSpriteVerts();
 	bool LoadShaders();
+	void LoadTestData();
 
 	SDL_Window* mWindow;
 	SDL_GLContext mContext;
