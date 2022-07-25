@@ -65,6 +65,28 @@ Matrix3& Matrix3::operator*=(const Matrix3& rhs)
 	return *this;
 }
 
+Matrix3 Matrix3::CreateScale(float xScale, float yScale)
+{
+	float temp[3][3] = {
+		{ xScale, 0.0f, 0.0f },
+		{ 0.0f, yScale, 0.0f },
+		{ 0.0f, 0.0f, 1.0f },
+	};
+
+	return Matrix3(temp);
+}
+
+Matrix3 Matrix3::CreateRotation(float theta)
+{
+	float temp[3][3] = {
+		{ Math::Cos(theta), Math::Sin(theta), 0.0f },
+		{ -Math::Sin(theta), Math::Cos(theta), 0.0f },
+		{ 0.0f, 0.0f, 1.0f },
+	};
+
+	return Matrix3(temp);
+}
+
 // Matrix4
 Matrix4::Matrix4():
 	mat{ {0} }
@@ -129,4 +151,52 @@ Matrix4& Matrix4::operator*=(const Matrix4& rhs)
 	*this = *this * rhs;
 
 	return *this;
+}
+
+Matrix4 Matrix4::CreateScale(float xScale, float yScale, float zScale)
+{
+	float temp[4][4] = {
+		{ xScale, 0.0f, 0.0f, 0.0f },
+		{ 0.0f, yScale, 0.0f, 0.0f },
+		{ 0.0f, 0.0f, zScale, 0.0f },
+		{ 0.0f, 0.0f, 0.0f, 1.0f }
+	};
+
+	return Matrix4(temp);
+}
+
+Matrix4 Matrix4::CreateRotationX(float theta)
+{
+	float temp[4][4] = {
+		{ 1.0f, 0.0f, 0.0f , 0.0f },
+		{ 0.0f, Math::Cos(theta), Math::Sin(theta), 0.0f },
+		{ 0.0f, -Math::Sin(theta), Math::Cos(theta), 0.0f },
+		{ 0.0f, 0.0f, 0.0f, 1.0f },
+	};
+
+	return Matrix4(temp);
+}
+
+Matrix4 Matrix4::CreateRotationY(float theta)
+{
+	float temp[4][4] = {
+		{ Math::Cos(theta), 0.0f, -Math::Sin(theta), 0.0f },
+		{ 0.0f, 1.0f, 0.0f, 0.0f },
+		{ Math::Sin(theta), 0.0f, Math::Cos(theta), 0.0f },
+		{ 0.0f, 0.0f, 0.0f, 1.0f },
+	};
+
+	return Matrix4(temp);
+}
+
+Matrix4 Matrix4::CreateRotationZ(float theta)
+{
+	float temp[4][4] = {
+		{ Math::Cos(theta), Math::Sin(theta), 0.0f, 0.0f },
+		{ -Math::Sin(theta), Math::Cos(theta), 0.0f, 0.0f },
+		{ 0.0f, 0.0f, 1.0f, 0.0f },
+		{ 0.0f, 0.0f, 0.0f, 1.0f },
+	};
+
+	return Matrix4(temp);
 }
