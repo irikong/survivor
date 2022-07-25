@@ -87,6 +87,17 @@ Matrix3 Matrix3::CreateRotation(float theta)
 	return Matrix3(temp);
 }
 
+Matrix3 Matrix3::CreateTranslation(float xTrans, float yTrans)
+{
+	float temp[3][3] = {
+		{ 1.0f, 0.0f, 0.0f },
+		{ 0.0f, 1.0f, 0.0f },
+		{ xTrans, yTrans, 1.0f },
+	};
+
+	return Matrix3(temp);
+}
+
 // Matrix4
 Matrix4::Matrix4():
 	mat{ {0} }
@@ -196,6 +207,18 @@ Matrix4 Matrix4::CreateRotationZ(float theta)
 		{ -Math::Sin(theta), Math::Cos(theta), 0.0f, 0.0f },
 		{ 0.0f, 0.0f, 1.0f, 0.0f },
 		{ 0.0f, 0.0f, 0.0f, 1.0f },
+	};
+
+	return Matrix4(temp);
+}
+
+Matrix4 Matrix4::CreateTranslation(float xTrans, float yTrans, float zTrans)
+{
+	float temp[4][4] = {
+		{ 1.0f, 0.0f, 0.0f, 0.0f },
+		{ 0.0f, 1.0f, 0.0f, 0.0f },
+		{ 0.0f, 0.0f, 1.0f, 0.0f },
+		{ xTrans, yTrans, zTrans, 1.0f }
 	};
 
 	return Matrix4(temp);

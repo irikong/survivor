@@ -37,6 +37,7 @@ public:
 
 	static Matrix3 CreateScale(float xScale, float yScale);
 	static Matrix3 CreateRotation(float theta);
+	static Matrix3 CreateTranslation(float xTrans, float yTrans);
 
 private:
 	float mat[3][3];
@@ -58,6 +59,7 @@ public:
 	static Matrix4 CreateRotationX(float theta);
 	static Matrix4 CreateRotationY(float theta);
 	static Matrix4 CreateRotationZ(float theta);
+	static Matrix4 CreateTranslation(float xTrans, float yTrans, float zTrans);
 
 private:
 	float mat[4][4];
