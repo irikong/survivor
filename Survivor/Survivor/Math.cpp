@@ -65,6 +65,11 @@ Matrix3& Matrix3::operator*=(const Matrix3& rhs)
 	return *this;
 }
 
+Matrix3 Matrix3::CreateScale(float scale)
+{
+	return CreateScale(scale, scale);
+}
+
 Matrix3 Matrix3::CreateScale(float xScale, float yScale)
 {
 	float temp[3][3] = {
@@ -162,6 +167,11 @@ Matrix4& Matrix4::operator*=(const Matrix4& rhs)
 	*this = *this * rhs;
 
 	return *this;
+}
+
+Matrix4 Matrix4::CreateScale(float scale)
+{
+	return CreateScale(scale, scale, scale);
 }
 
 Matrix4 Matrix4::CreateScale(float xScale, float yScale, float zScale)

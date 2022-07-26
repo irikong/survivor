@@ -35,6 +35,7 @@ public:
 	friend Matrix3 operator*(const Matrix3& lhs, const Matrix3& rhs);
 	Matrix3& operator*=(const Matrix3& rhs);
 
+	static Matrix3 CreateScale(float scale);
 	static Matrix3 CreateScale(float xScale, float yScale);
 	static Matrix3 CreateRotation(float theta);
 	static Matrix3 CreateTranslation(float xTrans, float yTrans);
@@ -55,6 +56,7 @@ public:
 	friend Matrix4 operator*(const Matrix4& lhs, const Matrix4& rhs);
 	Matrix4& operator*=(const Matrix4& rhs);
 
+	static Matrix4 CreateScale(float scale);
 	static Matrix4 CreateScale(float xScale, float yScale, float zScale);
 	static Matrix4 CreateRotationX(float theta);
 	static Matrix4 CreateRotationY(float theta);

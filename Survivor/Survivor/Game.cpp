@@ -9,9 +9,13 @@
 Game::Game() :
 	MIN_TICK(16),
 	MAX_DELTA_TIME(0.05f),
+	mContext(),
+	mTicksCount(),
 	mWindow(nullptr),
 	mIsRunning(true),
-	mUpdatingActors(false)
+	mUpdatingActors(false),
+	mSpriteShader(nullptr),
+	mSpriteVerts(nullptr)
 {
 
 }
@@ -161,6 +165,7 @@ void Game::UpdateGame()
 	mUpdatingActors = false;
 
 	for (Actor* pendingActor : mPendingActors) {
+		pendingActor->ComputeWorldTransform();
 		mActors.emplace_back(pendingActor);
 	}
 	mPendingActors.clear();
