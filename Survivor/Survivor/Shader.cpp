@@ -42,6 +42,12 @@ void Shader::SetActive()
 	glUseProgram(mShaderProgramID);
 }
 
+void Shader::SetMatrixUniform(const char* name, const Matrix4& matrix)
+{
+	GLuint location = glGetUniformLocation(mShaderProgramID, name); // TODO: location 캐싱
+	glUniformMatrix4fv(location, 1, GL_TRUE, matrix.GetAsFloatPtr()); // location, count, transpose(행 벡터이면 true), *value
+}
+
 bool Shader::CompileShader(const std::string& fileName, GLenum shaderType, GLuint& outShaderID)
 {
 	std::ifstream shaderFile(fileName);

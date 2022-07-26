@@ -6,6 +6,9 @@
 #include "Shader.h"
 #include "VertexArray.h"
 
+int Game::windowWidth = 1024;
+int Game::windowHeight = 768;
+
 Game::Game() :
 	MIN_TICK(16),
 	MAX_DELTA_TIME(0.05f),
@@ -40,7 +43,7 @@ bool Game::Initialize()
 	SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
 	SDL_GL_SetAttribute(SDL_GL_ACCELERATED_VISUAL, 1);
 
-	mWindow = SDL_CreateWindow("Survivor", 200, 200, 1024, 768, SDL_WINDOW_OPENGL);
+	mWindow = SDL_CreateWindow("Survivor", 200, 200, windowWidth, windowHeight, SDL_WINDOW_OPENGL);
 	if (!mWindow) {
 		SDL_Log("Failed to create window: %s", SDL_GetError());
 		return false;
@@ -218,8 +221,11 @@ void Game::CreateSpriteVerts()
 bool Game::LoadShaders()
 {
 	mSpriteShader = new Shader();
-	if (!mSpriteShader->Load("Shaders/Sprite.vert", "Shaders/Sprite.frag")) return false;
+	if (!mSpriteShader->Load("Shaders/Transform.vert", "Shaders/Sprite.frag")) return false;
 	mSpriteShader->SetActive();
+	
+	Matrix4 viewProj = Matrix4::CreateViewProj(static_cast<float>(windowWidth), static_cast<float>(windowHeight));
+	mSpriteShader->SetMatrixUniform("uViewProj", viewProj);
 
 	return true;
 }

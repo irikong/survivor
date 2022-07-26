@@ -24,6 +24,7 @@ public:
 
 	State GetState() { return mState; }
 	class Game* GetGame() { return mGame; }
+	const Matrix4& GetWorldTransform() const { return mWorldTransform; }
 
 private:
 	State mState;

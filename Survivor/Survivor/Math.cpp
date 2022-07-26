@@ -103,6 +103,22 @@ Matrix3 Matrix3::CreateTranslation(float xTrans, float yTrans)
 	return Matrix3(temp);
 }
 
+Matrix3 Matrix3::CreateViewProj(float width, float height)
+{
+	float temp[3][3] = {
+		{ 2.0f / width, 0.0f, 0.0f },
+		{ 0.0f, 2.0f / height, 0.0f },
+		{ 0.0f, 0.0f, 1.0f }
+	};
+
+	return Matrix3(temp);
+}
+
+const float* Matrix3::GetAsFloatPtr() const
+{
+	return reinterpret_cast<const float*>(&mat[0][0]);
+}
+
 // Matrix4
 Matrix4::Matrix4():
 	mat{ {0} }
@@ -232,4 +248,21 @@ Matrix4 Matrix4::CreateTranslation(float xTrans, float yTrans, float zTrans)
 	};
 
 	return Matrix4(temp);
+}
+
+Matrix4 Matrix4::CreateViewProj(float width, float height)
+{
+	float temp[4][4] = {
+		{ 2.0f / width, 0.0f, 0.0f, 0.0f },
+		{ 0.0f, 2.0f / height, 0.0f, 0.0f },
+		{ 0.0f, 0.0f, 1.0f, 0.0f },
+		{ 0.0f, 0.0f, 1.0f, 1.0f }
+	};
+
+	return Matrix4(temp);
+}
+
+const float* Matrix4::GetAsFloatPtr() const
+{
+	return reinterpret_cast<const float*>(&mat[0][0]);
 }

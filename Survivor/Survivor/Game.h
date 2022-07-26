@@ -27,6 +27,9 @@ private:
 	bool LoadShaders();
 	void LoadTestData();
 
+	static int windowWidth;
+	static int windowHeight;
+
 	SDL_Window* mWindow;
 	SDL_GLContext mContext;
 	Uint32 mTicksCount;

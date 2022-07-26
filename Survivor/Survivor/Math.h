@@ -39,6 +39,9 @@ public:
 	static Matrix3 CreateScale(float xScale, float yScale);
 	static Matrix3 CreateRotation(float theta);
 	static Matrix3 CreateTranslation(float xTrans, float yTrans);
+	static Matrix3 CreateViewProj(float width, float height);
+
+	const float* GetAsFloatPtr() const;
 
 private:
 	float mat[3][3];
@@ -62,6 +65,9 @@ public:
 	static Matrix4 CreateRotationY(float theta);
 	static Matrix4 CreateRotationZ(float theta);
 	static Matrix4 CreateTranslation(float xTrans, float yTrans, float zTrans);
+	static Matrix4 CreateViewProj(float width, float height);
+
+	const float* GetAsFloatPtr() const;
 
 private:
 	float mat[4][4];
