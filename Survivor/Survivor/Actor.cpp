@@ -10,7 +10,7 @@ Actor::Actor(Game* game) :
 	mRotation(0.0f),
 	mRecomputeWorldTransform(true)
 {
-
+	mGame->AddActor(this);
 }
 
 Actor::~Actor()
