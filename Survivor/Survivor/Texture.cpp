@@ -14,10 +14,10 @@ Texture::~Texture()
 {
 }
 
-bool Texture::Load(const std::string& fileName)
+bool Texture::Load(const std::string& filePath)
 {
 	int channels = 0;
-	unsigned char* image = SOIL_load_image(fileName.c_str(), &mWidth, &mHeight, &channels, SOIL_LOAD_AUTO);
+	unsigned char* image = SOIL_load_image(filePath.c_str(), &mWidth, &mHeight, &channels, SOIL_LOAD_AUTO);
 	
 	if (image == nullptr) return false;
 

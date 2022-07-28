@@ -7,7 +7,7 @@ public:
 	Texture();
 	~Texture();
 
-	bool Load(const std::string& fileName);
+	bool Load(const std::string& filePath);
 	void Unload();
 	void SetActive();
 

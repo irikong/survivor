@@ -1,5 +1,6 @@
 #pragma once
 #include <vector>
+#include <unordered_map>
 #include "SDL/SDL.h"
 
 class Game {
@@ -15,9 +16,13 @@ public:
 	void AddSprite(class SpriteComponent* sprite);
 	void RemoveSprite(class SpriteComponent* sprite);
 
+	class Texture* GetTexture(const std::string& fileName);
+
 private:
 	const int MIN_TICK;
 	const float MAX_DELTA_TIME;
+	const std::string ASSETS_PATH;
+	const std::string SHADERS_PATH;
 
 	void ProcessInput();
 	void UpdateGame();
@@ -39,6 +44,7 @@ private:
 	std::vector<class Actor*> mActors;
 	std::vector<class Actor*> mPendingActors;
 	std::vector<class SpriteComponent*> mSprites;
+	std::unordered_map<std::string, class Texture*> mTextures;
 
 	class Shader* mSpriteShader;
 	class VertexArray* mSpriteVerts;

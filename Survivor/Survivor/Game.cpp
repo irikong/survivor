@@ -5,6 +5,7 @@
 #include "SpriteComponent.h"
 #include "Shader.h"
 #include "VertexArray.h"
+#include "Texture.h"
 
 int Game::windowWidth = 1024;
 int Game::windowHeight = 768;
@@ -12,6 +13,8 @@ int Game::windowHeight = 768;
 Game::Game() :
 	MIN_TICK(16),
 	MAX_DELTA_TIME(0.05f),
+	ASSETS_PATH("Assets/"),
+	SHADERS_PATH("Shaders/"),
 	mContext(),
 	mTicksCount(),
 	mWindow(nullptr),
@@ -135,6 +138,29 @@ void Game::RemoveSprite(SpriteComponent* sprite)
 	}
 }
 
+Texture* Game::GetTexture(const std::string& fileName)
+{
+	Texture* tex = nullptr;
+
+	auto iter = mTextures.find(fileName);
+	if (iter != mTextures.end()) {
+		tex = iter->second;
+	}
+	else {
+		tex = new Texture();
+
+		if (tex->Load(ASSETS_PATH + fileName)) {
+			mTextures.emplace(fileName, tex);
+		}
+		else {
+			delete tex;
+			tex = nullptr;
+		}
+	}
+
+	return tex;
+}
+
 void Game::ProcessInput()
 {
 	SDL_Event event;
@@ -190,6 +216,9 @@ void Game::GenerateOutput()
 	glClearColor(0.25f, 0.25f, 0.25f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT);
 
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
 	mSpriteShader->SetActive();
 	mSpriteVerts->SetActive();
 
@@ -203,11 +232,12 @@ void Game::GenerateOutput()
 
 void Game::CreateSpriteVerts()
 {
+	// 3f(position), 2f(uv)
 	float vertices[] = {
-		-0.5f,  0.5f, 0.f,
-		 0.5f,  0.5f, 0.f,
-		 0.5f, -0.5f, 0.f,
-		-0.5f, -0.5f, 0.f,
+		-0.5f,  0.5f, 0.0f, 0.0f, 0.0f, // LU
+		 0.5f,  0.5f, 0.0f, 1.0f, 0.0f, // RU
+		 0.5f, -0.5f, 0.0f, 1.0f, 1.0f, // RD
+		-0.5f, -0.5f, 0.0f, 0.0f, 1.0f  // LD
 	};
 
 	unsigned int indices[] = {
@@ -221,7 +251,7 @@ void Game::CreateSpriteVerts()
 bool Game::LoadShaders()
 {
 	mSpriteShader = new Shader();
-	if (!mSpriteShader->Load("Shaders/Transform.vert", "Shaders/Sprite.frag")) return false;
+	if (!mSpriteShader->Load(SHADERS_PATH + "Sprite.vert", SHADERS_PATH + "Sprite.frag")) return false;
 	mSpriteShader->SetActive();
 	
 	Matrix4 viewProj = Matrix4::CreateViewProj(static_cast<float>(windowWidth), static_cast<float>(windowHeight));
@@ -234,5 +264,6 @@ void Game::LoadTestData()
 {
 	Actor* a = new Actor(this);
 	SpriteComponent* sc = new SpriteComponent(a);
+	sc->SetTexture(GetTexture("Test.png"));
 }
 
