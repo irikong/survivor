@@ -1,5 +1,6 @@
 #pragma once
 #include <vector>
+#include "Math.h"
 
 class Actor
 {
@@ -19,16 +20,22 @@ public:
 
 	void AddComponent(class Component* component);
 	void RemoveComponent(class Component* component);
+	void ComputeWorldTransform();
 
 	State GetState() { return mState; }
+	class Game* GetGame() { return mGame; }
+	const Matrix4& GetWorldTransform() const { return mWorldTransform; }
 
 private:
 	State mState;
 
-	std::pair<int, int> mPosition;
-	float mScale;
-	float mRotation;
-
 	class Game* mGame;
 	std::vector<class Component*> mComponents;
+
+	std::pair<float, float> mPosition;
+	float mScale;
+	float mRotation;
+	
+	Matrix4 mWorldTransform;
+	bool mRecomputeWorldTransform;
 };

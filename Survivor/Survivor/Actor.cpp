@@ -5,10 +5,12 @@
 Actor::Actor(Game* game) :
 	mState(EActive),
 	mGame(game),
+	mPosition{ 0.0f,0.0f },
 	mScale(1.0f),
-	mRotation(0.0f)
+	mRotation(0.0f),
+	mRecomputeWorldTransform(true)
 {
-
+	mGame->AddActor(this);
 }
 
 Actor::~Actor()
@@ -22,8 +24,12 @@ Actor::~Actor()
 void Actor::Update(float deltaTime)
 {
 	if (mState == EActive) {
+		ComputeWorldTransform();
+
 		UpdateComponents(deltaTime);
 		UpdateActor(deltaTime);
+
+		ComputeWorldTransform();
 	}
 }
 
@@ -53,5 +59,20 @@ void Actor::RemoveComponent(Component* component)
 	auto iter = std::find(mComponents.begin(), mComponents.end(), component);
 	if (iter != mComponents.end()) {
 		mComponents.erase(iter);
+	}
+}
+
+void Actor::ComputeWorldTransform()
+{
+	if (mRecomputeWorldTransform) {
+		mRecomputeWorldTransform = false;
+
+		mWorldTransform = Matrix4::CreateScale(mScale);
+		mWorldTransform *= Matrix4::CreateRotationZ(mRotation);
+		mWorldTransform *= Matrix4::CreateTranslation(mPosition.first, mPosition.second, 0.0f);
+
+		for (auto comp : mComponents) {
+			comp->OnUpdateWorldTransform();
+		}
 	}
 }
