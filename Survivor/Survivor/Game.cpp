@@ -6,6 +6,7 @@
 #include "Shader.h"
 #include "VertexArray.h"
 #include "Texture.h"
+#include "TileMapComponent.h"
 
 int Game::windowWidth = 1024;
 int Game::windowHeight = 768;
@@ -251,7 +252,7 @@ void Game::CreateSpriteVerts()
 bool Game::LoadShaders()
 {
 	mSpriteShader = new Shader();
-	if (!mSpriteShader->Load(SHADERS_PATH + "Sprite.vert", SHADERS_PATH + "Sprite.frag")) return false;
+	if (!mSpriteShader->Load(SHADERS_PATH + "Tile.vert", SHADERS_PATH + "Tile.frag")) return false;
 	mSpriteShader->SetActive();
 	
 	Matrix4 viewProj = Matrix4::CreateViewProj(static_cast<float>(windowWidth), static_cast<float>(windowHeight));
@@ -262,8 +263,15 @@ bool Game::LoadShaders()
 
 void Game::LoadTestData()
 {
-	Actor* a = new Actor(this);
-	SpriteComponent* sc = new SpriteComponent(a);
-	sc->SetTexture(GetTexture("Test.png"));
+	//Actor* a = new Actor(this);
+	//SpriteComponent* sc = new SpriteComponent(a);
+	//sc->SetTexture(GetTexture("Test.png"));
+
+	Actor* b = new Actor(this);
+	TileMapComponent* tm = new TileMapComponent(b);
+	tm->SetTileInfo(16, 16, 16, 16);
+	tm->SetTexture(GetTexture("TestTiles.png"));
+	tm->SetMapInfo(12, 16);
+	tm->LoadTileMap(ASSETS_PATH + "TestMap.csv");
 }
 
