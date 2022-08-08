@@ -48,6 +48,12 @@ void Shader::SetMatrixUniform(const char* name, const Matrix4& matrix)
 	glUniformMatrix4fv(location, 1, GL_TRUE, matrix.GetAsFloatPtr()); // location, count, transpose(행 벡터이면 true), *value
 }
 
+void Shader::SetIntUniform(const char* name, const int integer)
+{
+	GLuint location = glGetUniformLocation(mShaderProgramID, name);
+	glUniform1i(location, integer);
+}
+
 bool Shader::CompileShader(const std::string& fileName, GLenum shaderType, GLuint& outShaderID)
 {
 	std::ifstream shaderFile(fileName);
