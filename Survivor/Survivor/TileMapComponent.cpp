@@ -4,15 +4,17 @@
 #include "Game.h"
 #include "Texture.h"
 #include "Shader.h"
+#include "Renderer.h"
 
 TileMapComponent::TileMapComponent(Actor* owner, int drawOrder) :
 	SpriteComponent(owner, drawOrder)
 {
-
+	//mOwner->GetGame()->GetRenderer()->AddTileMap(this);
 }
 
 TileMapComponent::~TileMapComponent()
 {
+	//mOwner->GetGame()->GetRenderer()->RemoveTileMap(this);
 }
 
 void TileMapComponent::Draw(Shader* shader)

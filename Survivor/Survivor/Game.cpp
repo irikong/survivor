@@ -7,22 +7,14 @@
 #include "VertexArray.h"
 #include "Texture.h"
 #include "TileMapComponent.h"
-
-int Game::windowWidth = 1024;
-int Game::windowHeight = 768;
+#include "Renderer.h"
 
 Game::Game() :
 	MIN_TICK(16),
 	MAX_DELTA_TIME(0.05f),
-	ASSETS_PATH("Assets/"),
-	SHADERS_PATH("Shaders/"),
-	mContext(),
 	mTicksCount(),
-	mWindow(nullptr),
 	mIsRunning(true),
-	mUpdatingActors(false),
-	mSpriteShader(nullptr),
-	mSpriteVerts(nullptr)
+	mUpdatingActors(false)
 {
 
 }
@@ -34,40 +26,13 @@ bool Game::Initialize()
 		return false;
 	}
 
-	// OpenGL Setting
-	SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
-	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
-	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 3);
-
-	SDL_GL_SetAttribute(SDL_GL_RED_SIZE, 8);
-	SDL_GL_SetAttribute(SDL_GL_GREEN_SIZE, 8);
-	SDL_GL_SetAttribute(SDL_GL_BLUE_SIZE, 8);
-	SDL_GL_SetAttribute(SDL_GL_ALPHA_SIZE, 8);
-
-	SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
-	SDL_GL_SetAttribute(SDL_GL_ACCELERATED_VISUAL, 1);
-
-	mWindow = SDL_CreateWindow("Survivor", 200, 200, windowWidth, windowHeight, SDL_WINDOW_OPENGL);
-	if (!mWindow) {
-		SDL_Log("Failed to create window: %s", SDL_GetError());
+	mRenderer = new Renderer(this);
+	if (!mRenderer->Initialize(1024.0f, 768.0f)) {
+		SDL_Log("Failed to initialize renderer");
+		delete mRenderer;
+		mRenderer = nullptr;
 		return false;
 	}
-
-	mContext = SDL_GL_CreateContext(mWindow);
-	
-	glewExperimental = GL_TRUE;
-	if (glewInit() != GLEW_OK) {
-		SDL_Log("Failed to initialize GLEW.");
-		return false;
-	}
-	glGetError();
-
-	if (!LoadShaders()) {
-		SDL_Log("Failed to load shaders.");
-		return false;
-	}
-
-	CreateSpriteVerts();
 
 	LoadTestData();
 
@@ -88,8 +53,8 @@ void Game::RunLoop()
 
 void Game::Shutdown()
 {
-	SDL_GL_DeleteContext(mContext);
-	SDL_DestroyWindow(mWindow);
+	UnloadData();
+	if (mRenderer) mRenderer->Shutdown();
 	SDL_Quit();
 }
 
@@ -116,50 +81,6 @@ void Game::RemoveActor(Actor* actor)
 		std::iter_swap(iter, mActors.end() - 1);
 		mActors.pop_back();
 	}
-}
-
-void Game::AddSprite(SpriteComponent* sprite)
-{
-	int order = sprite->GetDrawOrder();
-	auto iter = mSprites.begin();
-	while (iter != mSprites.end()) {
-		if (order < (*iter)->GetDrawOrder()) break;
-
-		iter++;
-	}
-
-	mSprites.insert(iter, sprite);
-}
-
-void Game::RemoveSprite(SpriteComponent* sprite)
-{
-	auto iter = std::find(mSprites.begin(), mSprites.end(), sprite);
-	if (iter != mSprites.end()) {
-		mSprites.erase(iter);
-	}
-}
-
-Texture* Game::GetTexture(const std::string& fileName)
-{
-	Texture* tex = nullptr;
-
-	auto iter = mTextures.find(fileName);
-	if (iter != mTextures.end()) {
-		tex = iter->second;
-	}
-	else {
-		tex = new Texture();
-
-		if (tex->Load(ASSETS_PATH + fileName)) {
-			mTextures.emplace(fileName, tex);
-		}
-		else {
-			delete tex;
-			tex = nullptr;
-		}
-	}
-
-	return tex;
 }
 
 void Game::ProcessInput()
@@ -214,64 +135,29 @@ void Game::UpdateGame()
 
 void Game::GenerateOutput()
 {
-	glClearColor(0.25f, 0.25f, 0.25f, 1.0f);
-	glClear(GL_COLOR_BUFFER_BIT);
-
-	glEnable(GL_BLEND);
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
-	mSpriteShader->SetActive();
-	mSpriteVerts->SetActive();
-
-	for (auto sprite : mSprites)
-	{
-		sprite->Draw(mSpriteShader);
-	}
-
-	SDL_GL_SwapWindow(mWindow);
-}
-
-void Game::CreateSpriteVerts()
-{
-	// 3f(position), 2f(uv)
-	float vertices[] = {
-		-0.5f,  0.5f, 0.0f, 0.0f, 0.0f, // LU
-		 0.5f,  0.5f, 0.0f, 1.0f, 0.0f, // RU
-		 0.5f, -0.5f, 0.0f, 1.0f, 1.0f, // RD
-		-0.5f, -0.5f, 0.0f, 0.0f, 1.0f  // LD
-	};
-
-	unsigned int indices[] = {
-		0, 1, 2,
-		2, 3, 0
-	};
-
-	mSpriteVerts = new VertexArray(vertices, 4, indices, 6);
-}
-
-bool Game::LoadShaders()
-{
-	mSpriteShader = new Shader();
-	if (!mSpriteShader->Load(SHADERS_PATH + "Tile.vert", SHADERS_PATH + "Tile.frag")) return false;
-	mSpriteShader->SetActive();
-	
-	Matrix4 viewProj = Matrix4::CreateViewProj(static_cast<float>(windowWidth), static_cast<float>(windowHeight));
-	mSpriteShader->SetMatrixUniform("uViewProj", viewProj);
-
-	return true;
+	mRenderer->Draw();
 }
 
 void Game::LoadTestData()
 {
-	//Actor* a = new Actor(this);
-	//SpriteComponent* sc = new SpriteComponent(a);
-	//sc->SetTexture(GetTexture("Test.png"));
+	Actor* a = new Actor(this);
+	SpriteComponent* sc = new SpriteComponent(a);
+	sc->SetTexture(mRenderer->GetTexture("Test.png"));
+	mRenderer->AddSprite(sc);
 
 	Actor* b = new Actor(this);
 	TileMapComponent* tm = new TileMapComponent(b);
 	tm->SetTileInfo(16, 16, 16, 16);
-	tm->SetTexture(GetTexture("TestTiles.png"));
+	tm->SetTexture(mRenderer->GetTexture("TestTiles.png"));
 	tm->SetMapInfo(12, 16);
-	tm->LoadTileMap(ASSETS_PATH + "TestMap.csv");
+	tm->LoadTileMap(/*ASSETS_PATH + */"Assets/TestMap.csv");
+}
+
+void Game::UnloadData()
+{
+	while (!mActors.empty())
+		delete mActors.back();
+
+	if (mRenderer) mRenderer->UnloadData();
 }
 
