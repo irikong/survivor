@@ -10,9 +10,11 @@ public:
 	~TileMapComponent();
 
 	void Draw(class Shader* shader) override;
-	void LoadTileMap(const std::string& fileName);
+	void LoadTileMap(const std::string& filePath);
 	void SetMapInfo(int mapRow, int mapCol);
 	void SetTileInfo(int tWidth, int tHeight, int tPerRow, int tPerCol);
+
+	Type GetType() const override { return kTileMapComponent; }
 
 private:
 	struct Tile {
