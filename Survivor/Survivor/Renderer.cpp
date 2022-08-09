@@ -93,29 +93,14 @@ void Renderer::Draw()
 
 	mSpriteVerts->SetActive();
 
-	//mTileShader->SetActive();
-	//for (auto tmc : mTileMaps) {
-	//	tmc->Draw(mTileShader);
-	//}
-
-	//mSpriteShader->SetActive();
-	//for (auto sc : mSprites) {
-	//	sc->Draw(mSpriteShader);
-	//}
-
-	// TODO: Sprite, Tile 분리
-	// 임시 코드
-	mTileShader->SetActive();
-	int prev = 2;
-	for (auto sprite : mSprites) {
-		if (sprite->GetType() == 1) { // Sprite
-			if(prev == 2) mSpriteShader->SetActive();
-			sprite->Draw(mSpriteShader);
+	Component::Type shaderType = Component::Type::kComponent;
+	for (const auto& sprite : mSprites) {
+		if (shaderType != sprite->GetType()) {
+			shaderType = sprite->GetType();
+			mShaders[shaderType]->SetActive();
 		}
-		else { // TileMap
-			if (prev == 1) mTileShader->SetActive();
-			sprite->Draw(mTileShader);
-		}
+
+		sprite->Draw(mShaders[shaderType]);
 	}
 
 	SDL_GL_SwapWindow(mWindow);
@@ -195,11 +180,13 @@ bool Renderer::LoadShaders()
 	mSpriteShader->SetActive();
 	Matrix4 viewProj = Matrix4::CreateViewProj(mWindowWidth, mWindowHeight);
 	mSpriteShader->SetMatrixUniform("uViewProj", viewProj);
+	mShaders[Component::Type::kSpriteComponent] = mSpriteShader;
 
 	mTileShader = new Shader();
 	if (!mTileShader->Load(shadersPath + "Tile.vert", shadersPath + "Tile.frag")) return false;
 	mTileShader->SetActive();
 	mTileShader->SetMatrixUniform("uViewProj", viewProj);
+	mShaders[Component::Type::kTileMapComponent] = mTileShader;
 
 	return true;
 }

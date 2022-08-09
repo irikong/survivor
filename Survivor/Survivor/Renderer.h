@@ -34,6 +34,7 @@ private:
 	std::vector<class TileMapComponent*> mTileMaps;
 
 	class Game* mGame;
+	std::unordered_map<int, class Shader*> mShaders;
 	class Shader* mSpriteShader;
 	class Shader* mTileShader;
 	class VertexArray* mSpriteVerts;
