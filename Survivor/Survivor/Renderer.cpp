@@ -5,11 +5,10 @@
 #include "Texture.h"
 #include "SpriteComponent.h"
 #include "TileMapComponent.h"
+#include "Constants.h"
 
 Renderer::Renderer(Game* game) :
 	mGame(game),
-	ASSETS_PATH("Assets/"),
-	SHADERS_PATH("Shaders/"),
 	mSpriteShader(nullptr),
 	mTileShader(nullptr)
 {
@@ -77,7 +76,7 @@ void Renderer::Shutdown()
 
 void Renderer::UnloadData()
 {
-	for (auto t : mTextures) {
+	for (auto& t : mTextures) {
 		t.second->Unload();
 		delete t.second;
 	}
@@ -175,7 +174,7 @@ Texture* Renderer::GetTexture(const std::string& fileName)
 	else {
 		tex = new Texture();
 
-		if (tex->Load(ASSETS_PATH + fileName)) {
+		if (tex->Load(std::string(Path::ASSETS) + fileName)) {
 			mTextures.emplace(fileName, tex);
 		}
 		else {
@@ -189,14 +188,16 @@ Texture* Renderer::GetTexture(const std::string& fileName)
 
 bool Renderer::LoadShaders()
 {
+	std::string shadersPath = std::string(Path::SHADERS);
+
 	mSpriteShader = new Shader();
-	if (!mSpriteShader->Load(SHADERS_PATH + "Sprite.vert", SHADERS_PATH + "Sprite.frag")) return false;
+	if (!mSpriteShader->Load(shadersPath + "Sprite.vert", shadersPath + "Sprite.frag")) return false;
 	mSpriteShader->SetActive();
 	Matrix4 viewProj = Matrix4::CreateViewProj(mWindowWidth, mWindowHeight);
 	mSpriteShader->SetMatrixUniform("uViewProj", viewProj);
 
 	mTileShader = new Shader();
-	if (!mTileShader->Load(SHADERS_PATH + "Tile.vert", SHADERS_PATH + "Tile.frag")) return false;
+	if (!mTileShader->Load(shadersPath + "Tile.vert", shadersPath + "Tile.frag")) return false;
 	mTileShader->SetActive();
 	mTileShader->SetMatrixUniform("uViewProj", viewProj);
 

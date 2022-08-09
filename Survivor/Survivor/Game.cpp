@@ -8,6 +8,7 @@
 #include "Texture.h"
 #include "TileMapComponent.h"
 #include "Renderer.h"
+#include "Constants.h"
 
 Game::Game() :
 	MIN_TICK(16),
@@ -150,7 +151,7 @@ void Game::LoadTestData()
 	tm->SetTileInfo(16, 16, 16, 16);
 	tm->SetTexture(mRenderer->GetTexture("TestTiles.png"));
 	tm->SetMapInfo(12, 16);
-	tm->LoadTileMap(/*ASSETS_PATH + */"Assets/TestMap.csv");
+	tm->LoadTileMap(std::string(Path::ASSETS) + "TestMap.csv");
 }
 
 void Game::UnloadData()

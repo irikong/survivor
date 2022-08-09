@@ -26,9 +26,6 @@ public:
 	float GetScreenHeight() const { return mWindowHeight; }
 
 private:
-	const std::string ASSETS_PATH;
-	const std::string SHADERS_PATH;
-
 	bool LoadShaders();
 	void CreateSpriteVerts();
 

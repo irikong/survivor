@@ -11,8 +11,8 @@ public:
 
 	void Draw(class Shader* shader) override;
 	void LoadTileMap(const std::string& filePath);
-	void SetMapInfo(int mapRow, int mapCol);
 	void SetTileInfo(int tWidth, int tHeight, int tPerRow, int tPerCol);
+	void SetMapInfo(int mapRow, int mapCol);
 
 	Type GetType() const override { return kTileMapComponent; }
 
