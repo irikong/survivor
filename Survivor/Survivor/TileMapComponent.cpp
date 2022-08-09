@@ -1,20 +1,25 @@
 #include "TileMapComponent.h"
 #include <fstream>
-#include "Actor.h"
 #include "Game.h"
+#include "Actor.h"
 #include "Texture.h"
 #include "Shader.h"
 #include "Renderer.h"
 
 TileMapComponent::TileMapComponent(Actor* owner, int drawOrder) :
-	SpriteComponent(owner, drawOrder)
+	SpriteComponent(owner, drawOrder),
+	MAP_ROW(),
+	MAP_COL(),
+	TILE_WIDTH(),
+	TILE_HEIGHT(),
+	TILES_PER_ROW(),
+	TILES_PER_COL()
 {
-	//mOwner->GetGame()->GetRenderer()->AddTileMap(this);
+	
 }
 
 TileMapComponent::~TileMapComponent()
 {
-	//mOwner->GetGame()->GetRenderer()->RemoveTileMap(this);
 }
 
 void TileMapComponent::Draw(Shader* shader)
@@ -31,7 +36,7 @@ void TileMapComponent::Draw(Shader* shader)
 		for (auto& tile : mTiles) {
 			if (tile.texIdx == -1) continue;
 
-			shader->SetMatrixUniform("uWorldTransform", world * Matrix4::CreateTranslation(tile.posX, -tile.posY, 0.f)); // y축 openGL좌표계와 반대
+			shader->SetMatrixUniform("uWorldTransform", world * Matrix4::CreateTranslation(static_cast<float>(tile.posX), static_cast<float>(tile.posY), 0.f));
 			shader->SetIntUniform("uIdx", tile.texIdx);
 			glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
 		}
@@ -50,15 +55,15 @@ void TileMapComponent::LoadTileMap(const std::string& filePath)
 		size_t lf = line.find('\n');
 		if (lf != std::string::npos) {
 			std::string l(line.substr(0, lf));
-			mTiles.emplace_back(std::stoi(l), (mTiles.size() % MAP_COL) * TILE_WIDTH, (mTiles.size() / MAP_COL) * TILE_HEIGHT);
+			mTiles.emplace_back(std::stoi(l), (mTiles.size() % MAP_COL) * TILE_WIDTH, (mTiles.size() / MAP_COL) * -TILE_HEIGHT);
 
 			if (lf != line.size() - 1) {
 				std::string r(line.substr(lf + 1));
-				mTiles.emplace_back(std::stoi(r), (mTiles.size() % MAP_COL) * TILE_WIDTH, (mTiles.size() / MAP_COL) * TILE_HEIGHT);
+				mTiles.emplace_back(std::stoi(r), (mTiles.size() % MAP_COL) * TILE_WIDTH, (mTiles.size() / MAP_COL) * -TILE_HEIGHT);
 			}
 		}
 		else {
-			mTiles.emplace_back(std::stoi(line), (mTiles.size() % MAP_COL) * TILE_WIDTH, (mTiles.size() / MAP_COL) * TILE_HEIGHT);
+			mTiles.emplace_back(std::stoi(line), (mTiles.size() % MAP_COL) * TILE_WIDTH, (mTiles.size() / MAP_COL) * -TILE_HEIGHT);
 		}
 	}
 

@@ -1,6 +1,5 @@
 #pragma once
 #include <vector>
-#include <unordered_map>
 #include "SDL/SDL.h"
 
 class Game {

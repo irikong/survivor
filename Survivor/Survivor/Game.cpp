@@ -2,10 +2,8 @@
 #include "GL/glew.h"
 #include "Actor.h"
 #include "Component.h"
-#include "SpriteComponent.h"
-#include "Shader.h"
-#include "VertexArray.h"
 #include "Texture.h"
+#include "SpriteComponent.h"
 #include "TileMapComponent.h"
 #include "Renderer.h"
 #include "Constants.h"
@@ -15,7 +13,8 @@ Game::Game() :
 	MAX_DELTA_TIME(0.05f),
 	mTicksCount(),
 	mIsRunning(true),
-	mUpdatingActors(false)
+	mUpdatingActors(false),
+	mRenderer(nullptr)
 {
 
 }

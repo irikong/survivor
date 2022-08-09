@@ -1,5 +1,4 @@
 #include "Renderer.h"
-#include "GL/glew.h"
 #include "Shader.h"
 #include "VertexArray.h"
 #include "Texture.h"
@@ -10,7 +9,12 @@
 Renderer::Renderer(Game* game) :
 	mGame(game),
 	mSpriteShader(nullptr),
-	mTileShader(nullptr)
+	mTileShader(nullptr),
+	mSpriteVerts(nullptr),
+	mWindow(),
+	mContext(),
+	mWindowWidth(0),
+	mWindowHeight(0)
 {
 
 }

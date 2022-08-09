@@ -13,7 +13,6 @@ public:
 	bool Initialize(float windowWidth, float windowHeight);
 	void Shutdown();
 	void UnloadData();
-
 	void Draw();
 
 	void AddSprite(class SpriteComponent* sprite);
@@ -29,20 +28,21 @@ private:
 	bool LoadShaders();
 	void CreateSpriteVerts();
 
+	class Game* mGame;
+
 	std::unordered_map<std::string, class Texture*> mTextures;
 	std::vector<class SpriteComponent*> mSprites;
 	std::vector<class TileMapComponent*> mTileMaps;
 
-	class Game* mGame;
 	std::unordered_map<int, class Shader*> mShaders;
 	class Shader* mSpriteShader;
 	class Shader* mTileShader;
 	class VertexArray* mSpriteVerts;
 
-	float mWindowWidth;
-	float mWindowHeight;
-
 	SDL_Window* mWindow;
 	SDL_GLContext mContext;
+
+	float mWindowWidth;
+	float mWindowHeight;
 };
 
