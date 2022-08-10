@@ -99,6 +99,12 @@ void Game::ProcessInput()
 	if (keyState[SDL_SCANCODE_ESCAPE]) {
 		mIsRunning = false;
 	}
+
+	mUpdatingActors = true;
+	for (auto actor : mActors) {
+		actor->ProcessInput(keyState);
+	}
+	mUpdatingActors = false;
 }
 
 void Game::UpdateGame()

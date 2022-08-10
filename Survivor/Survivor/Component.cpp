@@ -13,6 +13,10 @@ Component::~Component()
 	mOwner->RemoveComponent(this);
 }
 
+void Component::ProcessInput(const uint8_t* keyState)
+{
+}
+
 void Component::Update(float deltaTime)
 {
 }

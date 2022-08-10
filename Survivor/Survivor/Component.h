@@ -1,4 +1,5 @@
 #pragma once
+
 class Component
 {
 public:
@@ -12,6 +13,7 @@ public:
 	Component(class Actor* owner, int updateOrder = 100);
 	virtual ~Component();
 
+	virtual void ProcessInput(const uint8_t* keyState);
 	virtual void Update(float deltaTime);
 	virtual void OnUpdateWorldTransform(); // Actor의 WorldTransform이 변경됐을 때 Call
 

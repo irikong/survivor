@@ -14,6 +14,8 @@ public:
 	Actor(class Game* game);
 	virtual ~Actor();
 
+	void ProcessInput(const uint8_t* keyState);
+	virtual void ActorInput(const uint8_t* keyState);
 	void Update(float deltaTime);
 	void UpdateComponents(float deltaTime);
 	virtual void UpdateActor(float deltaTime);
