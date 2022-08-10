@@ -21,7 +21,36 @@ namespace Math {
 	{
 		return tanf(theta);
 	}
+
+	inline bool NearZero(float val, float epsilon = 0.001f)
+	{
+		return (fabs(val) <= epsilon);
+	}
 }
+
+class Vector2
+{
+public:
+	float x;
+	float y;
+
+	Vector2();
+	explicit Vector2(float px, float py);
+
+	void Set(float px, float py);
+
+	friend Vector2 operator+(const Vector2& lhs, const Vector2& rhs);
+	friend Vector2 operator-(const Vector2& lhs, const Vector2& rhs);
+	friend Vector2 operator*(const Vector2& vec, float scalar);
+	friend Vector2 operator*(float scalar, const Vector2& vec);
+
+	Vector2& operator+=(const Vector2& rhs);
+	Vector2& operator-=(const Vector2& rhs);
+	Vector2& operator*=(float scalar);
+
+	static float Dot(const Vector2& lhs, const Vector2& rhs);
+
+};
 
 class Matrix3
 {
