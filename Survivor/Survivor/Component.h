@@ -5,7 +5,8 @@ public:
 	enum Type {
 		kComponent = 0,
 		kSpriteComponent,
-		kTileMapComponent
+		kTileMapComponent,
+		kMoveComponent
 	};
 
 	Component(class Actor* owner, int updateOrder = 100);

@@ -35,6 +35,9 @@ void Actor::Update(float deltaTime)
 
 void Actor::UpdateComponents(float deltaTime)
 {
+	for (auto comp : mComponents) {
+		comp->Update(deltaTime);
+	}
 }
 
 void Actor::UpdateActor(float deltaTime)
@@ -69,7 +72,7 @@ void Actor::ComputeWorldTransform()
 
 		mWorldTransform = Matrix4::CreateScale(mScale);
 		mWorldTransform *= Matrix4::CreateRotationZ(mRotation);
-		mWorldTransform *= Matrix4::CreateTranslation(mPosition.first, mPosition.second, 0.0f);
+		mWorldTransform *= Matrix4::CreateTranslation(mPosition.x, mPosition.y, 0.0f);
 
 		for (auto comp : mComponents) {
 			comp->OnUpdateWorldTransform();

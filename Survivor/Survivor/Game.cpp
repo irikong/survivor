@@ -7,6 +7,7 @@
 #include "TileMapComponent.h"
 #include "Renderer.h"
 #include "Constants.h"
+#include "MoveComponent.h"
 
 Game::Game() :
 	MIN_TICK(16),
@@ -143,7 +144,8 @@ void Game::LoadTestData()
 	Actor* a = new Actor(this);
 	SpriteComponent* sc = new SpriteComponent(a);
 	sc->SetTexture(mRenderer->GetTexture("Test.png"));
-	mRenderer->AddSprite(sc);
+	MoveComponent* mc = new MoveComponent(a);
+	mc->SetAngularSpeed(Math::PI);
 
 	Actor* b = new Actor(this);
 	TileMapComponent* tm = new TileMapComponent(b);

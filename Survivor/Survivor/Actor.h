@@ -22,9 +22,14 @@ public:
 	void RemoveComponent(class Component* component);
 	void ComputeWorldTransform();
 
-	State GetState() { return mState; }
-	class Game* GetGame() { return mGame; }
+	State GetState() const { return mState; }
+	class Game* GetGame() const { return mGame; }
 	const Matrix4& GetWorldTransform() const { return mWorldTransform; }
+	Vector2 GetForward() const { return Vector2(Math::Cos(mRotation), -Math::Sin(mRotation)); }
+	const Vector2& GetPosition() const { return mPosition; }
+	float GetRotation() const { return mRotation; }
+	void SetPosition(const Vector2& pos) { mPosition = pos; mRecomputeWorldTransform = true; }
+	void SetRotation(float rot) { mRotation = rot; mRecomputeWorldTransform = true; }
 
 private:
 	State mState;
@@ -32,7 +37,7 @@ private:
 	class Game* mGame;
 	std::vector<class Component*> mComponents;
 
-	std::pair<float, float> mPosition;
+	Vector2 mPosition;
 	float mScale;
 	float mRotation;
 	

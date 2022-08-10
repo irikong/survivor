@@ -2,6 +2,8 @@
 #include <cmath>
 
 namespace Math {
+	const float PI = 3.1415926535f;
+
 	inline float Abs(float value)
 	{
 		return fabs(value);
