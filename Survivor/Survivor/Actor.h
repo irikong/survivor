@@ -26,10 +26,12 @@ public:
 	class Game* GetGame() const { return mGame; }
 	const Matrix4& GetWorldTransform() const { return mWorldTransform; }
 	Vector2 GetForward() const { return Vector2(Math::Cos(mRotation), -Math::Sin(mRotation)); }
-	const Vector2& GetPosition() const { return mPosition; }
+	float GetScale() const { return mScale; }
 	float GetRotation() const { return mRotation; }
-	void SetPosition(const Vector2& pos) { mPosition = pos; mRecomputeWorldTransform = true; }
+	const Vector2& GetPosition() const { return mPosition; }
+	void SetScale(float scale) { mScale = scale; mRecomputeWorldTransform = true; }
 	void SetRotation(float rot) { mRotation = rot; mRecomputeWorldTransform = true; }
+	void SetPosition(const Vector2& pos) { mPosition = pos; mRecomputeWorldTransform = true; }
 
 private:
 	State mState;
