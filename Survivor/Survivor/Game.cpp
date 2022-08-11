@@ -7,8 +7,7 @@
 #include "TileMapComponent.h"
 #include "Renderer.h"
 #include "Constants.h"
-#include "MoveComponent.h"
-#include "InputComponent.h"
+#include "Player.h"
 
 Game::Game() :
 	MIN_TICK(16),
@@ -148,18 +147,7 @@ void Game::GenerateOutput()
 
 void Game::LoadTestData()
 {
-	Actor* a = new Actor(this);
-	SpriteComponent* sc = new SpriteComponent(a);
-	sc->SetTexture(mRenderer->GetTexture("Test.png"));
-	//MoveComponent* mc = new MoveComponent(a);
-	//mc->SetAngularSpeed(Math::PI);
-	InputComponent* ic = new InputComponent(a);
-	ic->SetUpKey(SDL_SCANCODE_UP);
-	ic->SetDownKey(SDL_SCANCODE_DOWN);
-	ic->SetLeftKey(SDL_SCANCODE_LEFT);
-	ic->SetRightKey(SDL_SCANCODE_RIGHT);
-	a->SetRotation(Math::PI / 2);
-	ic->SetSpeed(300.0f);
+	Player* player = new Player(this);
 
 	Actor* b = new Actor(this);
 	TileMapComponent* tm = new TileMapComponent(b);
