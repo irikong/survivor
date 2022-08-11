@@ -11,12 +11,15 @@ public:
 
 	Type GetType() const override { return kMoveComponent; }
 	float GetAngularSpeed() const { return mAngularSpeed; }
-	float GetForwardSpeed() const { return mForwardSpeed; }
+	float GetVerticalSpeed() const { return mVerticalSpeed; }
+	float GetHorizontalSpeed() const { return mHorizontalSpeed; }
 	void SetAngularSpeed(float speed) { mAngularSpeed = speed; }
-	void SetForwardSpeed(float speed) { mForwardSpeed = speed; }
+	void SetVerticalSpeed(float speed) { mVerticalSpeed = speed; }
+	void SetHorizontalSpeed(float speed) { mHorizontalSpeed = speed; }
 
 private:
 	float mAngularSpeed;
-	float mForwardSpeed;
+	float mVerticalSpeed;
+	float mHorizontalSpeed;
 };
 

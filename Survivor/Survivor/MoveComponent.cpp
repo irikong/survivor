@@ -5,7 +5,8 @@
 MoveComponent::MoveComponent(Actor* owner, int updateOrder) :
 	Component(owner, updateOrder),
 	mAngularSpeed(0.0f),
-	mForwardSpeed(0.0f)
+	mVerticalSpeed(0.0f),
+	mHorizontalSpeed(0.0f)
 {
 
 }
@@ -22,9 +23,15 @@ void MoveComponent::Update(float deltaTime)
 		mOwner->SetRotation(rot);
 	}
 
-	if (!Math::NearZero(mForwardSpeed)) {
+	if (!Math::NearZero(mVerticalSpeed)) {
 		Vector2 pos = mOwner->GetPosition();
-		pos += mOwner->GetForward() * mForwardSpeed * deltaTime;
+		pos += mOwner->GetForward() * mVerticalSpeed * deltaTime;
+		mOwner->SetPosition(pos);
+	}
+
+	if (!Math::NearZero(mHorizontalSpeed)) {
+		Vector2 pos = mOwner->GetPosition();
+		pos += mOwner->GetRight() * mHorizontalSpeed * deltaTime;
 		mOwner->SetPosition(pos);
 	}
 }
