@@ -60,6 +60,8 @@ public:
 	void Normalize();
 	static Vector2 Normalize(const Vector2& vec);
 	static float Dot(const Vector2& lhs, const Vector2& rhs);
+
+	static const Vector2 Zero;
 };
 
 class Matrix3

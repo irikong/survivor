@@ -5,12 +5,14 @@ Vector2::Vector2() :
 	x(0.0f),
 	y(0.0f)
 {
+
 }
 
 Vector2::Vector2(float px, float py) :
 	x(px),
 	y(py)
 {
+
 }
 
 void Vector2::Set(float px, float py)
@@ -92,6 +94,8 @@ float Vector2::Dot(const Vector2& lhs, const Vector2& rhs)
 {
 	return (lhs.x * rhs.x + lhs.y * rhs.y);
 }
+
+const Vector2 Vector2::Zero(0.0f, 0.0f);
 
 // Matrix3
 Matrix3::Matrix3():
