@@ -23,7 +23,7 @@ void MoveComponent::Update(float deltaTime)
 		mOwner->SetRotation(rot);
 	}
 
-	if (!Math::NearZero(mDirection.Length())) {
+	if (mDirection != Vector2::Zero) {
 		mDirection.Normalize();
 		Vector2 velocity = mDirection * mSpeed;
 		mOwner->SetPosition(mOwner->GetPosition() + velocity * deltaTime);

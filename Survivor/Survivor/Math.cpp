@@ -65,6 +65,16 @@ Vector2& Vector2::operator*=(float scalar)
 	return *this;
 }
 
+bool Vector2::operator==(const Vector2& rhs)
+{
+	return (x == rhs.x && y == rhs.y);
+}
+
+bool Vector2::operator!=(const Vector2& rhs)
+{
+	return !(*this == rhs);
+}
+
 float Vector2::LengthSq()
 {
 	return (x * x + y * y);

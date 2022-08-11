@@ -55,6 +55,9 @@ public:
 	Vector2& operator-=(const Vector2& rhs);
 	Vector2& operator*=(float scalar);
 
+	bool operator==(const Vector2& rhs);
+	bool operator!=(const Vector2& rhs);
+
 	float LengthSq();
 	float Length();
 	void Normalize();
