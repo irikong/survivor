@@ -158,9 +158,8 @@ void Game::LoadTestData()
 	ic->SetDownKey(SDL_SCANCODE_DOWN);
 	ic->SetLeftKey(SDL_SCANCODE_LEFT);
 	ic->SetRightKey(SDL_SCANCODE_RIGHT);
-	ic->SetMaxVerticalSpeed(300.0f);
-	ic->SetMaxHorizontalSpeed(300.0f);
 	a->SetRotation(Math::PI / 2);
+	ic->SetSpeed(300.0f);
 
 	Actor* b = new Actor(this);
 	TileMapComponent* tm = new TileMapComponent(b);

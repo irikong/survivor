@@ -8,7 +8,8 @@ public:
 		kComponent = 0,
 		kSpriteComponent,
 		kTileMapComponent,
-		kMoveComponent
+		kMoveComponent,
+		kInputComponent
 	};
 
 	Component(class Actor* owner, int updateOrder = 100);

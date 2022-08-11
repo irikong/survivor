@@ -24,6 +24,11 @@ namespace Math {
 		return tanf(theta);
 	}
 
+	inline float Sqrt(float value)
+	{
+		return sqrtf(value);
+	}
+
 	inline bool NearZero(float val, float epsilon = 0.001f)
 	{
 		return (fabs(val) <= epsilon);
@@ -50,8 +55,11 @@ public:
 	Vector2& operator-=(const Vector2& rhs);
 	Vector2& operator*=(float scalar);
 
+	float LengthSq();
+	float Length();
+	void Normalize();
+	static Vector2 Normalize(const Vector2& vec);
 	static float Dot(const Vector2& lhs, const Vector2& rhs);
-
 };
 
 class Matrix3

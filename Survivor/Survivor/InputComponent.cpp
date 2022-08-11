@@ -1,4 +1,5 @@
 #include "InputComponent.h"
+#include "Math.h"
 
 InputComponent::InputComponent(Actor* owner) :
 	MoveComponent(owner)
@@ -12,21 +13,17 @@ InputComponent::~InputComponent()
 
 void InputComponent::ProcessInput(const uint8_t* keyState)
 {
-	float verticalSpeed = 0.0f;
 	if (keyState[mUpKey]) {
-		verticalSpeed += mMaxVerticalSpeed;
+		mDirection.y += 1.0f;
 	}
 	if (keyState[mDownKey]) {
-		verticalSpeed -= mMaxVerticalSpeed;
+		mDirection.y -= 1.0f;
 	}
-	SetVerticalSpeed(verticalSpeed);
 
-	float horizontalSpeed = 0.0f;
 	if (keyState[mLeftKey]) {
-		horizontalSpeed -= mMaxHorizontalSpeed;
+		mDirection.x -= 1.0f;
 	}
 	if (keyState[mRightKey]) {
-		horizontalSpeed += mMaxHorizontalSpeed;
+		mDirection.x += 1.0f;
 	}
-	SetHorizontalSpeed(horizontalSpeed);
 }

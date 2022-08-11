@@ -63,6 +63,31 @@ Vector2& Vector2::operator*=(float scalar)
 	return *this;
 }
 
+float Vector2::LengthSq()
+{
+	return (x * x + y * y);
+}
+
+float Vector2::Length()
+{
+	return Math::Sqrt(LengthSq());
+}
+
+void Vector2::Normalize()
+{
+	float len = Length();
+	x /= len;
+	y /= len;
+}
+
+Vector2 Vector2::Normalize(const Vector2& vec)
+{
+	Vector2 temp = vec;
+	temp.Normalize();
+
+	return temp;
+}
+
 float Vector2::Dot(const Vector2& lhs, const Vector2& rhs)
 {
 	return (lhs.x * rhs.x + lhs.y * rhs.y);

@@ -1,5 +1,6 @@
 #pragma once
 #include "Component.h"
+#include "Math.h"
 
 class MoveComponent : public Component
 {
@@ -11,15 +12,15 @@ public:
 
 	Type GetType() const override { return kMoveComponent; }
 	float GetAngularSpeed() const { return mAngularSpeed; }
-	float GetVerticalSpeed() const { return mVerticalSpeed; }
-	float GetHorizontalSpeed() const { return mHorizontalSpeed; }
 	void SetAngularSpeed(float speed) { mAngularSpeed = speed; }
-	void SetVerticalSpeed(float speed) { mVerticalSpeed = speed; }
-	void SetHorizontalSpeed(float speed) { mHorizontalSpeed = speed; }
+	void SetDirection(Vector2 dir) { mDirection = dir; }
+	void SetSpeed(float speed) { mSpeed = speed; }
+
+protected:
+	Vector2 mDirection;
+	float mSpeed;
 
 private:
 	float mAngularSpeed;
-	float mVerticalSpeed;
-	float mHorizontalSpeed;
 };
 
