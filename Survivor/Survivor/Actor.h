@@ -28,7 +28,7 @@ public:
 	class Game* GetGame() const { return mGame; }
 	const Matrix4& GetWorldTransform() const { return mWorldTransform; }
 	Vector2 GetForward() const { return Vector2(Math::Cos(mRotation), Math::Sin(mRotation)); }
-	Vector2 GetRight() const { return Vector2(Math::Cos(mRotation - (Math::PI / 2)), Math::Sin(mRotation - (Math::PI / 2))); }
+	Vector2 GetRight() const { return Vector2(Math::Cos(mRotation - Math::PIDIV2), Math::Sin(mRotation - Math::PIDIV2)); }
 	float GetScale() const { return mScale; }
 	float GetRotation() const { return mRotation; }
 	const Vector2& GetPosition() const { return mPosition; }

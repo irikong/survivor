@@ -8,7 +8,7 @@
 Player::Player(Game* game) :
 	Actor(game)
 {
-	SetRotation(Math::PI / 2);
+	SetRotation(Math::PIDIV2);
 
 	mSC = new SpriteComponent(this);
 	mSC->SetTexture(game->GetRenderer()->GetTexture("Test.png"));

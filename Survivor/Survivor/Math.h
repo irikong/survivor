@@ -2,7 +2,9 @@
 #include <cmath>
 
 namespace Math {
-	const float PI = 3.1415926535f;
+	const float PI = 3.141592653589793238462f;
+	const float TWOPI = 2.f * PI;
+	const float PIDIV2 = PI / 2.f;
 
 	inline float Abs(float value)
 	{
