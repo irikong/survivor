@@ -135,6 +135,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Actor.cpp" />
+    <ClCompile Include="AnimComponent.cpp" />
     <ClCompile Include="AtlasComponent.cpp" />
     <ClCompile Include="Component.cpp" />
     <ClCompile Include="Game.cpp" />
@@ -152,6 +153,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Actor.h" />
+    <ClInclude Include="AnimComponent.h" />
     <ClInclude Include="AtlasComponent.h" />
     <ClInclude Include="Component.h" />
     <ClInclude Include="Constants.h" />

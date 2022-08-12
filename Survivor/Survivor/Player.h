@@ -10,7 +10,7 @@ public:
 	void ActorInput(const uint8_t* keyState) override;
 
 private:
-	class SpriteComponent* mSC;
 	class InputComponent* mIC;
+	class AnimComponent* mAC;
 };
 

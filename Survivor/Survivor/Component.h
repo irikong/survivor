@@ -8,6 +8,7 @@ public:
 		kComponent = 0,
 		kSpriteComponent,
 		kAtlasComponent,
+		kAnimComponent,
 		kTileMapComponent,
 		kMoveComponent,
 		kInputComponent
