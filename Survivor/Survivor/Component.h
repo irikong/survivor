@@ -7,6 +7,7 @@ public:
 	enum Type {
 		kComponent = 0,
 		kSpriteComponent,
+		kAtlasComponent,
 		kTileMapComponent,
 		kMoveComponent,
 		kInputComponent
