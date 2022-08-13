@@ -151,7 +151,7 @@ void Game::LoadTestData()
 
 	Actor* b = new Actor(this);
 	TileMapComponent* tm = new TileMapComponent(b);
-	tm->SetTileInfo(16, 16, 16, 16);
+	tm->SetFrameInfo(16, 16, 16, 16);
 	tm->SetTexture(mRenderer->GetTexture("TestTiles.png"));
 	tm->SetMapInfo(12, 16);
 	tm->LoadTileMap(std::string(Path::ASSETS) + "TestMap.csv");

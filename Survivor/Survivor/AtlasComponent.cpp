@@ -1,7 +1,11 @@
 #include "AtlasComponent.h"
 
 AtlasComponent::AtlasComponent(Actor* owner, int drawOrder) :
-	SpriteComponent(owner, drawOrder)
+	SpriteComponent(owner, drawOrder),
+	FRAME_WIDTH(),
+	FRAME_HEIGHT(),
+	FRAMES_PER_ROW(),
+	FRAMES_PER_COL()
 {
 
 }
