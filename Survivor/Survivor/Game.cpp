@@ -153,12 +153,10 @@ void Game::LoadTestData()
 	b->SetPosition(Vector2(-mRenderer->GetScreenWidth() / 2, mRenderer->GetScreenHeight() / 2));
 	TileMapComponent* tm1 = new TileMapComponent(b, 32, 32);
 	tm1->SetTexture(mRenderer->GetTexture("Grass1.png"));
-	tm1->SetMapInfo(16, 16);
-	tm1->LoadTileMap(std::string(Path::ASSETS) + "Layer1.csv");
+	tm1->LoadTileMap(std::string(Path::ASSETS) + "Layer1.csv", 16, 16);
 	TileMapComponent* tm2 = new TileMapComponent(b, 32, 32);
 	tm2->SetTexture(mRenderer->GetTexture("Dirt2.png"));
-	tm2->SetMapInfo(16, 16);
-	tm2->LoadTileMap(std::string(Path::ASSETS) + "Layer2.csv");
+	tm2->LoadTileMap(std::string(Path::ASSETS) + "Layer2.csv", 16, 16);
 	tm2->SetAlpha(0.7f);
 }
 

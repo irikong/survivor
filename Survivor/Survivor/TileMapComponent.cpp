@@ -14,10 +14,6 @@ TileMapComponent::TileMapComponent(Actor* owner, int fWidth, int fHeight, int dr
 	
 }
 
-TileMapComponent::~TileMapComponent()
-{
-}
-
 void TileMapComponent::Draw(Shader* shader)
 {
 	if (mTexture) {
@@ -39,8 +35,11 @@ void TileMapComponent::Draw(Shader* shader)
 	}
 }
 
-void TileMapComponent::LoadTileMap(const std::string& filePath)
+void TileMapComponent::LoadTileMap(const std::string& filePath, int mapRow, int mapCol)
 {
+	MAP_ROW = mapRow;
+	MAP_COL = mapCol;
+
 	std::fstream fs;
 	fs.open(filePath, std::ios::in);
 
@@ -64,10 +63,4 @@ void TileMapComponent::LoadTileMap(const std::string& filePath)
 	}
 
 	fs.close();
-}
-
-void TileMapComponent::SetMapInfo(int mapRow, int mapCol)
-{
-	MAP_ROW = mapRow;
-	MAP_COL = mapCol;
 }

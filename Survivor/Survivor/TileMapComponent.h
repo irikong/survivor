@@ -7,11 +7,10 @@ class TileMapComponent : public AtlasComponent
 {
 public:
 	TileMapComponent(class Actor* owner, int fWidth, int fHeight, int drawOrder = 10);
-	~TileMapComponent();
+	~TileMapComponent() = default;
 
 	void Draw(class Shader* shader) override;
-	void LoadTileMap(const std::string& filePath);
-	void SetMapInfo(int mapRow, int mapCol);
+	void LoadTileMap(const std::string& filePath, int mapRow, int mapCol);
 
 	Type GetType() const override { return kTileMapComponent; }
 
