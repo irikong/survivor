@@ -189,7 +189,7 @@ bool Renderer::LoadShaders()
 	mShaders[Component::Type::kSpriteComponent] = mSpriteShader;
 
 	mTileShader = new Shader();
-	if (!mTileShader->Load(shadersPath + "Tile.vert", shadersPath + "Tile.frag")) return false;
+	if (!mTileShader->Load(shadersPath + "Atlas.vert", shadersPath + "Atlas.frag")) return false;
 	mTileShader->SetActive();
 	mTileShader->SetMatrixUniform("uViewProj", viewProj);
 	mShaders[Component::Type::kAtlasComponent] = mTileShader;
