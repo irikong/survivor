@@ -34,6 +34,7 @@ void AnimComponent::Draw(Shader* shader)
 		shader->SetIntUniform("uTPR", FRAMES_PER_ROW);
 		shader->SetIntUniform("uTPC", FRAMES_PER_COL);
 		shader->SetIntUniform("uIdx", mAnims[mCurrAnim][static_cast<int>(mCurrFrame)]);
+		shader->SetFloatUniform("uAlpha", mAlpha);
 
 		mTexture->SetActive();
 

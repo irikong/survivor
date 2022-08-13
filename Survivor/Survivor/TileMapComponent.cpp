@@ -26,7 +26,7 @@ void TileMapComponent::Draw(Shader* shader)
 		
 		shader->SetIntUniform("uTPR", FRAMES_PER_ROW);
 		shader->SetIntUniform("uTPC", FRAMES_PER_COL);
-
+		shader->SetFloatUniform("uAlpha", mAlpha);
 		mTexture->SetActive();
 
 		for (auto& tile : mTiles) {

@@ -14,11 +14,13 @@ public:
 	int GetDrawOrder() const { return mDrawOrder; }
 	int GetTexHeight() const { return mTexHeight; }
 	int GetTexWidth() const { return mTexWidth; }
+	void SetAlpha(float alpha) { mAlpha = alpha; }
 
 protected:
 	class Texture* mTexture;
 	int mDrawOrder;
 	int mTexWidth;
 	int mTexHeight;
+	float mAlpha;
 };
 
