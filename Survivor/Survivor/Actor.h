@@ -14,6 +14,8 @@ public:
 	Actor(class Game* game);
 	virtual ~Actor();
 
+	void ProcessInput(const uint8_t* keyState);
+	virtual void ActorInput(const uint8_t* keyState);
 	void Update(float deltaTime);
 	void UpdateComponents(float deltaTime);
 	virtual void UpdateActor(float deltaTime);
@@ -22,9 +24,17 @@ public:
 	void RemoveComponent(class Component* component);
 	void ComputeWorldTransform();
 
-	State GetState() { return mState; }
-	class Game* GetGame() { return mGame; }
+	State GetState() const { return mState; }
+	class Game* GetGame() const { return mGame; }
 	const Matrix4& GetWorldTransform() const { return mWorldTransform; }
+	Vector2 GetForward() const { return Vector2(Math::Cos(mRotation), Math::Sin(mRotation)); }
+	Vector2 GetRight() const { return Vector2(Math::Cos(mRotation - Math::PIDIV2), Math::Sin(mRotation - Math::PIDIV2)); }
+	float GetScale() const { return mScale; }
+	float GetRotation() const { return mRotation; }
+	const Vector2& GetPosition() const { return mPosition; }
+	void SetScale(float scale) { mScale = scale; mRecomputeWorldTransform = true; }
+	void SetRotation(float rot) { mRotation = rot; mRecomputeWorldTransform = true; }
+	void SetPosition(const Vector2& pos) { mPosition = pos; mRecomputeWorldTransform = true; }
 
 private:
 	State mState;
@@ -32,7 +42,7 @@ private:
 	class Game* mGame;
 	std::vector<class Component*> mComponents;
 
-	std::pair<float, float> mPosition;
+	Vector2 mPosition;
 	float mScale;
 	float mRotation;
 	

@@ -2,6 +2,10 @@
 #include <cmath>
 
 namespace Math {
+	const float PI = 3.141592653589793238462f;
+	const float TWOPI = 2.f * PI;
+	const float PIDIV2 = PI / 2.f;
+
 	inline float Abs(float value)
 	{
 		return fabs(value);
@@ -21,7 +25,49 @@ namespace Math {
 	{
 		return tanf(theta);
 	}
+
+	inline float Sqrt(float value)
+	{
+		return sqrtf(value);
+	}
+
+	inline bool NearZero(float val, float epsilon = 0.001f)
+	{
+		return (fabs(val) <= epsilon);
+	}
 }
+
+class Vector2
+{
+public:
+	float x;
+	float y;
+
+	Vector2();
+	explicit Vector2(float px, float py);
+
+	void Set(float px, float py);
+
+	friend Vector2 operator+(const Vector2& lhs, const Vector2& rhs);
+	friend Vector2 operator-(const Vector2& lhs, const Vector2& rhs);
+	friend Vector2 operator*(const Vector2& vec, float scalar);
+	friend Vector2 operator*(float scalar, const Vector2& vec);
+
+	Vector2& operator+=(const Vector2& rhs);
+	Vector2& operator-=(const Vector2& rhs);
+	Vector2& operator*=(float scalar);
+
+	bool operator==(const Vector2& rhs);
+	bool operator!=(const Vector2& rhs);
+
+	float LengthSq();
+	float Length();
+	void Normalize();
+	static Vector2 Normalize(const Vector2& vec);
+	static float Dot(const Vector2& lhs, const Vector2& rhs);
+
+	static const Vector2 Zero;
+};
 
 class Matrix3
 {

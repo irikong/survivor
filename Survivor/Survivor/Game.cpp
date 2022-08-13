@@ -7,6 +7,7 @@
 #include "TileMapComponent.h"
 #include "Renderer.h"
 #include "Constants.h"
+#include "Player.h"
 
 Game::Game() :
 	MIN_TICK(16),
@@ -98,6 +99,12 @@ void Game::ProcessInput()
 	if (keyState[SDL_SCANCODE_ESCAPE]) {
 		mIsRunning = false;
 	}
+
+	mUpdatingActors = true;
+	for (auto actor : mActors) {
+		actor->ProcessInput(keyState);
+	}
+	mUpdatingActors = false;
 }
 
 void Game::UpdateGame()
@@ -140,10 +147,7 @@ void Game::GenerateOutput()
 
 void Game::LoadTestData()
 {
-	Actor* a = new Actor(this);
-	SpriteComponent* sc = new SpriteComponent(a);
-	sc->SetTexture(mRenderer->GetTexture("Test.png"));
-	mRenderer->AddSprite(sc);
+	Player* player = new Player(this);
 
 	Actor* b = new Actor(this);
 	TileMapComponent* tm = new TileMapComponent(b);

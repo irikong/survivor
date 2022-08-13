@@ -2,7 +2,7 @@
 #include "SpriteComponent.h"
 #include <vector>
 #include <string>
-
+// TODO: AtlasComponent의 서브 클래스가 되도록 변경
 class TileMapComponent : public SpriteComponent
 {
 public:

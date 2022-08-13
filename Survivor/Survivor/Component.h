@@ -1,16 +1,23 @@
 #pragma once
+#include <cstdint>
+
 class Component
 {
 public:
 	enum Type {
 		kComponent = 0,
 		kSpriteComponent,
-		kTileMapComponent
+		kAtlasComponent,
+		kAnimComponent,
+		kTileMapComponent,
+		kMoveComponent,
+		kInputComponent
 	};
 
 	Component(class Actor* owner, int updateOrder = 100);
 	virtual ~Component();
 
+	virtual void ProcessInput(const uint8_t* keyState);
 	virtual void Update(float deltaTime);
 	virtual void OnUpdateWorldTransform(); // Actor의 WorldTransform이 변경됐을 때 Call
 

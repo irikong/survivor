@@ -179,6 +179,8 @@ bool Renderer::LoadShaders()
 {
 	std::string shadersPath = std::string(Path::SHADERS);
 
+	// TODO: mShaders[] Shader 포인터 중복저장 개선
+
 	mSpriteShader = new Shader();
 	if (!mSpriteShader->Load(shadersPath + "Sprite.vert", shadersPath + "Sprite.frag")) return false;
 	mSpriteShader->SetActive();
@@ -190,7 +192,9 @@ bool Renderer::LoadShaders()
 	if (!mTileShader->Load(shadersPath + "Tile.vert", shadersPath + "Tile.frag")) return false;
 	mTileShader->SetActive();
 	mTileShader->SetMatrixUniform("uViewProj", viewProj);
+	mShaders[Component::Type::kAtlasComponent] = mTileShader;
 	mShaders[Component::Type::kTileMapComponent] = mTileShader;
+	mShaders[Component::Type::kAnimComponent] = mTileShader;
 
 	return true;
 }
