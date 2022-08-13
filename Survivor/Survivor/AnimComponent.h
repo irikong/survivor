@@ -6,7 +6,7 @@
 class AnimComponent : public AtlasComponent
 {
 public:
-	AnimComponent(class Actor* owner, int drawOrder = 100);
+	AnimComponent(class Actor* owner, int fWidth, int fHeight, int drawOrder = 100);
 	~AnimComponent() = default;
 
 	void Update(float deltaTime) override;

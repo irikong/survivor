@@ -4,8 +4,8 @@
 #include "Shader.h"
 #include "Texture.h"
 
-AnimComponent::AnimComponent(Actor* owner, int drawOrder) : 
-	AtlasComponent(owner, drawOrder),
+AnimComponent::AnimComponent(Actor* owner, int fWidth, int fHeight, int drawOrder) : 
+	AtlasComponent(owner, fWidth, fHeight, drawOrder),
 	mAnimFPS(0.0),
 	mCurrFrame(0.0),
 	mCurrAnim()
@@ -34,6 +34,7 @@ void AnimComponent::Draw(Shader* shader)
 		shader->SetIntUniform("uTPR", FRAMES_PER_ROW);
 		shader->SetIntUniform("uTPC", FRAMES_PER_COL);
 		shader->SetIntUniform("uIdx", mAnims[mCurrAnim][static_cast<int>(mCurrFrame)]);
+		shader->SetFloatUniform("uAlpha", mAlpha);
 
 		mTexture->SetActive();
 

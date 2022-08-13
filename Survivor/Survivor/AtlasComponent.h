@@ -5,13 +5,14 @@
 class AtlasComponent : public SpriteComponent
 {
 public:
-	AtlasComponent(class Actor* owner, int drawOrder = 100);
+	AtlasComponent(class Actor* owner, int fWidth, int fHeight, int drawOrder = 100);
 	~AtlasComponent() = default;
 
 	void Draw(class Shader* shader) override;
+	void SetTexture(class Texture* texture) override;
 
 	Type GetType() const override { return kAtlasComponent; }
-	void SetFrameInfo(int fWidth, int fHeight, int fPerRow, int fPerCol);
+	void SetFrameInfo(int fWidth, int fHeight);
 	std::pair<int, int> GetFrameCoord(int frame);
 
 protected:

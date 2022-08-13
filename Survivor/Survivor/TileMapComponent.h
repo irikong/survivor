@@ -1,18 +1,16 @@
 #pragma once
-#include "SpriteComponent.h"
+#include "AtlasComponent.h"
 #include <vector>
 #include <string>
-// TODO: AtlasComponent의 서브 클래스가 되도록 변경
-class TileMapComponent : public SpriteComponent
+
+class TileMapComponent : public AtlasComponent
 {
 public:
-	TileMapComponent(class Actor* owner, int drawOrder = 10);
-	~TileMapComponent();
+	TileMapComponent(class Actor* owner, int fWidth, int fHeight, int drawOrder = 10);
+	~TileMapComponent() = default;
 
 	void Draw(class Shader* shader) override;
-	void LoadTileMap(const std::string& filePath);
-	void SetTileInfo(int tWidth, int tHeight, int tPerRow, int tPerCol);
-	void SetMapInfo(int mapRow, int mapCol);
+	void LoadTileMap(const std::string& filePath, int mapRow, int mapCol);
 
 	Type GetType() const override { return kTileMapComponent; }
 
@@ -28,10 +26,5 @@ private:
 	// MAP INFO
 	int MAP_ROW;
 	int MAP_COL;
-	// TILES INFO
-	int TILE_WIDTH;
-	int TILE_HEIGHT;
-	int TILES_PER_ROW;
-	int TILES_PER_COL;
 };
 

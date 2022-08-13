@@ -8,9 +8,8 @@
 Player::Player(Game* game) :
 	Actor(game)
 {
-	mAC = new AnimComponent(this);
+	mAC = new AnimComponent(this, 32, 32);
 	mAC->SetTexture(game->GetRenderer()->GetTexture("Player.png"));
-	mAC->SetFrameInfo(32, 32, 3, 4);
 	mAC->SetAnimFPS(3.0f);
 	mAC->AddAnim("Down", 0, 2);
 	mAC->AddAnim("Left", 3, 5);
