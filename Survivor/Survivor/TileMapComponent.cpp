@@ -6,8 +6,8 @@
 #include "Shader.h"
 #include "Renderer.h"
 
-TileMapComponent::TileMapComponent(Actor* owner, int drawOrder) :
-	AtlasComponent(owner, drawOrder),
+TileMapComponent::TileMapComponent(Actor* owner, int fWidth, int fHeight, int drawOrder) :
+	AtlasComponent(owner, fWidth, fHeight, drawOrder),
 	MAP_ROW(),
 	MAP_COL()
 {

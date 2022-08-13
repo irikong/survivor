@@ -6,7 +6,7 @@
 class TileMapComponent : public AtlasComponent
 {
 public:
-	TileMapComponent(class Actor* owner, int drawOrder = 10);
+	TileMapComponent(class Actor* owner, int fWidth, int fHeight, int drawOrder = 10);
 	~TileMapComponent();
 
 	void Draw(class Shader* shader) override;

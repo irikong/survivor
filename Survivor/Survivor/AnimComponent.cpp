@@ -4,8 +4,8 @@
 #include "Shader.h"
 #include "Texture.h"
 
-AnimComponent::AnimComponent(Actor* owner, int drawOrder) : 
-	AtlasComponent(owner, drawOrder),
+AnimComponent::AnimComponent(Actor* owner, int fWidth, int fHeight, int drawOrder) : 
+	AtlasComponent(owner, fWidth, fHeight, drawOrder),
 	mAnimFPS(0.0),
 	mCurrFrame(0.0),
 	mCurrAnim()
