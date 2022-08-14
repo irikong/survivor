@@ -12,8 +12,11 @@ public:
 
 	void AddActor(class Actor* actor);
 	void RemoveActor(class Actor* actor);
+	void AddCircle(class CircleComponent* circle);
+	void RemoveCircle(class CircleComponent* circle);
 
 	class Renderer* GetRenderer() { return mRenderer; }
+	std::vector<class CircleComponent*> GetCircles() { return mCircles; }
 
 private:
 	const int MIN_TICK;
@@ -32,6 +35,7 @@ private:
 
 	std::vector<class Actor*> mActors;
 	std::vector<class Actor*> mPendingActors;
+	std::vector<class CircleComponent*> mCircles;
 
 	class Renderer* mRenderer;
 };

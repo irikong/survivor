@@ -13,6 +13,7 @@ public:
 		kMoveComponent,
 		kInputComponent,
 		kColliderComponent,
+		kCircleComponent
 	};
 
 	Component(class Actor* owner, int updateOrder = 100);

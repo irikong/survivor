@@ -8,6 +8,7 @@
 #include "Renderer.h"
 #include "Constants.h"
 #include "Player.h"
+#include "CircleComponent.h"
 
 Game::Game() :
 	MIN_TICK(16),
@@ -81,6 +82,19 @@ void Game::RemoveActor(Actor* actor)
 	if (iter != mActors.end()) {
 		std::iter_swap(iter, mActors.end() - 1);
 		mActors.pop_back();
+	}
+}
+
+void Game::AddCircle(CircleComponent* circle)
+{
+	mCircles.emplace_back(circle);
+}
+
+void Game::RemoveCircle(CircleComponent* circle)
+{
+	auto iter = std::find(mCircles.begin(), mCircles.end(), circle);
+	if (iter != mCircles.end()) {
+		mCircles.erase(iter);
 	}
 }
 
@@ -158,6 +172,12 @@ void Game::LoadTestData()
 	tm2->SetTexture(mRenderer->GetTexture("Dirt2.png"));
 	tm2->LoadTileMap(std::string(Path::ASSETS) + "Layer2.csv", 16, 16);
 	tm2->SetAlpha(0.7f);
+
+	Actor* c = new Actor(this);
+	SpriteComponent* sc = new SpriteComponent(c, 15);
+	sc->SetTexture(mRenderer->GetTexture("Test.png"));
+	CircleComponent* CC = new CircleComponent(c, sc->GetTexWidth() / 2);
+	c->SetPosition(Vector2(-300, 250));
 }
 
 void Game::UnloadData()

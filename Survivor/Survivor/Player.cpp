@@ -4,6 +4,8 @@
 #include "Texture.h"
 #include "AnimComponent.h"
 #include "InputComponent.h"
+#include "Collision.h"
+#include "CircleComponent.h"
 
 Player::Player(Game* game) :
 	Actor(game)
@@ -23,10 +25,19 @@ Player::Player(Game* game) :
 	mIC->SetLeftKey(SDL_SCANCODE_LEFT);
 	mIC->SetRightKey(SDL_SCANCODE_RIGHT);
 	mIC->SetSpeed(300.0f);
+
+	mCC = new CircleComponent(this, 32);
 }
 
 void Player::UpdateActor(float deltaTime)
 {
+	Actor::UpdateActor(deltaTime);
+
+	for (auto circle : GetGame()->GetCircles()) {
+		if ((circle != mCC) && Intersect(mCC->GetWorldCircle(), circle->GetWorldCircle())) {
+			// TODO: 충돌 처리
+		}
+	}
 }
 
 void Player::ActorInput(const uint8_t* keyState)
