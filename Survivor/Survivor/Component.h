@@ -11,7 +11,8 @@ public:
 		kAnimComponent,
 		kTileMapComponent,
 		kMoveComponent,
-		kInputComponent
+		kInputComponent,
+		kColliderComponent,
 	};
 
 	Component(class Actor* owner, int updateOrder = 100);
