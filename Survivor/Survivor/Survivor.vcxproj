@@ -137,6 +137,7 @@
     <ClCompile Include="Actor.cpp" />
     <ClCompile Include="AnimComponent.cpp" />
     <ClCompile Include="AtlasComponent.cpp" />
+    <ClCompile Include="Collision.cpp" />
     <ClCompile Include="Component.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="InputComponent.cpp" />
@@ -155,6 +156,7 @@
     <ClInclude Include="Actor.h" />
     <ClInclude Include="AnimComponent.h" />
     <ClInclude Include="AtlasComponent.h" />
+    <ClInclude Include="Collision.h" />
     <ClInclude Include="Component.h" />
     <ClInclude Include="Constants.h" />
     <ClInclude Include="Game.h" />
