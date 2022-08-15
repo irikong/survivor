@@ -6,6 +6,18 @@ namespace Math {
 	const float TWOPI = 2.f * PI;
 	const float PIDIV2 = PI / 2.f;
 
+	template <typename T>
+	T Max(const T& a, const T& b)
+	{
+		return (a < b ? b : a);
+	}
+
+	template <typename T>
+	T Min(const T& a, const T& b)
+	{
+		return (a < b ? a : b);
+	}
+
 	inline float Abs(float value)
 	{
 		return fabs(value);
