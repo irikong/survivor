@@ -137,6 +137,7 @@
     <ClCompile Include="Actor.cpp" />
     <ClCompile Include="AnimComponent.cpp" />
     <ClCompile Include="AtlasComponent.cpp" />
+    <ClCompile Include="BoxComponent.cpp" />
     <ClCompile Include="CircleComponent.cpp" />
     <ClCompile Include="ColliderComponent.cpp" />
     <ClCompile Include="Collision.cpp" />
@@ -158,6 +159,7 @@
     <ClInclude Include="Actor.h" />
     <ClInclude Include="AnimComponent.h" />
     <ClInclude Include="AtlasComponent.h" />
+    <ClInclude Include="BoxComponent.h" />
     <ClInclude Include="CircleComponent.h" />
     <ClInclude Include="ColliderComponent.h" />
     <ClInclude Include="Collision.h" />
