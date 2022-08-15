@@ -8,7 +8,9 @@
 #include "Renderer.h"
 #include "Constants.h"
 #include "Player.h"
+#include "Physics2D.h"
 #include "CircleComponent.h"
+#include "BoxComponent.h"
 
 Game::Game() :
 	MIN_TICK(16),
@@ -16,7 +18,8 @@ Game::Game() :
 	mTicksCount(),
 	mIsRunning(true),
 	mUpdatingActors(false),
-	mRenderer(nullptr)
+	mRenderer(nullptr),
+	mPhysics2D(nullptr)
 {
 
 }
@@ -35,6 +38,8 @@ bool Game::Initialize()
 		mRenderer = nullptr;
 		return false;
 	}
+
+	mPhysics2D = new Physics2D(this);
 
 	LoadTestData();
 
@@ -82,19 +87,6 @@ void Game::RemoveActor(Actor* actor)
 	if (iter != mActors.end()) {
 		std::iter_swap(iter, mActors.end() - 1);
 		mActors.pop_back();
-	}
-}
-
-void Game::AddCircle(CircleComponent* circle)
-{
-	mCircles.emplace_back(circle);
-}
-
-void Game::RemoveCircle(CircleComponent* circle)
-{
-	auto iter = std::find(mCircles.begin(), mCircles.end(), circle);
-	if (iter != mCircles.end()) {
-		mCircles.erase(iter);
 	}
 }
 
@@ -176,8 +168,14 @@ void Game::LoadTestData()
 	Actor* c = new Actor(this);
 	SpriteComponent* sc = new SpriteComponent(c, 15);
 	sc->SetTexture(mRenderer->GetTexture("Test.png"));
-	CircleComponent* CC = new CircleComponent(c, Circle(Vector2::Zero, sc->GetTexWidth() / 2.0f));
+	CircleComponent* cc = new CircleComponent(c, Circle(Vector2::Zero, sc->GetTexWidth() / 2.0f));
 	c->SetPosition(Vector2(-300, 250));
+
+	Actor* d = new Actor(this);
+	sc = new SpriteComponent(d, 15);
+	sc->SetTexture(mRenderer->GetTexture("Test.png"));
+	BoxComponent* bc = new BoxComponent(d, AABB(Vector2(-10, -10), Vector2(10, 10)));
+	d->SetPosition(Vector2(200, 200));
 }
 
 void Game::UnloadData()

@@ -1,18 +1,19 @@
 #include "CircleComponent.h"
 #include "Actor.h"
 #include "Game.h"
+#include "Physics2D.h"
 
 CircleComponent::CircleComponent(Actor* owner, const Circle& circle, int updateOrder) :
 	ColliderComponent(owner, updateOrder),
 	mCircle(circle),
 	mWorldCircle()
 {
-	owner->GetGame()->AddCircle(this);
+	owner->GetGame()->GetPhysics2D()->AddCollider(this);
 }
 
 CircleComponent::~CircleComponent()
 {
-	mOwner->GetGame()->RemoveCircle(this);
+	mOwner->GetGame()->GetPhysics2D()->RemoveCollider(this);
 }
 
 void CircleComponent::OnUpdateWorldTransform()

@@ -6,6 +6,7 @@
 #include "InputComponent.h"
 #include "Collision.h"
 #include "CircleComponent.h"
+#include "Physics2D.h"
 
 Player::Player(Game* game) :
 	Actor(game)
@@ -34,11 +35,11 @@ void Player::UpdateActor(float deltaTime)
 {
 	Actor::UpdateActor(deltaTime);
 
-	for (auto circle : GetGame()->GetCircles()) {
-		if ((circle != mCC) && Intersect(mCC->GetWorldCircle(), circle->GetWorldCircle())) {
-			// TODO: 충돌 처리
-		}
-	}
+	//for (auto collider : GetGame()->GetPhysics2D()->GetColliders()) {
+	//	if ((collider != mCC) && Intersect(mCC->GetWorldCircle(), collider->())) {
+	//		// TODO: 충돌 처리
+	//	}
+	//}
 }
 
 void Player::ActorInput(const uint8_t* keyState)
