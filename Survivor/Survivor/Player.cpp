@@ -26,7 +26,8 @@ Player::Player(Game* game) :
 	mIC->SetRightKey(SDL_SCANCODE_RIGHT);
 	mIC->SetSpeed(300.0f);
 
-	mCC = new CircleComponent(this, 32);
+	Circle circle(Vector2::Zero, 32);
+	mCC = new CircleComponent(this, circle);
 }
 
 void Player::UpdateActor(float deltaTime)

@@ -176,7 +176,7 @@ void Game::LoadTestData()
 	Actor* c = new Actor(this);
 	SpriteComponent* sc = new SpriteComponent(c, 15);
 	sc->SetTexture(mRenderer->GetTexture("Test.png"));
-	CircleComponent* CC = new CircleComponent(c, sc->GetTexWidth() / 2);
+	CircleComponent* CC = new CircleComponent(c, Circle(Vector2::Zero, sc->GetTexWidth() / 2.0f));
 	c->SetPosition(Vector2(-300, 250));
 }
 

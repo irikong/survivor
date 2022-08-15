@@ -2,10 +2,10 @@
 #include "Actor.h"
 #include "Game.h"
 
-CircleComponent::CircleComponent(Actor* owner, float radius, int updateOrder) : 
+CircleComponent::CircleComponent(Actor* owner, const Circle& circle, int updateOrder) :
 	ColliderComponent(owner, updateOrder),
-	mCircle(Vector2::Zero, radius),
-	mWorldCircle(owner->GetPosition(), radius)
+	mCircle(circle),
+	mWorldCircle()
 {
 	owner->GetGame()->AddCircle(this);
 }

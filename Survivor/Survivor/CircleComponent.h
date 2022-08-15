@@ -5,7 +5,7 @@
 class CircleComponent : public ColliderComponent
 {
 public:
-	CircleComponent(class Actor* owner, float radius, int updateOrder = 50);
+	CircleComponent(class Actor* owner, const Circle& circle, int updateOrder = 50);
 	~CircleComponent();
 
 	void OnUpdateWorldTransform() override;
