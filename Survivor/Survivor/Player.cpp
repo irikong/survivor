@@ -27,7 +27,7 @@ Player::Player(Game* game) :
 	mIC->SetRightKey(SDL_SCANCODE_RIGHT);
 	mIC->SetSpeed(300.0f);
 
-	Circle circle(Vector2::Zero, 32);
+	Circle circle(Vector2::Zero, 16);
 	mCC = new CircleComponent(this, circle);
 }
 
@@ -35,11 +35,7 @@ void Player::UpdateActor(float deltaTime)
 {
 	Actor::UpdateActor(deltaTime);
 
-	//for (auto collider : GetGame()->GetPhysics2D()->GetColliders()) {
-	//	if ((collider != mCC) && Intersect(mCC->GetWorldCircle(), collider->())) {
-	//		// TODO: 충돌 처리
-	//	}
-	//}
+	GetGame()->GetPhysics2D()->CollisionDetection(mCC);
 }
 
 void Player::ActorInput(const uint8_t* keyState)

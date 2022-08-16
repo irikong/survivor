@@ -8,12 +8,12 @@ BoxComponent::BoxComponent(Actor* owner, const AABB& box, int updateOrder) :
 	mBox(box),
 	mWorldBox()
 {
-	owner->GetGame()->GetPhysics2D()->AddCollider(this);
+	owner->GetGame()->GetPhysics2D()->AddBox(this);
 }
 
 BoxComponent::~BoxComponent()
 {
-	mOwner->GetGame()->GetPhysics2D()->RemoveCollider(this);
+	mOwner->GetGame()->GetPhysics2D()->RemoveBox(this);
 }
 
 void BoxComponent::OnUpdateWorldTransform()

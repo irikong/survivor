@@ -8,12 +8,12 @@ CircleComponent::CircleComponent(Actor* owner, const Circle& circle, int updateO
 	mCircle(circle),
 	mWorldCircle()
 {
-	owner->GetGame()->GetPhysics2D()->AddCollider(this);
+	owner->GetGame()->GetPhysics2D()->AddCircle(this);
 }
 
 CircleComponent::~CircleComponent()
 {
-	mOwner->GetGame()->GetPhysics2D()->RemoveCollider(this);
+	mOwner->GetGame()->GetPhysics2D()->RemoveCircle(this);
 }
 
 void CircleComponent::OnUpdateWorldTransform()

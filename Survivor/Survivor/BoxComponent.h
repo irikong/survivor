@@ -14,7 +14,7 @@ public:
 	void SetBox(AABB& box) { mBox = box; }
 	void SetMin(class Vector2& min) { mBox.mMin = min; }
 	void SetMax(class Vector2& max) { mBox.mMax = max; }
-	const AABB& GetWorldBox() const { return mBox; }
+	const AABB& GetWorldBox() const { return mWorldBox; }
 
 private:
 	AABB mBox;
