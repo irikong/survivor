@@ -94,3 +94,7 @@ void Actor::ComputeWorldTransform()
 		}
 	}
 }
+
+void Actor::OnCollision(ColliderComponent* other)
+{
+}

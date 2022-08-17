@@ -25,6 +25,7 @@ public:
 	virtual void OnUpdateWorldTransform(); // Actor의 WorldTransform이 변경됐을 때 Call
 
 	virtual Type GetType() const = 0;
+	class Actor* GetOwner() const { return mOwner; }
 	int GetUpdateOrder() const { return mUpdateOrder; }
 
 protected:

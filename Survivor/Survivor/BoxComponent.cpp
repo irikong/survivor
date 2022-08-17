@@ -9,6 +9,7 @@ BoxComponent::BoxComponent(Actor* owner, const AABB& box, int updateOrder) :
 	mWorldBox()
 {
 	owner->GetGame()->GetPhysics2D()->AddBox(this);
+	OnUpdateWorldTransform();
 }
 
 BoxComponent::~BoxComponent()

@@ -166,16 +166,16 @@ void Game::LoadTestData()
 	tm2->SetAlpha(0.7f);
 
 	Actor* c = new Actor(this);
+	c->SetPosition(Vector2(-300, 250));
 	SpriteComponent* sc = new SpriteComponent(c, 15);
 	sc->SetTexture(mRenderer->GetTexture("Circle.png"));
 	CircleComponent* cc = new CircleComponent(c, Circle(Vector2::Zero, sc->GetTexWidth() / 2.0f));
-	c->SetPosition(Vector2(-300, 250));
 
 	Actor* d = new Actor(this);
+	d->SetPosition(Vector2(200, 200));
 	sc = new SpriteComponent(d, 15);
 	sc->SetTexture(mRenderer->GetTexture("Box.png"));
 	BoxComponent* bc = new BoxComponent(d, AABB(Vector2(-16, -16), Vector2(16, 16)));
-	d->SetPosition(Vector2(200, 200));
 }
 
 void Game::UnloadData()

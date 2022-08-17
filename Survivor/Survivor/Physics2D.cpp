@@ -1,6 +1,7 @@
 #include "Physics2D.h"
 #include "CircleComponent.h"
 #include "BoxComponent.h"
+#include "Actor.h"
 
 Physics2D::Physics2D(Game* game) :
 	mGame(game)
@@ -38,13 +39,15 @@ void Physics2D::CollisionDetection(CircleComponent* circle)
 {
 	for (CircleComponent* cc : mCircles) {
 		if (circle != cc && Intersect(circle->GetWorldCircle(), cc->GetWorldCircle())) {
-
+			circle->GetOwner()->OnCollision(cc);
+			cc->GetOwner()->OnCollision(circle);
 		}
 	}
 
 	for (BoxComponent* bc : mBoxes) {
 		if (Intersect(circle->GetWorldCircle(), bc->GetWorldBox())) {
-
+			circle->GetOwner()->OnCollision(bc);
+			bc->GetOwner()->OnCollision(circle);
 		}
 	}
 }
@@ -53,13 +56,15 @@ void Physics2D::CollisionDetection(BoxComponent* box)
 {
 	for (CircleComponent* cc : mCircles) {
 		if (Intersect(box->GetWorldBox(), cc->GetWorldCircle())) {
-
+			box->GetOwner()->OnCollision(cc);
+			cc->GetOwner()->OnCollision(box);
 		}
 	}
 
 	for (BoxComponent* bc : mBoxes) {
 		if (box != bc && Intersect(box->GetWorldBox(), bc->GetWorldBox())) {
-
+			box->GetOwner()->OnCollision(bc);
+			bc->GetOwner()->OnCollision(box);
 		}
 	}
 }

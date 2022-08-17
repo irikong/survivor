@@ -23,6 +23,7 @@ public:
 	void AddComponent(class Component* component);
 	void RemoveComponent(class Component* component);
 	void ComputeWorldTransform();
+	virtual void OnCollision(class ColliderComponent* other);
 
 	State GetState() const { return mState; }
 	class Game* GetGame() const { return mGame; }

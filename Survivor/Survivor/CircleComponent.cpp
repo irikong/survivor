@@ -9,6 +9,7 @@ CircleComponent::CircleComponent(Actor* owner, const Circle& circle, int updateO
 	mWorldCircle()
 {
 	owner->GetGame()->GetPhysics2D()->AddCircle(this);
+	OnUpdateWorldTransform();
 }
 
 CircleComponent::~CircleComponent()
