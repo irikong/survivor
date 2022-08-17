@@ -4,13 +4,13 @@
 #include "Component.h"
 #include "Texture.h"
 #include "SpriteComponent.h"
-#include "TileMapComponent.h"
 #include "Renderer.h"
 #include "Constants.h"
 #include "Player.h"
 #include "Physics2D.h"
 #include "CircleComponent.h"
 #include "BoxComponent.h"
+#include "MapManager.h"
 
 Game::Game() :
 	MIN_TICK(16),
@@ -155,18 +155,10 @@ void Game::LoadTestData()
 {
 	Player* player = new Player(this);
 
-	Actor* b = new Actor(this);
-	b->SetPosition(Vector2(-mRenderer->GetScreenWidth() / 2, mRenderer->GetScreenHeight() / 2));
-	TileMapComponent* tm1 = new TileMapComponent(b, 32, 32);
-	tm1->SetTexture(mRenderer->GetTexture("Grass1.png"));
-	tm1->LoadTileMap(std::string(Path::ASSETS) + "Layer1.csv", 16, 16);
-	TileMapComponent* tm2 = new TileMapComponent(b, 32, 32);
-	tm2->SetTexture(mRenderer->GetTexture("Dirt2.png"));
-	tm2->LoadTileMap(std::string(Path::ASSETS) + "Layer2.csv", 16, 16);
-	tm2->SetAlpha(0.7f);
+	MapManager* mapManager = new MapManager(this);
 
 	Actor* c = new Actor(this);
-	c->SetPosition(Vector2(-300, 250));
+	c->SetPosition(Vector2(-100, -150));
 	SpriteComponent* sc = new SpriteComponent(c, 15);
 	sc->SetTexture(mRenderer->GetTexture("Circle.png"));
 	CircleComponent* cc = new CircleComponent(c, Circle(Vector2::Zero, sc->GetTexWidth() / 2.0f));
