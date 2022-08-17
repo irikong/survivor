@@ -8,6 +8,9 @@
 #include "Renderer.h"
 #include "Constants.h"
 #include "Player.h"
+#include "Physics2D.h"
+#include "CircleComponent.h"
+#include "BoxComponent.h"
 
 Game::Game() :
 	MIN_TICK(16),
@@ -15,7 +18,8 @@ Game::Game() :
 	mTicksCount(),
 	mIsRunning(true),
 	mUpdatingActors(false),
-	mRenderer(nullptr)
+	mRenderer(nullptr),
+	mPhysics2D(nullptr)
 {
 
 }
@@ -34,6 +38,8 @@ bool Game::Initialize()
 		mRenderer = nullptr;
 		return false;
 	}
+
+	mPhysics2D = new Physics2D(this);
 
 	LoadTestData();
 
@@ -158,6 +164,18 @@ void Game::LoadTestData()
 	tm2->SetTexture(mRenderer->GetTexture("Dirt2.png"));
 	tm2->LoadTileMap(std::string(Path::ASSETS) + "Layer2.csv", 16, 16);
 	tm2->SetAlpha(0.7f);
+
+	Actor* c = new Actor(this);
+	c->SetPosition(Vector2(-300, 250));
+	SpriteComponent* sc = new SpriteComponent(c, 15);
+	sc->SetTexture(mRenderer->GetTexture("Circle.png"));
+	CircleComponent* cc = new CircleComponent(c, Circle(Vector2::Zero, sc->GetTexWidth() / 2.0f));
+
+	Actor* d = new Actor(this);
+	d->SetPosition(Vector2(200, 200));
+	sc = new SpriteComponent(d, 15);
+	sc->SetTexture(mRenderer->GetTexture("Box.png"));
+	BoxComponent* bc = new BoxComponent(d, AABB(Vector2(-16, -16), Vector2(16, 16)));
 }
 
 void Game::UnloadData()

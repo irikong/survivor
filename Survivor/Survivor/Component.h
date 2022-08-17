@@ -11,7 +11,10 @@ public:
 		kAnimComponent,
 		kTileMapComponent,
 		kMoveComponent,
-		kInputComponent
+		kInputComponent,
+		kColliderComponent,
+		kCircleComponent,
+		kBoxComponent
 	};
 
 	Component(class Actor* owner, int updateOrder = 100);
@@ -22,6 +25,7 @@ public:
 	virtual void OnUpdateWorldTransform(); // Actor의 WorldTransform이 변경됐을 때 Call
 
 	virtual Type GetType() const = 0;
+	class Actor* GetOwner() const { return mOwner; }
 	int GetUpdateOrder() const { return mUpdateOrder; }
 
 protected:

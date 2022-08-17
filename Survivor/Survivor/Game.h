@@ -14,6 +14,7 @@ public:
 	void RemoveActor(class Actor* actor);
 
 	class Renderer* GetRenderer() { return mRenderer; }
+	class Physics2D* GetPhysics2D() { return mPhysics2D; }
 
 private:
 	const int MIN_TICK;
@@ -34,4 +35,5 @@ private:
 	std::vector<class Actor*> mPendingActors;
 
 	class Renderer* mRenderer;
+	class Physics2D* mPhysics2D;
 };

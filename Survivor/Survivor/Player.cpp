@@ -4,6 +4,10 @@
 #include "Texture.h"
 #include "AnimComponent.h"
 #include "InputComponent.h"
+#include "Collision.h"
+#include "CircleComponent.h"
+#include "BoxComponent.h"
+#include "Physics2D.h"
 
 Player::Player(Game* game) :
 	Actor(game)
@@ -23,10 +27,16 @@ Player::Player(Game* game) :
 	mIC->SetLeftKey(SDL_SCANCODE_LEFT);
 	mIC->SetRightKey(SDL_SCANCODE_RIGHT);
 	mIC->SetSpeed(300.0f);
+
+	AABB box(Vector2(-16, -16), Vector2(16, 16));
+	mBC = new BoxComponent(this, box);
 }
 
 void Player::UpdateActor(float deltaTime)
 {
+	Actor::UpdateActor(deltaTime);
+
+	GetGame()->GetPhysics2D()->CollisionDetection(mBC);
 }
 
 void Player::ActorInput(const uint8_t* keyState)
@@ -46,3 +56,39 @@ void Player::ActorInput(const uint8_t* keyState)
 		mAC->SetCurrAnim("Right");
 	}
 }
+
+void Player::OnCollision(ColliderComponent* other)
+{
+	switch (other->GetType()){
+	case Component::kCircleComponent:
+		// Circle 처리
+		break;
+	case Component::kBoxComponent:
+		ResolveCollision(dynamic_cast<BoxComponent*>(other)->GetWorldBox());
+		break;
+	default:
+		break;
+	}
+}
+
+void Player::ResolveCollision(const AABB& other)
+{
+	const AABB& box = mBC->GetWorldBox();
+
+	float dx1 = other.mMax.x - box.mMin.x;
+	float dx2 = other.mMin.x - box.mMax.x;
+	float dx = Math::Abs(dx1) < Math::Abs(dx2) ? dx1 : dx2;
+
+	float dy1 = other.mMax.y - box.mMin.y;
+	float dy2 = other.mMin.y - box.mMax.y;
+	float dy = Math::Abs(dy1) < Math::Abs(dy2) ? dy1 : dy2;
+
+	Vector2 pos = GetPosition();
+	if (Math::Abs(dx) < Math::Abs(dy)) pos.x += dx;
+	else pos.y += dy;
+
+	SetPosition(pos);
+	mBC->OnUpdateWorldTransform();
+	ComputeWorldTransform();
+}
+
