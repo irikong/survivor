@@ -22,5 +22,41 @@ MapManager::MapManager(Game* game) :
 	TileMapComponent* tm2 = new TileMapComponent(this, 32, 32);
 	tm2->SetTexture(renderer->GetTexture("Dirt2.png"));
 	tm2->LoadTileMap(std::string(Path::ASSETS) + "Layer2.csv", 16, 16);
+
+	MakeWall(fWidth, fHeight, mapRow, mapCol);
 }
 
+void MapManager::MakeWall(float fWidth, float fHeight, float mapRow, float mapCol)
+{
+	float mapWidth = fWidth * mapRow;
+	float mapHeight = fHeight * mapCol;
+
+	AABB box;
+	BoxComponent* bc;
+	Vector2 min, max;
+	Vector2 offset(-fWidth / 2.f, fHeight / 2.f);
+
+	// 가로
+	min = Vector2(-fWidth, 0.0f) + offset;
+	max = Vector2(mapWidth + fWidth, fHeight) + offset;
+
+	box.mMin = min;
+	box.mMax = max;
+	bc = new BoxComponent(this, box);
+
+	box.mMin.y -= (mapHeight + fHeight);
+	box.mMax.y -= (mapHeight + fHeight);
+	bc = new BoxComponent(this, box);
+
+	// 세로
+	min = Vector2(-fWidth, -(mapHeight + fHeight)) + offset;
+	max = Vector2(0.0f, fHeight) + offset;
+
+	box.mMin = min;
+	box.mMax = max;
+	bc = new BoxComponent(this, box);
+
+	box.mMin.x += (mapWidth + fWidth);
+	box.mMax.x += (mapWidth + fWidth);
+	bc = new BoxComponent(this, box);
+}
