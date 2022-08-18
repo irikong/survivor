@@ -11,6 +11,8 @@ public:
 		EDead
 	};
 
+	// TODO: Layer 추가
+
 	Actor(class Game* game);
 	virtual ~Actor();
 
