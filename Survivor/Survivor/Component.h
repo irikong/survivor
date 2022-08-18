@@ -14,7 +14,8 @@ public:
 		kInputComponent,
 		kColliderComponent,
 		kCircleComponent,
-		kBoxComponent
+		kBoxComponent,
+		kStateComponent
 	};
 
 	Component(class Actor* owner, int updateOrder = 100);

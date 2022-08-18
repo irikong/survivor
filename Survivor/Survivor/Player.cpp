@@ -8,6 +8,7 @@
 #include "CircleComponent.h"
 #include "BoxComponent.h"
 #include "Physics2D.h"
+#include "Math.h"
 
 Player::Player(Game* game) :
 	Actor(game)
