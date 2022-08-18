@@ -63,6 +63,8 @@ void AnimComponent::AppendAnim(const std::string& animName, int startFrame, int 
 
 void AnimComponent::SetCurrAnim(const std::string& animName)
 {
+	if (mCurrAnim == animName) return;
+
 	mCurrAnim = animName;
 	mCurrFrame = 0.0f;
 }
