@@ -12,6 +12,7 @@
 #include "BoxComponent.h"
 #include "MapManager.h"
 #include "Monster.h"
+#include "Skeleton.h"
 
 Game::Game() :
 	MIN_TICK(16),
@@ -159,7 +160,7 @@ void Game::LoadTestData()
 
 	MapManager* mapManager = new MapManager(this);
 
-	Monster* monster = new Monster(this);
+	Skeleton* skeleton = new Skeleton(this);
 
 	Actor* c = new Actor(this);
 	c->SetPosition(Vector2(-100, -150));

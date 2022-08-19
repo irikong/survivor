@@ -154,6 +154,7 @@
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="Shader.cpp" />
+    <ClCompile Include="Skeleton.cpp" />
     <ClCompile Include="SpriteComponent.cpp" />
     <ClCompile Include="StateComponent.cpp" />
     <ClCompile Include="Texture.cpp" />
@@ -181,6 +182,7 @@
     <ClInclude Include="Player.h" />
     <ClInclude Include="Renderer.h" />
     <ClInclude Include="Shader.h" />
+    <ClInclude Include="Skeleton.h" />
     <ClInclude Include="SpriteComponent.h" />
     <ClInclude Include="StateComponent.h" />
     <ClInclude Include="Texture.h" />

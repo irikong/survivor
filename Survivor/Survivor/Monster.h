@@ -4,7 +4,7 @@
 class Monster : public Actor
 {
 public:
-	Monster(class Game* game);
+	Monster(class Game* game, float hp, float speed);
 	~Monster() = default;
 
 	void UpdateActor(float deltaTime) override;
@@ -15,8 +15,7 @@ public:
 
 protected:
 	float mHP;
-
-private:
+	float mSpeed;
 	class AnimComponent* mAC;
 	class MoveComponent* mMC;
 	class BoxComponent* mBC;
