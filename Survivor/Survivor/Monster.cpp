@@ -1,0 +1,56 @@
+#include "Monster.h"
+#include "Collision.h"
+#include "BoxComponent.h"
+#include "StateComponent.h"
+#include "MonsterState.h"
+#include "MoveComponent.h"
+#include "AnimComponent.h"
+#include "Player.h"
+#include "Renderer.h"
+#include "Texture.h"
+#include "Game.h"
+#include "Math.h"
+
+Monster::Monster(Game* game, float hp, float speed) : 
+	Actor(game),
+	mHP(hp),
+	mSpeed(speed),
+	mAC(),
+	mMC(),
+	mBC(),
+	mSC()
+{
+	mMC = new MoveComponent(this);
+	mMC->SetSpeed(speed);
+}
+
+void Monster::UpdateActor(float deltaTime)
+{
+	Actor::UpdateActor(deltaTime);
+}
+
+void Monster::MoveTo(Vector2 dir)
+{
+	if (Math::Abs(dir.x) > Math::Abs(dir.y)) {
+		mAC->SetCurrAnim((dir.x > 0.0f ? "Right" : "Left"));
+	}
+	else {
+		mAC->SetCurrAnim((dir.y > 0.0f ? "Up" : "Down"));
+	}
+
+	mMC->SetDirection(dir);
+}
+
+void Monster::Death()
+{
+	SetState(EDead);
+}
+
+void Monster::Hit(float damage)
+{
+	mHP -= damage;
+
+	if (mHP <= 0.0f) {
+		mSC->ChangeState("Death");
+	}
+}

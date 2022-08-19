@@ -11,6 +11,9 @@
 #include "CircleComponent.h"
 #include "BoxComponent.h"
 #include "MapManager.h"
+#include "Monster.h"
+#include "Skeleton.h"
+#include "Ghost.h"
 
 Game::Game() :
 	MIN_TICK(16),
@@ -19,7 +22,8 @@ Game::Game() :
 	mIsRunning(true),
 	mUpdatingActors(false),
 	mRenderer(nullptr),
-	mPhysics2D(nullptr)
+	mPhysics2D(nullptr),
+	mPlayer(nullptr)
 {
 
 }
@@ -153,9 +157,13 @@ void Game::GenerateOutput()
 
 void Game::LoadTestData()
 {
-	Player* player = new Player(this);
+	mPlayer = new Player(this);
 
 	MapManager* mapManager = new MapManager(this);
+
+	Skeleton* skeleton = new Skeleton(this);
+	Ghost* ghost = new Ghost(this);
+	ghost->SetPosition(Vector2(50.f, 50.f));
 
 	Actor* c = new Actor(this);
 	c->SetPosition(Vector2(-100, -150));

@@ -16,6 +16,8 @@ public:
 	class Renderer* GetRenderer() { return mRenderer; }
 	class Physics2D* GetPhysics2D() { return mPhysics2D; }
 
+	class Player* GetPlayer() { return mPlayer; }
+
 private:
 	const int MIN_TICK;
 	const float MAX_DELTA_TIME;
@@ -36,4 +38,6 @@ private:
 
 	class Renderer* mRenderer;
 	class Physics2D* mPhysics2D;
+
+	class Player* mPlayer;
 };
