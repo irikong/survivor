@@ -14,6 +14,8 @@
 Player::Player(Game* game) :
 	Actor(game)
 {
+	SetLayer(EPlayer);
+
 	mAC = new AnimComponent(this, 32, 32);
 	mAC->SetTexture(game->GetRenderer()->GetTexture("Player.png"));
 	mAC->SetAnimFPS(3.0f);

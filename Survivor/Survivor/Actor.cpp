@@ -4,6 +4,7 @@
 
 Actor::Actor(Game* game) :
 	mState(EActive),
+	mLayer(ENone),
 	mGame(game),
 	mPosition{ 0.0f, 0.0f },
 	mScale(1.0f),

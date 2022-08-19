@@ -10,6 +10,8 @@
 MapManager::MapManager(Game* game) :
 	Actor(game)
 {
+	SetLayer(EProp);
+
 	Renderer* renderer = GetGame()->GetRenderer();
 	float fWidth = 32, fHeight = 32;
 	float mapRow = 16, mapCol = 16;

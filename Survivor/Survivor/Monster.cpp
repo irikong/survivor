@@ -20,6 +20,8 @@ Monster::Monster(Game* game, float hp, float speed) :
 	mBC(),
 	mSC()
 {
+	SetLayer(EMonster);
+
 	mMC = new MoveComponent(this);
 	mMC->SetSpeed(speed);
 }
