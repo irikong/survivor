@@ -28,6 +28,7 @@ public:
 	virtual void OnCollision(class ColliderComponent* other);
 
 	State GetState() const { return mState; }
+	void SetState(State state) { mState = state; }
 	class Game* GetGame() const { return mGame; }
 	const Matrix4& GetWorldTransform() const { return mWorldTransform; }
 	Vector2 GetForward() const { return Vector2(Math::Cos(mRotation), Math::Sin(mRotation)); }

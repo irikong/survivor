@@ -53,8 +53,9 @@ void MonsterFollow::Exit()
 }
 
 // MonsterDeath
-MonsterDeath::MonsterDeath(StateComponent* sc) :
-	MonsterState(sc)
+MonsterDeath::MonsterDeath(StateComponent* sc, Monster* monster) :
+	MonsterState(sc),
+	mMonster(monster)
 {
 }
 
@@ -64,6 +65,7 @@ void MonsterDeath::Update(float deltaTime)
 
 void MonsterDeath::Enter()
 {
+	mMonster->Death();
 }
 
 void MonsterDeath::Exit()

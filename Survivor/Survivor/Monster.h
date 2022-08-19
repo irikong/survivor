@@ -10,6 +10,11 @@ public:
 	void UpdateActor(float deltaTime) override;
 
 	void MoveTo(class Vector2 dir);
+	void Death();
+	void Hit(float damage);
+
+protected:
+	float mHP;
 
 private:
 	class AnimComponent* mAC;

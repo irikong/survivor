@@ -12,7 +12,8 @@
 #include "Math.h"
 
 Monster::Monster(Game* game) : 
-	Actor(game)
+	Actor(game),
+	mHP(100)
 {
 	mAC = new AnimComponent(this, 32, 32);
 	mAC->SetTexture(game->GetRenderer()->GetTexture("Monster.png"));
@@ -32,7 +33,7 @@ Monster::Monster(Game* game) :
 	mSC = new StateComponent(this);
 	mSC->AddState(new MonsterPatrol(mSC));
 	mSC->AddState(new MonsterFollow(mSC, this));
-	mSC->AddState(new MonsterDeath(mSC));
+	mSC->AddState(new MonsterDeath(mSC, this));
 	mSC->ChangeState("Follow");
 }
 
@@ -51,4 +52,18 @@ void Monster::MoveTo(Vector2 dir)
 	}
 
 	mMC->SetDirection(dir);
+}
+
+void Monster::Death()
+{
+	SetState(EDead);
+}
+
+void Monster::Hit(float damage)
+{
+	mHP -= damage;
+
+	if (mHP <= 0.0f) {
+		mSC->ChangeState("Death");
+	}
 }

@@ -39,10 +39,13 @@ private:
 
 class MonsterDeath : public MonsterState {
 public:
-	MonsterDeath(class StateComponent* sc);
+	MonsterDeath(class StateComponent* sc, class Monster* monster);
 
 	void Update(float deltaTime);
 	void Enter();
 	void Exit();
 	const char* GetName() const override { return "Death"; }
+
+private:
+	class Monster* mMonster;
 };

@@ -9,6 +9,7 @@
 #include "BoxComponent.h"
 #include "Physics2D.h"
 #include "Math.h"
+#include "Monster.h"
 
 Player::Player(Game* game) :
 	Actor(game)
@@ -65,7 +66,8 @@ void Player::OnCollision(ColliderComponent* other)
 		// Circle 처리
 		break;
 	case Component::kBoxComponent:
-		ResolveCollision(dynamic_cast<BoxComponent*>(other)->GetWorldBox());
+		ResolveCollision(static_cast<BoxComponent*>(other)->GetWorldBox());
+		//static_cast<Monster*>(other->GetOwner())->Hit(5);
 		break;
 	default:
 		break;
