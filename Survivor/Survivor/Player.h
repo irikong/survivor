@@ -13,9 +13,17 @@ public:
 	void OnCollision(class ColliderComponent* other) override;
 	void ResolveCollision(const struct AABB& other);
 
+	void Hit(float damage);
+
 private:
 	class InputComponent* mIC;
 	class AnimComponent* mAC;
 	class BoxComponent* mBC;
+
+	float mHP;
+
+	bool mIsInvincible;
+	float mITime;
+	float mCurrITime;
 };
 
