@@ -14,6 +14,7 @@
 #include "Monster.h"
 #include "Skeleton.h"
 #include "Ghost.h"
+#include "MonsterSpawner.h"
 
 Game::Game() :
 	MIN_TICK(16),
@@ -157,13 +158,13 @@ void Game::GenerateOutput()
 
 void Game::LoadTestData()
 {
-	mPlayer = new Player(this, 100.0f, 300.0f);
+	mPlayer = new Player(this, 100.0f, 200.0f);
 
 	MapManager* mapManager = new MapManager(this);
 
-	Skeleton* skeleton = new Skeleton(this);
-	Ghost* ghost = new Ghost(this);
-	ghost->SetPosition(Vector2(50.f, 50.f));
+	MonsterSpawner* monsterSpawner = new MonsterSpawner(this);
+	monsterSpawner->Spawn<Skeleton>()->SetPosition(Vector2(100, 100));
+	monsterSpawner->Spawn<Ghost>()->SetPosition(Vector2(200, 200));
 
 	Actor* c = new Actor(this);
 	c->SetPosition(Vector2(-100, -150));

@@ -150,6 +150,7 @@
     <ClCompile Include="MapManager.cpp" />
     <ClCompile Include="Math.cpp" />
     <ClCompile Include="Monster.cpp" />
+    <ClCompile Include="MonsterSpawner.cpp" />
     <ClCompile Include="MonsterState.cpp" />
     <ClCompile Include="MoveComponent.cpp" />
     <ClCompile Include="Physics2D.cpp" />
@@ -181,6 +182,7 @@
     <ClInclude Include="MapManager.h" />
     <ClInclude Include="Math.h" />
     <ClInclude Include="Monster.h" />
+    <ClInclude Include="MonsterSpawner.h" />
     <ClInclude Include="MonsterState.h" />
     <ClInclude Include="MoveComponent.h" />
     <ClInclude Include="Physics2D.h" />
