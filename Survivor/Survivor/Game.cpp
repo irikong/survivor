@@ -157,7 +157,7 @@ void Game::GenerateOutput()
 
 void Game::LoadTestData()
 {
-	mPlayer = new Player(this);
+	mPlayer = new Player(this, 100.0f, 300.0f);
 
 	MapManager* mapManager = new MapManager(this);
 

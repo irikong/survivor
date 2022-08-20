@@ -11,9 +11,8 @@
 #include "Math.h"
 #include "Monster.h"
 
-Player::Player(Game* game) :
-	Actor(game),
-	mHP(100.0f),
+Player::Player(Game* game, float hp, float speed) :
+	Creature(game, hp, speed),
 	mIsInvincible(false),
 	mITime(0.5f),
 	mCurrITime(0.0f)
@@ -34,7 +33,7 @@ Player::Player(Game* game) :
 	mIC->SetDownKey(SDL_SCANCODE_DOWN);
 	mIC->SetLeftKey(SDL_SCANCODE_LEFT);
 	mIC->SetRightKey(SDL_SCANCODE_RIGHT);
-	mIC->SetSpeed(300.0f);
+	mIC->SetSpeed(speed);
 
 	AABB box(Vector2(-16, -16), Vector2(16, 16));
 	mBC = new BoxComponent(this, box);
@@ -42,7 +41,7 @@ Player::Player(Game* game) :
 
 void Player::UpdateActor(float deltaTime)
 {
-	Actor::UpdateActor(deltaTime);
+	Creature::UpdateActor(deltaTime);
 
 	if (mIsInvincible) {
 		mCurrITime += deltaTime;
@@ -112,6 +111,10 @@ void Player::ResolveCollision(const AABB& other)
 	ComputeWorldTransform();
 }
 
+void Player::Attack()
+{
+}
+
 void Player::Hit(float damage)
 {
 	if (!mIsInvincible) {
@@ -119,5 +122,9 @@ void Player::Hit(float damage)
 		mCurrITime = 0.0f;
 		mIsInvincible = true;
 	}
+}
+
+void Player::Death()
+{
 }
 
