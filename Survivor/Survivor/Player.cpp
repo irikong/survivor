@@ -10,10 +10,19 @@
 #include "Physics2D.h"
 #include "Math.h"
 #include "Monster.h"
+#include "Weapon.h"
 
-Player::Player(Game* game) :
-	Actor(game)
+Player::Player(Game* game, float hp, float speed) :
+	Creature(game, hp, speed),
+	mIsInvincible(false),
+	mITime(0.5f),
+	mCurrITime(0.0f),
+	mAttackCoolTime(1.0f),
+	mCurrCoolTime(0.0f),
+	mFace(Vector2::Down)
 {
+	SetLayer(EPlayer);
+
 	mAC = new AnimComponent(this, 32, 32);
 	mAC->SetTexture(game->GetRenderer()->GetTexture("Player.png"));
 	mAC->SetAnimFPS(3.0f);
@@ -28,7 +37,7 @@ Player::Player(Game* game) :
 	mIC->SetDownKey(SDL_SCANCODE_DOWN);
 	mIC->SetLeftKey(SDL_SCANCODE_LEFT);
 	mIC->SetRightKey(SDL_SCANCODE_RIGHT);
-	mIC->SetSpeed(300.0f);
+	mIC->SetSpeed(speed);
 
 	AABB box(Vector2(-16, -16), Vector2(16, 16));
 	mBC = new BoxComponent(this, box);
@@ -36,9 +45,23 @@ Player::Player(Game* game) :
 
 void Player::UpdateActor(float deltaTime)
 {
-	Actor::UpdateActor(deltaTime);
+	Creature::UpdateActor(deltaTime);
+
+	if (mIsInvincible) {
+		mCurrITime += deltaTime;
+		float alpha = (Math::Cos(4.0f * Math::TWOPI * (mCurrITime / mITime)) + 3.0f) / 4.0f;
+		mAC->SetAlpha(alpha);
+
+		if (mCurrITime > mITime) {
+			mAC->SetAlpha(1.0f);
+			mIsInvincible = false;
+		}
+	}
 
 	GetGame()->GetPhysics2D()->CollisionDetection(mBC);
+	
+	mCurrCoolTime -= deltaTime;
+	Attack();
 }
 
 void Player::ActorInput(const uint8_t* keyState)
@@ -46,28 +69,32 @@ void Player::ActorInput(const uint8_t* keyState)
 	// 임시 코드
 	if (keyState[SDL_SCANCODE_UP]) {
 		mAC->SetCurrAnim("Up");
+		mFace = Vector2::Up;
 	}
 	if (keyState[SDL_SCANCODE_DOWN]) {
 		mAC->SetCurrAnim("Down");
+		mFace = Vector2::Down;
 	}
 
 	if (keyState[SDL_SCANCODE_LEFT]) {
 		mAC->SetCurrAnim("Left");
+		mFace = Vector2::Left;
 	}
 	if (keyState[SDL_SCANCODE_RIGHT]) {
 		mAC->SetCurrAnim("Right");
+		mFace = Vector2::Right;
 	}
 }
 
 void Player::OnCollision(ColliderComponent* other)
 {
-	switch (other->GetType()){
-	case Component::kCircleComponent:
-		// Circle 처리
+	switch (other->GetOwner()->GetLayer()){
+	case EMonster:
+		Hit(5);
 		break;
-	case Component::kBoxComponent:
-		ResolveCollision(static_cast<BoxComponent*>(other)->GetWorldBox());
-		//static_cast<Monster*>(other->GetOwner())->Hit(5);
+	case EProp:
+		if(other->GetType() == Component::kBoxComponent)
+			ResolveCollision(static_cast<BoxComponent*>(other)->GetWorldBox());
 		break;
 	default:
 		break;
@@ -93,5 +120,26 @@ void Player::ResolveCollision(const AABB& other)
 	SetPosition(pos);
 	mBC->OnUpdateWorldTransform();
 	ComputeWorldTransform();
+}
+
+void Player::Attack()
+{
+	if (mCurrCoolTime < 0.0f) {
+		mCurrCoolTime = mAttackCoolTime;
+		Weapon* w = new Weapon(GetGame(), this);
+	}
+}
+
+void Player::Hit(float damage)
+{
+	if (!mIsInvincible) {
+		mHP -= damage;
+		mCurrITime = 0.0f;
+		mIsInvincible = true;
+	}
+}
+
+void Player::Death()
+{
 }
 

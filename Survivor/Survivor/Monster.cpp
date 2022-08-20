@@ -12,21 +12,21 @@
 #include "Math.h"
 
 Monster::Monster(Game* game, float hp, float speed) : 
-	Actor(game),
-	mHP(hp),
-	mSpeed(speed),
+	Creature(game, hp, speed),
 	mAC(),
 	mMC(),
 	mBC(),
 	mSC()
 {
+	SetLayer(EMonster);
+
 	mMC = new MoveComponent(this);
 	mMC->SetSpeed(speed);
 }
 
 void Monster::UpdateActor(float deltaTime)
 {
-	Actor::UpdateActor(deltaTime);
+	Creature::UpdateActor(deltaTime);
 }
 
 void Monster::MoveTo(Vector2 dir)
@@ -44,6 +44,10 @@ void Monster::MoveTo(Vector2 dir)
 void Monster::Death()
 {
 	SetState(EDead);
+}
+
+void Monster::Attack()
+{
 }
 
 void Monster::Hit(float damage)

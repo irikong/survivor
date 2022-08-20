@@ -142,6 +142,7 @@
     <ClCompile Include="ColliderComponent.cpp" />
     <ClCompile Include="Collision.cpp" />
     <ClCompile Include="Component.cpp" />
+    <ClCompile Include="Creature.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Ghost.cpp" />
     <ClCompile Include="InputComponent.cpp" />
@@ -161,6 +162,7 @@
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="TileMapComponent.cpp" />
     <ClCompile Include="VertexArray.cpp" />
+    <ClCompile Include="Weapon.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Actor.h" />
@@ -172,6 +174,7 @@
     <ClInclude Include="Collision.h" />
     <ClInclude Include="Component.h" />
     <ClInclude Include="Constants.h" />
+    <ClInclude Include="Creature.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Ghost.h" />
     <ClInclude Include="InputComponent.h" />
@@ -190,6 +193,7 @@
     <ClInclude Include="Texture.h" />
     <ClInclude Include="TileMapComponent.h" />
     <ClInclude Include="VertexArray.h" />
+    <ClInclude Include="Weapon.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

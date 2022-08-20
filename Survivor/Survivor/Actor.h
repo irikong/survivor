@@ -11,7 +11,12 @@ public:
 		EDead
 	};
 
-	// TODO: Layer 추가
+	enum Layer {
+		ENone,
+		EPlayer,
+		EMonster,
+		EProp
+	};
 
 	Actor(class Game* game);
 	virtual ~Actor();
@@ -29,6 +34,9 @@ public:
 
 	State GetState() const { return mState; }
 	void SetState(State state) { mState = state; }
+	Layer GetLayer() const { return mLayer; }
+	void SetLayer(Layer layer) { mLayer = layer; }
+
 	class Game* GetGame() const { return mGame; }
 	const Matrix4& GetWorldTransform() const { return mWorldTransform; }
 	Vector2 GetForward() const { return Vector2(Math::Cos(mRotation), Math::Sin(mRotation)); }
@@ -42,6 +50,7 @@ public:
 
 private:
 	State mState;
+	Layer mLayer;
 
 	class Game* mGame;
 	std::vector<class Component*> mComponents;

@@ -1,10 +1,10 @@
 #pragma once
-#include "Actor.h"
+#include "Creature.h"
 
-class Player : public Actor
+class Player : public Creature
 {
 public:
-	Player(class Game* game);
+	Player(class Game* game, float hp, float speed);
 	~Player() = default;
 
 	void UpdateActor(float deltaTime) override;
@@ -13,9 +13,24 @@ public:
 	void OnCollision(class ColliderComponent* other) override;
 	void ResolveCollision(const struct AABB& other);
 
+	void Attack() override;
+	void Hit(float damage) override;
+	void Death() override;
+
+	Vector2 GetFace() { return mFace; }
+
 private:
 	class InputComponent* mIC;
 	class AnimComponent* mAC;
 	class BoxComponent* mBC;
+
+	bool mIsInvincible;
+	const float mITime;
+	float mCurrITime;
+
+	const float mAttackCoolTime;
+	float mCurrCoolTime;
+
+	Vector2 mFace;
 };
 
