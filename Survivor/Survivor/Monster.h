@@ -14,7 +14,6 @@ public:
 	void Death() override;
 	void MoveTo(class Vector2 dir);
 
-
 protected:
 	class AnimComponent* mAC;
 	class MoveComponent* mMC;

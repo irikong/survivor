@@ -17,13 +17,20 @@ public:
 	void Hit(float damage) override;
 	void Death() override;
 
+	Vector2 GetFace() { return mFace; }
+
 private:
 	class InputComponent* mIC;
 	class AnimComponent* mAC;
 	class BoxComponent* mBC;
 
 	bool mIsInvincible;
-	float mITime;
+	const float mITime;
 	float mCurrITime;
+
+	const float mAttackCoolTime;
+	float mCurrCoolTime;
+
+	Vector2 mFace;
 };
 

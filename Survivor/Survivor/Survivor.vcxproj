@@ -162,6 +162,7 @@
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="TileMapComponent.cpp" />
     <ClCompile Include="VertexArray.cpp" />
+    <ClCompile Include="Weapon.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Actor.h" />
@@ -192,6 +193,7 @@
     <ClInclude Include="Texture.h" />
     <ClInclude Include="TileMapComponent.h" />
     <ClInclude Include="VertexArray.h" />
+    <ClInclude Include="Weapon.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

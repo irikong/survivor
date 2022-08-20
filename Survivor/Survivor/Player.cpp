@@ -10,12 +10,16 @@
 #include "Physics2D.h"
 #include "Math.h"
 #include "Monster.h"
+#include "Weapon.h"
 
 Player::Player(Game* game, float hp, float speed) :
 	Creature(game, hp, speed),
 	mIsInvincible(false),
 	mITime(0.5f),
-	mCurrITime(0.0f)
+	mCurrITime(0.0f),
+	mAttackCoolTime(1.0f),
+	mCurrCoolTime(0.0f),
+	mFace(Vector2::Down)
 {
 	SetLayer(EPlayer);
 
@@ -55,6 +59,9 @@ void Player::UpdateActor(float deltaTime)
 	}
 
 	GetGame()->GetPhysics2D()->CollisionDetection(mBC);
+	
+	mCurrCoolTime -= deltaTime;
+	Attack();
 }
 
 void Player::ActorInput(const uint8_t* keyState)
@@ -62,16 +69,20 @@ void Player::ActorInput(const uint8_t* keyState)
 	// 임시 코드
 	if (keyState[SDL_SCANCODE_UP]) {
 		mAC->SetCurrAnim("Up");
+		mFace = Vector2::Up;
 	}
 	if (keyState[SDL_SCANCODE_DOWN]) {
 		mAC->SetCurrAnim("Down");
+		mFace = Vector2::Down;
 	}
 
 	if (keyState[SDL_SCANCODE_LEFT]) {
 		mAC->SetCurrAnim("Left");
+		mFace = Vector2::Left;
 	}
 	if (keyState[SDL_SCANCODE_RIGHT]) {
 		mAC->SetCurrAnim("Right");
+		mFace = Vector2::Right;
 	}
 }
 
@@ -113,6 +124,10 @@ void Player::ResolveCollision(const AABB& other)
 
 void Player::Attack()
 {
+	if (mCurrCoolTime < 0.0f) {
+		mCurrCoolTime = mAttackCoolTime;
+		Weapon* w = new Weapon(GetGame(), this);
+	}
 }
 
 void Player::Hit(float damage)

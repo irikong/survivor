@@ -79,6 +79,10 @@ public:
 	static float Dot(const Vector2& lhs, const Vector2& rhs);
 
 	static const Vector2 Zero;
+	static const Vector2 Left;
+	static const Vector2 Right;
+	static const Vector2 Up;
+	static const Vector2 Down;
 };
 
 class Matrix3
