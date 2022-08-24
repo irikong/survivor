@@ -29,6 +29,7 @@ void SpriteComponent::Draw(Shader* shader)
 		Matrix4 world = texScale * mOwner->GetWorldTransform();
 
 		shader->SetMatrixUniform("uWorldTransform", world);
+		shader->SetFloatUniform("uAlpha", mAlpha);
 		mTexture->SetActive();
 
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);

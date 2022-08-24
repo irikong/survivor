@@ -26,6 +26,7 @@ MapManager::MapManager(Game* game) :
 	tm2->LoadTileMap(std::string(Path::ASSETS) + "Layer2.csv", 16, 16);
 
 	MakeWall(fWidth, fHeight, mapRow, mapCol);
+	MakeLight();
 }
 
 void MapManager::MakeWall(float fWidth, float fHeight, float mapRow, float mapCol)
@@ -61,4 +62,9 @@ void MapManager::MakeWall(float fWidth, float fHeight, float mapRow, float mapCo
 	box.mMin.x += (mapWidth + fWidth);
 	box.mMax.x += (mapWidth + fWidth);
 	bc = new BoxComponent(this, box);
+}
+
+void MapManager::MakeLight()
+{
+	GetGame()->GetRenderer()->SetAmbientLight(1.0, 1.0, 1.0);
 }

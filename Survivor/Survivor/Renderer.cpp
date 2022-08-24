@@ -152,6 +152,15 @@ void Renderer::RemoveTileMap(TileMapComponent* tilemap)
 	}
 }
 
+void Renderer::SetAmbientLight(float r, float g, float b)
+{
+	float color[3] = { r, g, b };
+	mSpriteShader->SetActive();
+	mSpriteShader->SetVector3Uniform("uAmbientLight", color);
+	mTileShader->SetActive();
+	mTileShader->SetVector3Uniform("uAmbientLight", color);
+}
+
 Texture* Renderer::GetTexture(const std::string& fileName)
 {
 	Texture* tex = nullptr;

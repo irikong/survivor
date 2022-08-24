@@ -19,6 +19,7 @@ public:
 	void RemoveSprite(class SpriteComponent* sprite);
 	void AddTileMap(class TileMapComponent* tilemap);
 	void RemoveTileMap(class TileMapComponent* tilemap);
+	void SetAmbientLight(float r, float g, float b);
 
 	class Texture* GetTexture(const std::string& fileName);
 	float GetScreenWidth() const { return mWindowWidth; }

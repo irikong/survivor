@@ -13,6 +13,7 @@ public:
 	void Unload();
 	void SetActive();
 	void SetMatrixUniform(const char* name, const Matrix4& matrix);
+	void SetVector3Uniform(const char* name, const float vector[3]);
 	void SetIntUniform(const char* name, const int integer);
 	void SetFloatUniform(const char* name, const float f);
 
