@@ -152,9 +152,8 @@ void Renderer::RemoveTileMap(TileMapComponent* tilemap)
 	}
 }
 
-void Renderer::SetAmbientLight(float r, float g, float b)
+void Renderer::SetAmbientLight(Vector3 color)
 {
-	float color[3] = { r, g, b };
 	mSpriteShader->SetActive();
 	mSpriteShader->SetVector3Uniform("uAmbientLight", color);
 	mTileShader->SetActive();

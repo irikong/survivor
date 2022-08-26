@@ -66,5 +66,5 @@ void MapManager::MakeWall(float fWidth, float fHeight, float mapRow, float mapCo
 
 void MapManager::MakeLight()
 {
-	GetGame()->GetRenderer()->SetAmbientLight(1.0, 1.0, 1.0);
+	GetGame()->GetRenderer()->SetAmbientLight(Vector3(1.0f, 1.0f, 1.0f));
 }

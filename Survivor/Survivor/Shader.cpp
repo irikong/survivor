@@ -48,10 +48,10 @@ void Shader::SetMatrixUniform(const char* name, const Matrix4& matrix)
 	glUniformMatrix4fv(location, 1, GL_TRUE, matrix.GetAsFloatPtr()); // location, count, transpose(행 벡터이면 true), *value
 }
 
-void Shader::SetVector3Uniform(const char* name, const float vector[3])
+void Shader::SetVector3Uniform(const char* name, const Vector3& vector)
 {
 	GLuint location = glGetUniformLocation(mShaderProgramID, name);
-	glUniform3fv(location, 1, vector);
+	glUniform3fv(location, 1, vector.GetAsFloatPtr());
 }
 
 void Shader::SetIntUniform(const char* name, const int integer)
