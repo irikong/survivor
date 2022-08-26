@@ -4,6 +4,12 @@
 #include "SDL/SDL.h"
 #include "Math.h"
 
+struct PointLight {
+	Vector3 mPosition;
+	Vector3 mColor;
+	float mFallOffRange;
+};
+
 class Renderer
 {
 public:

@@ -156,8 +156,15 @@ void Renderer::SetAmbientLight(Vector3 color)
 {
 	mSpriteShader->SetActive();
 	mSpriteShader->SetVector3Uniform("uAmbientLight", color);
+	mSpriteShader->SetVector3Uniform("uPointLight.mPosition", Vector3(40, 10, 0));
+	mSpriteShader->SetVector3Uniform("uPointLight.mColor", Vector3(1, 1, 1));
+	mSpriteShader->SetFloatUniform("uPointLight.mFallOffRange", 50);
+
 	mTileShader->SetActive();
 	mTileShader->SetVector3Uniform("uAmbientLight", color);
+	mTileShader->SetVector3Uniform("uPointLight.mPosition", Vector3(40, 10, 0));
+	mTileShader->SetVector3Uniform("uPointLight.mColor", Vector3(1, 1, 1));
+	mTileShader->SetFloatUniform("uPointLight.mFallOffRange", 50);
 }
 
 Texture* Renderer::GetTexture(const std::string& fileName)
