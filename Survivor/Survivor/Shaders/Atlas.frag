@@ -13,7 +13,8 @@ struct PointLight {
 };
 
 uniform vec3 uAmbientLight;
-uniform PointLight uPointLight;
+uniform PointLight uPointLight[10];
+uniform int uNumPointLight;
 
 in vec3 fragWorldPos;
 in vec2 fragUV;
@@ -23,9 +24,12 @@ out vec4 outColor;
 void main()
 {
     vec3 light = uAmbientLight;
-	float dist = length(uPointLight.mPosition - fragWorldPos);
-	if(dist < uPointLight.mFallOffRange){
-		light += vec3(uPointLight.mColor);
+	
+	for(int i = 0; i < uNumPointLight; i++){
+		float dist = length(uPointLight[i].mPosition - fragWorldPos);
+		if(dist < uPointLight[i].mFallOffRange){
+			light += vec3(uPointLight[i].mColor);
+		}
 	}
 
     vec2 newUV = vec2((fragUV.x + mod(uIdx, uTPR)) / uTPR, (fragUV.y + uIdx / uTPR) / uTPC);

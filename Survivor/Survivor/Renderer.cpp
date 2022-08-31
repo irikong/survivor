@@ -8,6 +8,7 @@
 
 Renderer::Renderer(Game* game) :
 	mGame(game),
+	MAX_POINTLIGHT(10),
 	mSpriteShader(nullptr),
 	mTileShader(nullptr),
 	mSpriteVerts(nullptr),
@@ -21,6 +22,10 @@ Renderer::Renderer(Game* game) :
 
 Renderer::~Renderer()
 {
+	for (PointLight* pt : mPointLights) {
+		delete pt;
+	}
+	mPointLights.clear();
 }
 
 bool Renderer::Initialize(float windowWidth, float windowHeight)
@@ -97,6 +102,8 @@ void Renderer::Draw()
 
 	mSpriteVerts->SetActive();
 
+	InitPointLight();
+
 	Component::Type shaderType = Component::Type::kComponent;
 	for (const auto& sprite : mSprites) {
 		if (shaderType != sprite->GetType()) {
@@ -156,15 +163,54 @@ void Renderer::SetAmbientLight(Vector3 color)
 {
 	mSpriteShader->SetActive();
 	mSpriteShader->SetVector3Uniform("uAmbientLight", color);
-	mSpriteShader->SetVector3Uniform("uPointLight.mPosition", Vector3(40, 10, 0));
-	mSpriteShader->SetVector3Uniform("uPointLight.mColor", Vector3(1, 1, 1));
-	mSpriteShader->SetFloatUniform("uPointLight.mFallOffRange", 50);
 
 	mTileShader->SetActive();
 	mTileShader->SetVector3Uniform("uAmbientLight", color);
-	mTileShader->SetVector3Uniform("uPointLight.mPosition", Vector3(40, 10, 0));
-	mTileShader->SetVector3Uniform("uPointLight.mColor", Vector3(1, 1, 1));
-	mTileShader->SetFloatUniform("uPointLight.mFallOffRange", 50);
+}
+
+void Renderer::AddPointLight(PointLight* pt)
+{
+	if (mPointLights.size() < MAX_POINTLIGHT) {
+		mPointLights.push_back(pt);
+	}
+}
+
+void Renderer::RemovePointLight(PointLight* pt)
+{
+	auto iter = std::find(mPointLights.begin(), mPointLights.end(), pt);
+	if (iter != mPointLights.end()) {
+		std::iter_swap(iter, mPointLights.end() - 1);
+		mPointLights.pop_back();
+	}
+}
+
+void Renderer::InitPointLight()
+{
+	mSpriteShader->SetActive();
+	mSpriteShader->SetIntUniform("uNumPointLight", mPointLights.size());
+	for (unsigned int i = 0; i < mPointLights.size(); i++) {
+		char name[50];
+
+		snprintf(name, 50, "uPointLight[%d].mPosition", i);
+		mSpriteShader->SetVector3Uniform(name, (*mPointLights[i]).mPosition);
+		snprintf(name, 50, "uPointLight[%d].mColor", i);
+		mSpriteShader->SetVector3Uniform(name, (*mPointLights[i]).mColor);
+		snprintf(name, 50, "uPointLight[%d].mFallOffRange", i);
+		mSpriteShader->SetFloatUniform(name, (*mPointLights[i]).mFallOffRange);
+	}
+
+	mTileShader->SetActive();
+	mTileShader->SetIntUniform("uNumPointLight", mPointLights.size());
+	for (unsigned int i = 0; i < mPointLights.size(); i++) {
+		char name[50];
+
+		snprintf(name, 50, "uPointLight[%d].mPosition", i);
+		mTileShader->SetVector3Uniform(name, (*mPointLights[i]).mPosition);
+		snprintf(name, 50, "uPointLight[%d].mColor", i);
+		mTileShader->SetVector3Uniform(name, (*mPointLights[i]).mColor);
+		snprintf(name, 50, "uPointLight[%d].mFallOffRange", i);
+		mTileShader->SetFloatUniform(name, (*mPointLights[i]).mFallOffRange);
+	}
 }
 
 Texture* Renderer::GetTexture(const std::string& fileName)

@@ -66,5 +66,12 @@ void MapManager::MakeWall(float fWidth, float fHeight, float mapRow, float mapCo
 
 void MapManager::MakeLight()
 {
-	GetGame()->GetRenderer()->SetAmbientLight(Vector3(0.3f, 0.3f, 0.3f));
+	Renderer* renderer = GetGame()->GetRenderer();
+
+	renderer->SetAmbientLight(Vector3(0.3f, 0.3f, 0.3f));
+
+	PointLight* pt = new PointLight{ Vector3(40, 10, 0), Vector3(1, 1, 1), 50 };
+	renderer->AddPointLight(pt);
+	pt = new PointLight{ Vector3(-100, -100, 0), Vector3(1, 1, 1), 100 };
+	renderer->AddPointLight(pt);
 }
