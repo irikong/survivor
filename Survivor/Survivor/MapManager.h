@@ -8,5 +8,6 @@ public:
 
 private:
 	void MakeWall(float fWidth, float fHeight, float mapRow, float mapCol);
+	void MakeLight();
 };
 

@@ -15,6 +15,11 @@ Vector2::Vector2(float px, float py) :
 
 }
 
+const float* Vector2::GetAsFloatPtr() const
+{
+	return reinterpret_cast<const float*>(&x);;
+}
+
 void Vector2::Set(float px, float py)
 {
 	x = px;
@@ -110,6 +115,36 @@ const Vector2 Vector2::Left(-1.0f, 0.0f);
 const Vector2 Vector2::Right(1.0f, 0.0f);
 const Vector2 Vector2::Up(0.0f, 1.0f);
 const Vector2 Vector2::Down(0.0f, -1.0f);
+
+Vector3::Vector3() :
+	x(0.0f),
+	y(0.0f),
+	z(0.0f)
+{
+
+}
+
+Vector3::Vector3(float px, float py, float pz) :
+	x(px),
+	y(py),
+	z(pz)
+{
+
+}
+
+const float* Vector3::GetAsFloatPtr() const
+{
+	return reinterpret_cast<const float*>(&x);
+}
+
+void Vector3::Set(float px, float py, float pz)
+{
+	x = px;
+	y = py;
+	z = pz;
+}
+
+const Vector3 Vector3::Zero(0.0f, 0.0f, 0.0f);
 
 // Matrix3
 Matrix3::Matrix3():
@@ -377,3 +412,4 @@ const float* Matrix4::GetAsFloatPtr() const
 {
 	return reinterpret_cast<const float*>(&mat[0][0]);
 }
+

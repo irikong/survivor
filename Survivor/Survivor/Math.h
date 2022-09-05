@@ -58,6 +58,7 @@ public:
 	Vector2();
 	explicit Vector2(float px, float py);
 
+	const float* GetAsFloatPtr() const;
 	void Set(float px, float py);
 
 	friend Vector2 operator+(const Vector2& lhs, const Vector2& rhs);
@@ -83,6 +84,22 @@ public:
 	static const Vector2 Right;
 	static const Vector2 Up;
 	static const Vector2 Down;
+};
+
+class Vector3
+{
+public:
+	float x;
+	float y;
+	float z;
+
+	Vector3();
+	explicit Vector3(float px, float py, float pz);
+
+	const float* GetAsFloatPtr() const;
+	void Set(float px, float py, float pz);
+
+	static const Vector3 Zero;
 };
 
 class Matrix3
