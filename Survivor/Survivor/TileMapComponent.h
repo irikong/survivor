@@ -11,6 +11,7 @@ public:
 
 	void Draw(class Shader* shader) override;
 	void LoadTileMap(const std::string& filePath, int mapRow, int mapCol);
+	void UpdateUnwalkable(std::vector<std::vector<int>>& mapState);
 
 	Type GetType() const override { return kTileMapComponent; }
 
