@@ -166,19 +166,19 @@ void Game::LoadTestData()
 	monsterSpawner->Spawn<Skeleton>()->SetPosition(Vector2(100, 100));
 	monsterSpawner->Spawn<Ghost>()->SetPosition(Vector2(200, 200));
 
-	Actor* c = new Actor(this);
-	c->SetPosition(Vector2(-100, -150));
-	c->SetLayer(Actor::EProp);
-	SpriteComponent* sc = new SpriteComponent(c, 15);
-	sc->SetTexture(mRenderer->GetTexture("Circle.png"));
-	CircleComponent* cc = new CircleComponent(c, Circle(Vector2::Zero, sc->GetTexWidth() / 2.0f));
+	//Actor* c = new Actor(this);
+	//c->SetPosition(Vector2(-100, -150));
+	//c->SetLayer(Actor::EProp);
+	//SpriteComponent* sc = new SpriteComponent(c, 15);
+	//sc->SetTexture(mRenderer->GetTexture("Circle.png"));
+	//CircleComponent* cc = new CircleComponent(c, Circle(Vector2::Zero, sc->GetTexWidth() / 2.0f));
 
-	Actor* d = new Actor(this);
-	d->SetPosition(Vector2(200, 200));
-	d->SetLayer(Actor::EProp);
-	sc = new SpriteComponent(d, 15);
-	sc->SetTexture(mRenderer->GetTexture("Box.png"));
-	BoxComponent* bc = new BoxComponent(d, AABB(Vector2(-16, -16), Vector2(16, 16)));
+	//Actor* d = new Actor(this);
+	//d->SetPosition(Vector2(200, 200));
+	//d->SetLayer(Actor::EProp);
+	//sc = new SpriteComponent(d, 15);
+	//sc->SetTexture(mRenderer->GetTexture("Box.png"));
+	//BoxComponent* bc = new BoxComponent(d, AABB(Vector2(-16, -16), Vector2(16, 16)));
 }
 
 void Game::UnloadData()
