@@ -24,7 +24,6 @@ Ghost::Ghost(Game* game) :
 	mBC = new BoxComponent(this, box);
 
 	mSC = new StateComponent(this);
-	mSC->AddState(new MonsterPatrol(mSC));
 	mSC->AddState(new MonsterFollow(mSC, this));
 	mSC->AddState(new MonsterDeath(mSC, this));
 	mSC->ChangeState("Follow");

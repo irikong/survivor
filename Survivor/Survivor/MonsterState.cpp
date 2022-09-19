@@ -11,13 +11,20 @@ MonsterState::MonsterState(StateComponent* sc) :
 }
 
 // MonsterPatrol
-MonsterPatrol::MonsterPatrol(StateComponent* sc) :
-	MonsterState(sc)
+MonsterPatrol::MonsterPatrol(StateComponent* sc, Monster* monster, float aggroRange) :
+	MonsterState(sc),
+	mMonster(monster)
 {
+	mTarget = monster->GetGame()->GetPlayer();
+	mAggroRangeSq = aggroRange * aggroRange;
 }
 
 void MonsterPatrol::Update(float deltaTime)
 {
+	Vector2 dir = mTarget->GetPosition() - mMonster->GetPosition();
+	if (dir.LengthSq() < mAggroRangeSq) {
+		mSC->ChangeState("Follow");
+	}
 }
 
 void MonsterPatrol::Enter()

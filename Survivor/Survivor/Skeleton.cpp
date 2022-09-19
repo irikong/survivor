@@ -24,10 +24,10 @@ Skeleton::Skeleton(Game* game) :
 	mBC = new BoxComponent(this, box);
 
 	mSC = new StateComponent(this);
-	mSC->AddState(new MonsterPatrol(mSC));
+	mSC->AddState(new MonsterPatrol(mSC, this, 100));
 	mSC->AddState(new MonsterFollow(mSC, this));
 	mSC->AddState(new MonsterDeath(mSC, this));
-	mSC->ChangeState("Follow");
+	mSC->ChangeState("Patrol");
 }
 
 void Skeleton::UpdateActor(float deltaTime)

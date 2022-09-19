@@ -15,12 +15,17 @@ protected:
 
 class MonsterPatrol : public MonsterState {
 public:
-	MonsterPatrol(class StateComponent* sc);
+	MonsterPatrol(class StateComponent* sc, class Monster* monster, float aggroRange);
 
 	void Update(float deltaTime);
 	void Enter();
 	void Exit();
 	const char* GetName() const override { return "Patrol"; }
+
+private:
+	class Player* mTarget;
+	class Monster* mMonster;
+	float mAggroRangeSq;
 };
 
 class MonsterFollow : public MonsterState {
