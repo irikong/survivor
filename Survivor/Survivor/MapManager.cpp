@@ -15,6 +15,7 @@ MapManager::MapManager(Game* game) :
 	Renderer* renderer = GetGame()->GetRenderer();
 	float fWidth = 32, fHeight = 32;
 	float mapRow = 16, mapCol = 16;
+	mMap = std::vector<std::vector<int>>(mapRow, std::vector<int>(mapCol, 1));
 
 	SetPosition(Vector2(-(fWidth * mapRow - fWidth) / 2, (fHeight * mapCol - fHeight) / 2));
 
@@ -27,6 +28,7 @@ MapManager::MapManager(Game* game) :
 	TileMapComponent* tm3 = new TileMapComponent(this, 32, 32);
 	tm3->SetTexture(renderer->GetTexture("Water2.png"));
 	tm3->LoadTileMap(std::string(Path::ASSETS) + "Water.csv", 16, 16);
+	tm3->UpdateUnwalkable(mMap);
 
 	MakeWall(fWidth, fHeight, mapRow, mapCol);
 	MakeLight();

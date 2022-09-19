@@ -64,3 +64,10 @@ void TileMapComponent::LoadTileMap(const std::string& filePath, int mapRow, int 
 
 	fs.close();
 }
+
+void TileMapComponent::UpdateUnwalkable(std::vector<std::vector<int>>& mapState)
+{
+	for (int i = 0; i < mTiles.size(); i++) {
+		if (mTiles[i].texIdx != -1) mapState[i / MAP_COL][i % MAP_COL] = 0;
+	}
+}
