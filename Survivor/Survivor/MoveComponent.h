@@ -15,10 +15,12 @@ public:
 	void SetAngularSpeed(float speed) { mAngularSpeed = speed; }
 	void SetDirection(Vector2 dir) { mDirection = dir; }
 	void SetSpeed(float speed) { mSpeed = speed; }
+	void SetGroundCheck(bool check) { mGroundCheck = check; }
 
 protected:
 	Vector2 mDirection;
 	float mSpeed;
+	bool mGroundCheck;
 
 private:
 	float mAngularSpeed;

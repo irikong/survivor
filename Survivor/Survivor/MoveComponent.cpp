@@ -8,7 +8,8 @@ MoveComponent::MoveComponent(Actor* owner, int updateOrder) :
 	Component(owner, updateOrder),
 	mAngularSpeed(0.0f),
 	mDirection(),
-	mSpeed(0.0f)
+	mSpeed(0.0f),
+	mGroundCheck(true)
 {
 
 }
@@ -30,7 +31,7 @@ void MoveComponent::Update(float deltaTime)
 		Vector2 velocity = mDirection * mSpeed;
 		Vector2 nextPos = mOwner->GetPosition() + velocity * deltaTime;
 		
-		if(mOwner->GetGame()->GetMapManager()->IsWalkable(nextPos))
+		if(!mGroundCheck || mOwner->GetGame()->GetMapManager()->IsWalkable(nextPos))
 			mOwner->SetPosition(nextPos);
 	}
 }

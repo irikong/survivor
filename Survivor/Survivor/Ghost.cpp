@@ -11,6 +11,8 @@
 Ghost::Ghost(Game* game) :
 	Monster(game, 100.0f, 50.0f)
 {
+	mMC->SetGroundCheck(false);
+
 	mAC = new AnimComponent(this, 32, 32);
 	mAC->SetTexture(game->GetRenderer()->GetTexture("Ghost.png"));
 	mAC->SetAnimFPS(3.0f);
