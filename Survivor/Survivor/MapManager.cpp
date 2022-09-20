@@ -16,6 +16,10 @@ MapManager::MapManager(Game* game) :
 	float fWidth = 32, fHeight = 32;
 	float mapRow = 16, mapCol = 16;
 	mMap = std::vector<std::vector<int>>(mapRow, std::vector<int>(mapCol, 1));
+	mMapWidth = fWidth * mapRow;
+	mMapHeight = fHeight * mapCol;
+	mPixelOffset.x = mMapWidth / 2;
+	mPixelOffset.y = -mMapHeight / 2;
 
 	SetPosition(Vector2(-(fWidth * mapRow - fWidth) / 2, (fHeight * mapCol - fHeight) / 2));
 
@@ -30,8 +34,20 @@ MapManager::MapManager(Game* game) :
 	tm3->LoadTileMap(std::string(Path::ASSETS) + "Water.csv", 16, 16);
 	tm3->UpdateUnwalkable(mMap);
 
-	MakeWall(fWidth, fHeight, mapRow, mapCol);
+	//MakeWall(fWidth, fHeight, mapRow, mapCol);
 	MakeLight();
+}
+
+bool MapManager::IsWalkable(const Vector2& pos)
+{
+	Vector2 pixelPos = WorldToPixel(pos);
+	
+	return 0 < pixelPos.x && pixelPos.x < mMapWidth && 0 < pixelPos.y && pixelPos.y < mMapHeight && mMap[pixelPos.y / 32][pixelPos.x / 32];
+}
+
+Vector2 MapManager::WorldToPixel(const Vector2& worldPos)
+{
+	return Vector2((mPixelOffset.x + worldPos.x), -(mPixelOffset.y + worldPos.y));
 }
 
 void MapManager::MakeWall(float fWidth, float fHeight, float mapRow, float mapCol)

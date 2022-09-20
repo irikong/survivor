@@ -159,8 +159,7 @@ void Game::GenerateOutput()
 void Game::LoadTestData()
 {
 	mPlayer = new Player(this, 100.0f, 200.0f);
-
-	MapManager* mapManager = new MapManager(this);
+	mMapManager = new MapManager(this);
 
 	MonsterSpawner* monsterSpawner = new MonsterSpawner(this);
 	monsterSpawner->Spawn<Skeleton>()->SetPosition(Vector2(100, 100));

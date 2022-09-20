@@ -17,6 +17,7 @@ public:
 	class Physics2D* GetPhysics2D() { return mPhysics2D; }
 
 	class Player* GetPlayer() { return mPlayer; }
+	class MapManager* GetMapManager() { return mMapManager; }
 
 private:
 	const int MIN_TICK;
@@ -40,4 +41,5 @@ private:
 	class Physics2D* mPhysics2D;
 
 	class Player* mPlayer;
+	class MapManager* mMapManager;
 };
