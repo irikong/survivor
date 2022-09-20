@@ -31,7 +31,7 @@ void MoveComponent::Update(float deltaTime)
 		Vector2 velocity = mDirection * mSpeed;
 		Vector2 nextPos = mOwner->GetPosition() + velocity * deltaTime;
 		
-		if(!mGroundCheck || mOwner->GetGame()->GetMapManager()->IsWalkable(nextPos))
+		if(!mGroundCheck || mOwner->GetGame()->GetMapManager()->IsGround(nextPos))
 			mOwner->SetPosition(nextPos);
 	}
 }

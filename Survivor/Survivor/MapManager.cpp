@@ -38,7 +38,7 @@ MapManager::MapManager(Game* game) :
 	MakeLight();
 }
 
-bool MapManager::IsWalkable(const Vector2& pos)
+bool MapManager::IsGround(const Vector2& pos)
 {
 	Vector2 pixelPos = WorldToPixel(pos);
 	

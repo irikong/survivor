@@ -8,7 +8,7 @@ public:
 	MapManager(class Game* game);
 	~MapManager() = default;
 
-	bool IsWalkable(const Vector2& pos);
+	bool IsGround(const Vector2& pos);
 	Vector2 WorldToPixel(const Vector2& worldPos);
 
 private:
