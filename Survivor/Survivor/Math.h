@@ -5,6 +5,7 @@ namespace Math {
 	const float PI = 3.141592653589793238462f;
 	const float TWOPI = 2.f * PI;
 	const float PIDIV2 = PI / 2.f;
+	const int INF = 0x3f3f3f3f;
 
 	template <typename T>
 	T Max(const T& a, const T& b)

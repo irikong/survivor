@@ -5,7 +5,6 @@
 #include "Renderer.h"
 #include "Texture.h"
 #include "BoxComponent.h"
-#include "Math.h"
 #include <queue>
 
 MapManager::MapManager(Game* game) :
@@ -91,7 +90,7 @@ bool MapManager::PathFinding(int sr, int sc, int fr, int fc) // A* search
 				int nh = CalcHeuristic(nr, nc, fr, fc);
 				int nf = ng + nh;
 
-				if ((cellMap[nr][nc].f == 0x3f3f3f3f) || (nf < cellMap[nr][nc].f)) {
+				if ((cellMap[nr][nc].f == Math::INF) || (nf < cellMap[nr][nc].f)) {
 					cellMap[nr][nc].f = nf;
 					cellMap[nr][nc].g = ng;
 					cellMap[nr][nc].h = nh;

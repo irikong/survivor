@@ -1,5 +1,6 @@
 #pragma once
 #include "Actor.h"
+#include "Math.h"
 #include <vector>
 
 struct Cell {
@@ -9,9 +10,9 @@ struct Cell {
 	bool isClosed;
 
 	Cell() :
-		f(0x3f3f3f3f),
-		g(0x3f3f3f3f),
-		h(0x3f3f3f3f),
+		f(Math::INF),
+		g(Math::INF),
+		h(Math::INF),
 		r(-1),
 		c(-1),
 		parentR(-1),
