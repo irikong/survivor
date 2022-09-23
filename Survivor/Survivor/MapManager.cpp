@@ -6,6 +6,7 @@
 #include "Texture.h"
 #include "BoxComponent.h"
 #include "Math.h"
+#include <queue>
 
 MapManager::MapManager(Game* game) :
 	Actor(game)
@@ -16,6 +17,8 @@ MapManager::MapManager(Game* game) :
 	float fWidth = 32, fHeight = 32;
 	float mapRow = 16, mapCol = 16;
 	mMap = std::vector<std::vector<int>>(mapRow, std::vector<int>(mapCol, 1));
+	mMapRow = mapRow;
+	mMapCol = mapCol;
 	mMapWidth = fWidth * mapRow;
 	mMapHeight = fHeight * mapCol;
 	mPixelOffset.x = mMapWidth / 2;
@@ -48,6 +51,61 @@ bool MapManager::IsGround(const Vector2& pos)
 Vector2 MapManager::WorldToPixel(const Vector2& worldPos)
 {
 	return Vector2((mPixelOffset.x + worldPos.x), -(mPixelOffset.y + worldPos.y));
+}
+
+bool MapManager::PathFinding(int sr, int sc, int fr, int fc)
+{
+	if (!(0 <= sr && sr < mMapRow && 0 <= sc && sc < mMapCol && mMap[sr][sc])) return false;
+	if (!(0 <= fr && fr < mMapRow && 0 <= fc && fc < mMapCol && mMap[fr][fc])) return false;
+	
+	std::vector<std::vector<Cell>> cellMap(mMapRow, std::vector<Cell>(mMapCol));
+	std::priority_queue<std::pair<int, Cell*>, std::vector<std::pair<int, Cell*>>, std::greater<>> openList;
+
+	int dr[4] = { -1, 0, 1, 0 };
+	int dc[4] = { 0, 1, 0, -1 };
+
+	cellMap[sr][sc].f = cellMap[sr][sc].g = cellMap[sr][sc].h = 0;
+	cellMap[sr][sc].r = sr;
+	cellMap[sr][sc].c = sc;
+	cellMap[sr][sc].parentR = sr;
+	cellMap[sr][sc].parentC = sc;
+	openList.push({ 0, &cellMap[sr][sc] });
+
+	while (!openList.empty()) {
+		Cell* curr = openList.top().second;
+		int r = curr->r;
+		int c = curr->c;
+		openList.pop();
+
+		for (int i = 0; i < 4; i++) {
+			int nr = r + dr[i];
+			int nc = c + dc[i];
+			if (0 <= nr && nr < mMapRow && 0 <= nc && nc < mMapCol && mMap[nr][nc] && !cellMap[nr][nc].isClosed) {
+				if (nr == fr && nc == fc) {
+					cellMap[nr][nc].parentR = r;
+					cellMap[nr][nc].parentC = c;
+					return true;
+				}
+				
+				int ng = curr->g + 1;
+				int nh = CalcHeuristic(nr, nc, fr, fc);
+				int nf = ng + nh;
+
+				if ((cellMap[nr][nc].f == 0x3f3f3f3f) || (nf < cellMap[nr][nc].f)) {
+					cellMap[nr][nc].f = nf;
+					cellMap[nr][nc].g = ng;
+					cellMap[nr][nc].h = nh;
+					cellMap[nr][nc].r = nr;
+					cellMap[nr][nc].c = nc;
+					cellMap[nr][nc].parentR = r;
+					cellMap[nr][nc].parentC = c;
+					openList.push({ nf, &cellMap[nr][nc] });
+				}
+			}
+		}
+	}
+
+	return false;
 }
 
 void MapManager::MakeWall(float fWidth, float fHeight, float mapRow, float mapCol)
@@ -95,4 +153,9 @@ void MapManager::MakeLight()
 	//renderer->AddPointLight(pt);
 	//pt = new PointLight{ Vector3(-100, -100, 0), Vector3(1, 1, 1), 100 };
 	//renderer->AddPointLight(pt);
+}
+
+int MapManager::CalcHeuristic(int r, int c, int fr, int fc)
+{
+	return Math::Abs(fr - r) + Math::Abs(fc - c);
 }
