@@ -53,13 +53,13 @@ Vector2 MapManager::WorldToPixel(const Vector2& worldPos)
 	return Vector2((mPixelOffset.x + worldPos.x), -(mPixelOffset.y + worldPos.y));
 }
 
-bool MapManager::PathFinding(int sr, int sc, int fr, int fc)
+bool MapManager::PathFinding(int sr, int sc, int fr, int fc) // A* search
 {
 	if (!(0 <= sr && sr < mMapRow && 0 <= sc && sc < mMapCol && mMap[sr][sc])) return false;
 	if (!(0 <= fr && fr < mMapRow && 0 <= fc && fc < mMapCol && mMap[fr][fc])) return false;
 	
 	std::vector<std::vector<Cell>> cellMap(mMapRow, std::vector<Cell>(mMapCol));
-	std::priority_queue<std::pair<int, Cell*>, std::vector<std::pair<int, Cell*>>, std::greater<>> openList;
+	std::priority_queue<Cell*, std::vector<Cell*>, Cell> openList;
 
 	int dr[4] = { -1, 0, 1, 0 };
 	int dc[4] = { 0, 1, 0, -1 };
@@ -69,10 +69,10 @@ bool MapManager::PathFinding(int sr, int sc, int fr, int fc)
 	cellMap[sr][sc].c = sc;
 	cellMap[sr][sc].parentR = sr;
 	cellMap[sr][sc].parentC = sc;
-	openList.push({ 0, &cellMap[sr][sc] });
+	openList.push(&cellMap[sr][sc]);
 
 	while (!openList.empty()) {
-		Cell* curr = openList.top().second;
+		Cell* curr = openList.top();
 		int r = curr->r;
 		int c = curr->c;
 		openList.pop();
@@ -99,7 +99,7 @@ bool MapManager::PathFinding(int sr, int sc, int fr, int fc)
 					cellMap[nr][nc].c = nc;
 					cellMap[nr][nc].parentR = r;
 					cellMap[nr][nc].parentC = c;
-					openList.push({ nf, &cellMap[nr][nc] });
+					openList.push(&cellMap[nr][nc]);
 				}
 			}
 		}

@@ -18,6 +18,10 @@ struct Cell {
 		parentC(-1),
 		isClosed(false)
 	{}
+
+	bool operator()(const Cell* lhs, const Cell* rhs) const {
+		return lhs->f > rhs->f;
+	}
 };
 
 class MapManager : public Actor
