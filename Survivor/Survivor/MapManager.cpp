@@ -15,7 +15,7 @@ MapManager::MapManager(Game* game) :
 	Renderer* renderer = GetGame()->GetRenderer();
 	float fWidth = 32, fHeight = 32;
 	float mapRow = 16, mapCol = 16;
-	mMap = std::vector<std::vector<int>>(mapRow, std::vector<int>(mapCol, 1));
+	mMap = std::vector<std::vector<int>>(mapRow, std::vector<int>(mapCol, Math::INF));
 	mMapRow = mapRow;
 	mMapCol = mapCol;
 	mMapWidth = fWidth * mapRow;
@@ -44,7 +44,8 @@ bool MapManager::IsGround(const Vector2& pos)
 {
 	Vector2 pixelPos = WorldToPixel(pos);
 	
-	return 0 < pixelPos.x && pixelPos.x < mMapWidth && 0 < pixelPos.y && pixelPos.y < mMapHeight && mMap[pixelPos.y / 32][pixelPos.x / 32];
+	return 0 < pixelPos.x && pixelPos.x < mMapWidth && 0 < pixelPos.y && pixelPos.y < mMapHeight && 
+		mMap[pixelPos.y / 32][pixelPos.x / 32] != -1;
 }
 
 Vector2 MapManager::WorldToPixel(const Vector2& worldPos)
@@ -54,8 +55,8 @@ Vector2 MapManager::WorldToPixel(const Vector2& worldPos)
 
 bool MapManager::PathFinding(int sr, int sc, int fr, int fc) // A* search
 {
-	if (!(0 <= sr && sr < mMapRow && 0 <= sc && sc < mMapCol && mMap[sr][sc])) return false;
-	if (!(0 <= fr && fr < mMapRow && 0 <= fc && fc < mMapCol && mMap[fr][fc])) return false;
+	if (!(0 <= sr && sr < mMapRow && 0 <= sc && sc < mMapCol && mMap[sr][sc] != -1)) return false;
+	if (!(0 <= fr && fr < mMapRow && 0 <= fc && fc < mMapCol && mMap[fr][fc] != -1)) return false;
 	
 	std::vector<std::vector<Cell>> cellMap(mMapRow, std::vector<Cell>(mMapCol));
 	std::priority_queue<Cell*, std::vector<Cell*>, Cell> openList;
@@ -79,7 +80,7 @@ bool MapManager::PathFinding(int sr, int sc, int fr, int fc) // A* search
 		for (int i = 0; i < 4; i++) {
 			int nr = r + dr[i];
 			int nc = c + dc[i];
-			if (0 <= nr && nr < mMapRow && 0 <= nc && nc < mMapCol && mMap[nr][nc] && !cellMap[nr][nc].isClosed) {
+			if (0 <= nr && nr < mMapRow && 0 <= nc && nc < mMapCol && mMap[nr][nc] != -1 && !cellMap[nr][nc].isClosed) {
 				if (nr == fr && nc == fc) {
 					cellMap[nr][nc].parentR = r;
 					cellMap[nr][nc].parentC = c;
