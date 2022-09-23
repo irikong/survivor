@@ -40,6 +40,11 @@ MapManager::MapManager(Game* game) :
 	MakeLight();
 }
 
+Vector2 MapManager::WorldToPixel(const Vector2& worldPos)
+{
+	return Vector2((mPixelOffset.x + worldPos.x), -(mPixelOffset.y + worldPos.y));
+}
+
 bool MapManager::IsGround(const Vector2& pos)
 {
 	Vector2 pixelPos = WorldToPixel(pos);
@@ -48,15 +53,13 @@ bool MapManager::IsGround(const Vector2& pos)
 		mMap[pixelPos.y / 32][pixelPos.x / 32] != -1;
 }
 
-Vector2 MapManager::WorldToPixel(const Vector2& worldPos)
-{
-	return Vector2((mPixelOffset.x + worldPos.x), -(mPixelOffset.y + worldPos.y));
-}
-
 bool MapManager::PathFinding(int sr, int sc, int fr, int fc) // A* search
 {
-	if (!(0 <= sr && sr < mMapRow && 0 <= sc && sc < mMapCol && mMap[sr][sc] != -1)) return false;
-	if (!(0 <= fr && fr < mMapRow && 0 <= fc && fc < mMapCol && mMap[fr][fc] != -1)) return false;
+	if (!IsValidCell(sr, sc)) return false;
+	if (!IsValidCell(fr, fc)) return false;
+	if (mMap[sr][sc] != Math::INF) {
+		return true;
+	}
 	
 	std::vector<std::vector<Cell>> cellMap(mMapRow, std::vector<Cell>(mMapCol));
 	std::priority_queue<Cell*, std::vector<Cell*>, Cell> openList;
@@ -80,10 +83,13 @@ bool MapManager::PathFinding(int sr, int sc, int fr, int fc) // A* search
 		for (int i = 0; i < 4; i++) {
 			int nr = r + dr[i];
 			int nc = c + dc[i];
-			if (0 <= nr && nr < mMapRow && 0 <= nc && nc < mMapCol && mMap[nr][nc] != -1 && !cellMap[nr][nc].isClosed) {
+
+			if (IsValidCell(nr, nc) && !cellMap[nr][nc].isClosed) {
 				if (nr == fr && nc == fc) {
 					cellMap[nr][nc].parentR = r;
 					cellMap[nr][nc].parentC = c;
+					
+					SavePath(cellMap, sr, sc, fr, fc);
 					return true;
 				}
 				
@@ -158,4 +164,25 @@ void MapManager::MakeLight()
 int MapManager::CalcHeuristic(int r, int c, int fr, int fc)
 {
 	return Math::Abs(fr - r) + Math::Abs(fc - c);
+}
+
+bool MapManager::IsValidCell(int r, int c)
+{
+	return 0 <= r && r < mMapRow && 0 <= c && c < mMapCol && mMap[r][c] != -1;
+}
+
+void MapManager::SavePath(const std::vector<std::vector<Cell>>& cellMap, int sr, int sc, int fr, int fc)
+{
+	int r = fr, c = fc, pr, pc, len = 0;
+
+	mMap[r][c] = len++;
+	while (r != sr || c != sc) {
+		pr = cellMap[r][c].parentR;
+		pc = cellMap[r][c].parentC;
+		r = pr;
+		c = pc;
+
+		mMap[r][c] = Math::Min(mMap[r][c], len);
+		len++;
+	}
 }

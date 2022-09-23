@@ -31,14 +31,16 @@ public:
 	MapManager(class Game* game);
 	~MapManager() = default;
 
-	bool IsGround(const Vector2& pos);
 	Vector2 WorldToPixel(const Vector2& worldPos);
+	bool IsGround(const Vector2& pos);
 	bool PathFinding(int sr, int sc, int fr, int fc);
 
 private:
 	void MakeWall(float fWidth, float fHeight, float mapRow, float mapCol);
 	void MakeLight();
 	int CalcHeuristic(int r, int c, int fr, int fc);
+	bool IsValidCell(int r, int c);
+	void SavePath(const std::vector<std::vector<Cell>>& cellMap, int sr, int sc, int fr, int fc);
 
 	int mMapRow;
 	int mMapCol;
