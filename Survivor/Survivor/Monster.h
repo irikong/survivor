@@ -12,7 +12,7 @@ public:
 	void Attack() override;
 	void Hit(float damage) override;
 	void Death() override;
-	void MoveTo(class Vector2 dir);
+	void MoveDir(class Vector2 dir);
 
 protected:
 	class AnimComponent* mAC;

@@ -54,7 +54,7 @@ void Monster::Death()
 	SetState(EDead);
 }
 
-void Monster::MoveTo(Vector2 dir)
+void Monster::MoveDir(Vector2 dir)
 {
 	if (Math::Abs(dir.x) > Math::Abs(dir.y)) {
 		mAC->SetCurrAnim((dir.x > 0.0f ? "Right" : "Left"));
