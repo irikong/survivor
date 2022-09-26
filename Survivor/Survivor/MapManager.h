@@ -35,7 +35,7 @@ public:
 	Vector2 PixelToWorld(const Vector2& pixelPos);
 	bool IsGround(const Vector2& pos);
 	void ResetMap();
-	bool PathFinding(int sr, int sc, int fr, int fc);
+	bool PathFinding(const Vector2& src, const Vector2& dst);
 	Vector2 GetNextPath(const Vector2& worldPos);
 	std::pair<int, int> GetRowCol(const Vector2& worldPos);
 	void PrintMap(); // For Test

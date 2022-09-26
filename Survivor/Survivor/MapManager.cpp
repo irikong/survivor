@@ -70,23 +70,28 @@ void MapManager::ResetMap()
 	}
 }
 
-bool MapManager::PathFinding(int sr, int sc, int fr, int fc) // A* search
+bool MapManager::PathFinding(const Vector2& src, const Vector2& dst) // A* search
 {
-	if (!IsValidCell(sr, sc)) return false;
-	if (!IsValidCell(fr, fc)) return false;
-	if (mMap[sr][sc] != Math::INF) {
+	std::pair<int, int> rowCol = GetRowCol(src);
+	int srcR = rowCol.first, srcC = rowCol.second;
+	rowCol = GetRowCol(dst);
+	int dstR = rowCol.first, dstC = rowCol.second;
+
+	if (!IsValidCell(srcR, srcC)) return false;
+	if (!IsValidCell(dstR, dstC)) return false;
+	if (mMap[srcR][srcC] != Math::INF) {
 		return true;
 	}
 	
 	std::vector<std::vector<Cell>> cellMap(mMapRow, std::vector<Cell>(mMapCol));
 	std::priority_queue<Cell*, std::vector<Cell*>, Cell> openList;
 
-	cellMap[sr][sc].f = cellMap[sr][sc].g = cellMap[sr][sc].h = 0;
-	cellMap[sr][sc].r = sr;
-	cellMap[sr][sc].c = sc;
-	cellMap[sr][sc].parentR = sr;
-	cellMap[sr][sc].parentC = sc;
-	openList.push(&cellMap[sr][sc]);
+	cellMap[srcR][srcC].f = cellMap[srcR][srcC].g = cellMap[srcR][srcC].h = 0;
+	cellMap[srcR][srcC].r = srcR;
+	cellMap[srcR][srcC].c = srcC;
+	cellMap[srcR][srcC].parentR = srcR;
+	cellMap[srcR][srcC].parentC = srcC;
+	openList.push(&cellMap[srcR][srcC]);
 
 	while (!openList.empty()) {
 		Cell* curr = openList.top();
@@ -99,16 +104,16 @@ bool MapManager::PathFinding(int sr, int sc, int fr, int fc) // A* search
 			int nc = c + dc[i];
 
 			if (IsValidCell(nr, nc) && !cellMap[nr][nc].isClosed) {
-				if (nr == fr && nc == fc) {
+				if (nr == dstR && nc == dstC) {
 					cellMap[nr][nc].parentR = r;
 					cellMap[nr][nc].parentC = c;
 					
-					SavePath(cellMap, sr, sc, fr, fc);
+					SavePath(cellMap, srcR, srcC, dstR, dstC);
 					return true;
 				}
 				
 				int ng = curr->g + 1;
-				int nh = CalcHeuristic(nr, nc, fr, fc);
+				int nh = CalcHeuristic(nr, nc, dstR, dstC);
 				int nf = ng + nh;
 
 				if ((cellMap[nr][nc].f == Math::INF) || (nf < cellMap[nr][nc].f)) {

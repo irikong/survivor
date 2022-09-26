@@ -5,7 +5,7 @@ class Monster : public Creature
 {
 public:
 	Monster(class Game* game, float hp, float speed);
-	~Monster() = default;
+	~Monster();
 
 	void UpdateActor(float deltaTime) override;
 

@@ -67,8 +67,7 @@ void Player::UpdateActor(float deltaTime)
 		MM->ResetMap();
 
 		for (Monster* m : GetGame()->GetMonsters()) {
-			rowCol = MM->GetRowCol(m->GetPosition());
-			MM->PathFinding(rowCol.first, rowCol.second, mCurrRowCol.first, mCurrRowCol.second);
+			MM->PathFinding(m->GetPosition(), GetPosition());
 		}
 		MM->PrintMap();
 	}
