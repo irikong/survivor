@@ -32,10 +32,15 @@ public:
 	~MapManager() = default;
 
 	Vector2 WorldToPixel(const Vector2& worldPos);
+	Vector2 PixelToWorld(const Vector2& pixelPos);
 	bool IsGround(const Vector2& pos);
 	bool PathFinding(int sr, int sc, int fr, int fc);
+	Vector2 GetNextPath(const Vector2& worldPos);
 
 private:
+	const int dr[4] = { -1, 0, 1, 0 };
+	const int dc[4] = { 0, 1, 0, -1 };
+
 	void MakeWall(float fWidth, float fHeight, float mapRow, float mapCol);
 	void MakeLight();
 	int CalcHeuristic(int r, int c, int fr, int fc);

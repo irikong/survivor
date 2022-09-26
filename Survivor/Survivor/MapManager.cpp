@@ -45,6 +45,11 @@ Vector2 MapManager::WorldToPixel(const Vector2& worldPos)
 	return Vector2((mPixelOffset.x + worldPos.x), -(mPixelOffset.y + worldPos.y));
 }
 
+Vector2 MapManager::PixelToWorld(const Vector2& pixelPos)
+{
+	return Vector2((pixelPos.x - mPixelOffset.x), -(pixelPos.y + mPixelOffset.y));
+}
+
 bool MapManager::IsGround(const Vector2& pos)
 {
 	Vector2 pixelPos = WorldToPixel(pos);
@@ -63,9 +68,6 @@ bool MapManager::PathFinding(int sr, int sc, int fr, int fc) // A* search
 	
 	std::vector<std::vector<Cell>> cellMap(mMapRow, std::vector<Cell>(mMapCol));
 	std::priority_queue<Cell*, std::vector<Cell*>, Cell> openList;
-
-	int dr[4] = { -1, 0, 1, 0 };
-	int dc[4] = { 0, 1, 0, -1 };
 
 	cellMap[sr][sc].f = cellMap[sr][sc].g = cellMap[sr][sc].h = 0;
 	cellMap[sr][sc].r = sr;
@@ -112,6 +114,35 @@ bool MapManager::PathFinding(int sr, int sc, int fr, int fc) // A* search
 	}
 
 	return false;
+}
+
+Vector2 MapManager::GetNextPath(const Vector2& worldPos)
+{
+	Vector2 pixelPos = WorldToPixel(worldPos);
+	int r = pixelPos.y / 32;
+	int c = pixelPos.x / 32;
+
+	if (IsValidCell(r, c)) {
+
+		int nr, nc, min = Math::INF, minDir = -1;
+		for (int dir = 0; dir < 4; dir++) {
+			nr = r + dr[dir];
+			nc = c + dc[dir];
+
+			if (IsValidCell(nr, nc) && mMap[nr][nc] < min) {
+				min = mMap[nr][nc];
+				minDir = dir;
+			}
+		}
+
+		if (minDir != -1) {
+			pixelPos.y += 32 * dr[minDir];
+			pixelPos.x += 32 * dc[minDir];
+			return PixelToWorld(pixelPos);
+		}
+	}
+
+	return worldPos;
 }
 
 void MapManager::MakeWall(float fWidth, float fHeight, float mapRow, float mapCol)

@@ -29,23 +29,6 @@ void Monster::UpdateActor(float deltaTime)
 	Creature::UpdateActor(deltaTime);
 }
 
-void Monster::MoveTo(Vector2 dir)
-{
-	if (Math::Abs(dir.x) > Math::Abs(dir.y)) {
-		mAC->SetCurrAnim((dir.x > 0.0f ? "Right" : "Left"));
-	}
-	else {
-		mAC->SetCurrAnim((dir.y > 0.0f ? "Up" : "Down"));
-	}
-
-	mMC->SetDirection(dir);
-}
-
-void Monster::Death()
-{
-	SetState(EDead);
-}
-
 void Monster::Attack()
 {
 }
@@ -57,4 +40,21 @@ void Monster::Hit(float damage)
 	if (mHP <= 0.0f) {
 		mSC->ChangeState("Death");
 	}
+}
+
+void Monster::Death()
+{
+	SetState(EDead);
+}
+
+void Monster::MoveTo(Vector2 dir)
+{
+	if (Math::Abs(dir.x) > Math::Abs(dir.y)) {
+		mAC->SetCurrAnim((dir.x > 0.0f ? "Right" : "Left"));
+	}
+	else {
+		mAC->SetCurrAnim((dir.y > 0.0f ? "Up" : "Down"));
+	}
+
+	mMC->SetDirection(dir);
 }
