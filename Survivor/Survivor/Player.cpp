@@ -11,6 +11,7 @@
 #include "Math.h"
 #include "Monster.h"
 #include "Weapon.h"
+#include "MapManager.h"
 
 Player::Player(Game* game, float hp, float speed) :
 	Creature(game, hp, speed),
@@ -59,7 +60,14 @@ void Player::UpdateActor(float deltaTime)
 	}
 
 	GetGame()->GetPhysics2D()->CollisionDetection(mBC);
-	
+	MapManager* MM = GetGame()->GetMapManager();
+	std::pair<int, int> rowCol = MM->GetRowCol(GetPosition());
+	if (mCurrRowCol != rowCol) {
+		mCurrRowCol = rowCol;
+		MM->ResetMap();
+		MM->PathFinding(0, 0, mCurrRowCol.first, mCurrRowCol.second);
+		MM->PrintMap();
+	}
 	mCurrCoolTime -= deltaTime;
 	Attack();
 }

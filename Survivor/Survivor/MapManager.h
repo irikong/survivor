@@ -34,8 +34,11 @@ public:
 	Vector2 WorldToPixel(const Vector2& worldPos);
 	Vector2 PixelToWorld(const Vector2& pixelPos);
 	bool IsGround(const Vector2& pos);
+	void ResetMap();
 	bool PathFinding(int sr, int sc, int fr, int fc);
 	Vector2 GetNextPath(const Vector2& worldPos);
+	std::pair<int, int> GetRowCol(const Vector2& worldPos);
+	void PrintMap(); // For Test
 
 private:
 	const int dr[4] = { -1, 0, 1, 0 };
@@ -47,6 +50,8 @@ private:
 	bool IsValidCell(int r, int c);
 	void SavePath(const std::vector<std::vector<Cell>>& cellMap, int sr, int sc, int fr, int fc);
 
+	int mTileWidth;
+	int mTileHeight;
 	int mMapRow;
 	int mMapCol;
 	float mMapWidth;

@@ -6,6 +6,7 @@
 #include "Texture.h"
 #include "BoxComponent.h"
 #include <queue>
+#include <iostream>
 
 MapManager::MapManager(Game* game) :
 	Actor(game)
@@ -16,6 +17,8 @@ MapManager::MapManager(Game* game) :
 	float fWidth = 32, fHeight = 32;
 	float mapRow = 16, mapCol = 16;
 	mMap = std::vector<std::vector<int>>(mapRow, std::vector<int>(mapCol, Math::INF));
+	mTileWidth = fWidth;
+	mTileHeight = fHeight;
 	mMapRow = mapRow;
 	mMapCol = mapCol;
 	mMapWidth = fWidth * mapRow;
@@ -25,15 +28,15 @@ MapManager::MapManager(Game* game) :
 
 	SetPosition(Vector2(-(fWidth * mapRow - fWidth) / 2, (fHeight * mapCol - fHeight) / 2));
 
-	TileMapComponent* tm1 = new TileMapComponent(this, 32, 32);
+	TileMapComponent* tm1 = new TileMapComponent(this, fWidth, fHeight);
 	tm1->SetTexture(renderer->GetTexture("Grass1.png"));
-	tm1->LoadTileMap(std::string(Path::ASSETS) + "Grass.csv", 16, 16);
-	TileMapComponent* tm2 = new TileMapComponent(this, 32, 32);
+	tm1->LoadTileMap(std::string(Path::ASSETS) + "Grass.csv", mapRow, mapCol);
+	TileMapComponent* tm2 = new TileMapComponent(this, fWidth, fHeight);
 	tm2->SetTexture(renderer->GetTexture("Dirt2.png"));
-	tm2->LoadTileMap(std::string(Path::ASSETS) + "Dirt.csv", 16, 16);
-	TileMapComponent* tm3 = new TileMapComponent(this, 32, 32);
+	tm2->LoadTileMap(std::string(Path::ASSETS) + "Dirt.csv", mapRow, mapCol);
+	TileMapComponent* tm3 = new TileMapComponent(this, fWidth, fHeight);
 	tm3->SetTexture(renderer->GetTexture("Water2.png"));
-	tm3->LoadTileMap(std::string(Path::ASSETS) + "Water.csv", 16, 16);
+	tm3->LoadTileMap(std::string(Path::ASSETS) + "Water.csv", mapRow, mapCol);
 	tm3->UpdateUnwalkable(mMap);
 
 	//MakeWall(fWidth, fHeight, mapRow, mapCol);
@@ -55,7 +58,16 @@ bool MapManager::IsGround(const Vector2& pos)
 	Vector2 pixelPos = WorldToPixel(pos);
 	
 	return 0 < pixelPos.x && pixelPos.x < mMapWidth && 0 < pixelPos.y && pixelPos.y < mMapHeight && 
-		mMap[pixelPos.y / 32][pixelPos.x / 32] != -1;
+		mMap[pixelPos.y / mTileHeight][pixelPos.x / mTileWidth] != -1;
+}
+
+void MapManager::ResetMap()
+{
+	for (int r = 0; r < mMapRow; r++) {
+		for (int c = 0; c < mMapCol; c++) {
+			if (mMap[r][c] != -1) mMap[r][c] = Math::INF;
+		}
+	}
 }
 
 bool MapManager::PathFinding(int sr, int sc, int fr, int fc) // A* search
@@ -119,8 +131,8 @@ bool MapManager::PathFinding(int sr, int sc, int fr, int fc) // A* search
 Vector2 MapManager::GetNextPath(const Vector2& worldPos)
 {
 	Vector2 pixelPos = WorldToPixel(worldPos);
-	int r = pixelPos.y / 32;
-	int c = pixelPos.x / 32;
+	int r = pixelPos.y / mTileHeight;
+	int c = pixelPos.x / mTileWidth;
 
 	if (IsValidCell(r, c)) {
 
@@ -136,13 +148,30 @@ Vector2 MapManager::GetNextPath(const Vector2& worldPos)
 		}
 
 		if (minDir != -1) {
-			pixelPos.y += 32 * dr[minDir];
-			pixelPos.x += 32 * dc[minDir];
+			pixelPos.y += mTileHeight * dr[minDir];
+			pixelPos.x += mTileWidth * dc[minDir];
 			return PixelToWorld(pixelPos);
 		}
 	}
 
 	return worldPos;
+}
+
+std::pair<int, int> MapManager::GetRowCol(const Vector2& worldPos)
+{
+	Vector2 pixelPos = WorldToPixel(worldPos);
+	return std::pair<int, int>(pixelPos.y / mTileHeight, pixelPos.x / mTileWidth);
+}
+
+void MapManager::PrintMap()
+{
+	for (int r = 0; r < mMapRow; r++) {
+		for (int c = 0; c < mMapCol; c++) {
+			printf("%2d ", Math::Min(99, mMap[r][c]));
+		}
+		std::cout << std::endl;
+	}
+	std::cout << std::endl;
 }
 
 void MapManager::MakeWall(float fWidth, float fHeight, float mapRow, float mapCol)
