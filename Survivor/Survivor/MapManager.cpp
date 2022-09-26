@@ -39,7 +39,6 @@ MapManager::MapManager(Game* game) :
 	tm3->LoadTileMap(std::string(Path::ASSETS) + "Water.csv", mapRow, mapCol);
 	tm3->UpdateUnwalkable(mMap);
 
-	//MakeWall(fWidth, fHeight, mapRow, mapCol);
 	MakeLight();
 }
 
@@ -53,12 +52,11 @@ Vector2 MapManager::PixelToWorld(const Vector2& pixelPos)
 	return Vector2((pixelPos.x - mPixelOffset.x), -(pixelPos.y + mPixelOffset.y));
 }
 
-bool MapManager::IsGround(const Vector2& pos)
+bool MapManager::IsGround(const Vector2& worldPos)
 {
-	Vector2 pixelPos = WorldToPixel(pos);
-	
-	return 0 < pixelPos.x && pixelPos.x < mMapWidth && 0 < pixelPos.y && pixelPos.y < mMapHeight && 
-		mMap[pixelPos.y / mTileHeight][pixelPos.x / mTileWidth] != -1;
+	std::pair<int, int> rowCol = GetRowCol(worldPos);
+
+	return IsValidCell(rowCol.first, rowCol.second);
 }
 
 void MapManager::ResetMap()

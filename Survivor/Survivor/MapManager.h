@@ -33,7 +33,7 @@ public:
 
 	Vector2 WorldToPixel(const Vector2& worldPos);
 	Vector2 PixelToWorld(const Vector2& pixelPos);
-	bool IsGround(const Vector2& pos);
+	bool IsGround(const Vector2& worldPos);
 	void ResetMap();
 	bool PathFinding(const Vector2& src, const Vector2& dst);
 	Vector2 GetNextPath(const Vector2& worldPos);

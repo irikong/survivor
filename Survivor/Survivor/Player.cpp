@@ -64,12 +64,11 @@ void Player::UpdateActor(float deltaTime)
 	std::pair<int, int> rowCol = MM->GetRowCol(GetPosition());
 	if (mCurrRowCol != rowCol) {
 		mCurrRowCol = rowCol;
-		MM->ResetMap();
 
+		MM->ResetMap();
 		for (Monster* m : GetGame()->GetMonsters()) {
 			MM->PathFinding(m->GetPosition(), GetPosition());
 		}
-		MM->PrintMap();
 	}
 	mCurrCoolTime -= deltaTime;
 	Attack();
