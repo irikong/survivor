@@ -22,6 +22,13 @@ Monster::Monster(Game* game, float hp, float speed) :
 
 	mMC = new MoveComponent(this);
 	mMC->SetSpeed(speed);
+
+	game->AddMonster(this);
+}
+
+Monster::~Monster()
+{
+	GetGame()->RemoveMonster(this);
 }
 
 void Monster::UpdateActor(float deltaTime)

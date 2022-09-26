@@ -24,7 +24,8 @@ Game::Game() :
 	mUpdatingActors(false),
 	mRenderer(nullptr),
 	mPhysics2D(nullptr),
-	mPlayer(nullptr)
+	mPlayer(nullptr),
+	mMapManager(nullptr)
 {
 
 }
@@ -92,6 +93,19 @@ void Game::RemoveActor(Actor* actor)
 	if (iter != mActors.end()) {
 		std::iter_swap(iter, mActors.end() - 1);
 		mActors.pop_back();
+	}
+}
+
+void Game::AddMonster(Monster* monster)
+{
+	mMonsters.emplace_back(monster);
+}
+
+void Game::RemoveMonster(Monster* monster)
+{
+	auto iter = std::find(mMonsters.begin(), mMonsters.end(), monster);
+	if (iter != mMonsters.end()) {
+		mMonsters.erase(iter);
 	}
 }
 

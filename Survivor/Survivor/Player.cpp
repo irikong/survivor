@@ -65,7 +65,11 @@ void Player::UpdateActor(float deltaTime)
 	if (mCurrRowCol != rowCol) {
 		mCurrRowCol = rowCol;
 		MM->ResetMap();
-		MM->PathFinding(0, 0, mCurrRowCol.first, mCurrRowCol.second);
+
+		for (Monster* m : GetGame()->GetMonsters()) {
+			rowCol = MM->GetRowCol(m->GetPosition());
+			MM->PathFinding(rowCol.first, rowCol.second, mCurrRowCol.first, mCurrRowCol.second);
+		}
 		MM->PrintMap();
 	}
 	mCurrCoolTime -= deltaTime;
