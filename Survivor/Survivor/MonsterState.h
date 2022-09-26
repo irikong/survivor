@@ -30,7 +30,7 @@ private:
 
 class MonsterFollow : public MonsterState {
 public:
-	MonsterFollow(class StateComponent* sc, class Monster* monster);
+	MonsterFollow(class StateComponent* sc, class Monster* monster, bool useNav);
 
 	void Update(float deltaTime);
 	void Enter();
@@ -40,6 +40,8 @@ public:
 private:
 	class Player* mTarget;
 	class Monster* mMonster;
+	class MapManager* mMM;
+	bool mUseNav;
 };
 
 class MonsterDeath : public MonsterState {

@@ -25,7 +25,7 @@ Skeleton::Skeleton(Game* game) :
 
 	mSC = new StateComponent(this);
 	mSC->AddState(new MonsterPatrol(mSC, this, 100));
-	mSC->AddState(new MonsterFollow(mSC, this));
+	mSC->AddState(new MonsterFollow(mSC, this, true));
 	mSC->AddState(new MonsterDeath(mSC, this));
 	mSC->ChangeState("Patrol");
 }

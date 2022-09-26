@@ -12,11 +12,14 @@ public:
 
 	void AddActor(class Actor* actor);
 	void RemoveActor(class Actor* actor);
+	void AddMonster(class Monster* monster);
+	void RemoveMonster(class Monster* monster);
 
 	class Renderer* GetRenderer() { return mRenderer; }
 	class Physics2D* GetPhysics2D() { return mPhysics2D; }
-
 	class Player* GetPlayer() { return mPlayer; }
+	class MapManager* GetMapManager() { return mMapManager; }
+	std::vector<class Monster*>& GetMonsters() { return mMonsters; }
 
 private:
 	const int MIN_TICK;
@@ -40,4 +43,7 @@ private:
 	class Physics2D* mPhysics2D;
 
 	class Player* mPlayer;
+	class MapManager* mMapManager;
+
+	std::vector<class Monster*> mMonsters;
 };

@@ -24,7 +24,8 @@ Game::Game() :
 	mUpdatingActors(false),
 	mRenderer(nullptr),
 	mPhysics2D(nullptr),
-	mPlayer(nullptr)
+	mPlayer(nullptr),
+	mMapManager(nullptr)
 {
 
 }
@@ -95,6 +96,19 @@ void Game::RemoveActor(Actor* actor)
 	}
 }
 
+void Game::AddMonster(Monster* monster)
+{
+	mMonsters.emplace_back(monster);
+}
+
+void Game::RemoveMonster(Monster* monster)
+{
+	auto iter = std::find(mMonsters.begin(), mMonsters.end(), monster);
+	if (iter != mMonsters.end()) {
+		mMonsters.erase(iter);
+	}
+}
+
 void Game::ProcessInput()
 {
 	SDL_Event event;
@@ -159,26 +173,11 @@ void Game::GenerateOutput()
 void Game::LoadTestData()
 {
 	mPlayer = new Player(this, 100.0f, 200.0f);
-
-	MapManager* mapManager = new MapManager(this);
+	mMapManager = new MapManager(this);
 
 	MonsterSpawner* monsterSpawner = new MonsterSpawner(this);
 	monsterSpawner->Spawn<Skeleton>()->SetPosition(Vector2(100, 100));
 	monsterSpawner->Spawn<Ghost>()->SetPosition(Vector2(200, 200));
-
-	//Actor* c = new Actor(this);
-	//c->SetPosition(Vector2(-100, -150));
-	//c->SetLayer(Actor::EProp);
-	//SpriteComponent* sc = new SpriteComponent(c, 15);
-	//sc->SetTexture(mRenderer->GetTexture("Circle.png"));
-	//CircleComponent* cc = new CircleComponent(c, Circle(Vector2::Zero, sc->GetTexWidth() / 2.0f));
-
-	//Actor* d = new Actor(this);
-	//d->SetPosition(Vector2(200, 200));
-	//d->SetLayer(Actor::EProp);
-	//sc = new SpriteComponent(d, 15);
-	//sc->SetTexture(mRenderer->GetTexture("Box.png"));
-	//BoxComponent* bc = new BoxComponent(d, AABB(Vector2(-16, -16), Vector2(16, 16)));
 }
 
 void Game::UnloadData()

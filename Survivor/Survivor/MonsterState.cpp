@@ -4,6 +4,7 @@
 #include "Player.h"
 #include "Game.h"
 #include "Math.h"
+#include "MapManager.h"
 
 MonsterState::MonsterState(StateComponent* sc) : 
 	mSC(sc)
@@ -36,18 +37,26 @@ void MonsterPatrol::Exit()
 }
 
 // MonsterFollow
-MonsterFollow::MonsterFollow(StateComponent* sc, Monster* monster) :
+MonsterFollow::MonsterFollow(StateComponent* sc, Monster* monster, bool useNav) :
 	MonsterState(sc),
-	mMonster(monster)
+	mMonster(monster),
+	mUseNav(useNav)
 {
-	mTarget = monster->GetGame()->GetPlayer();
+	Game* game = monster->GetGame();
+	mTarget = game->GetPlayer();
+	mMM = game->GetMapManager();
 }
 
 void MonsterFollow::Update(float deltaTime)
 {
 	if (mTarget) {
 		Vector2 dir = mTarget->GetPosition() - mMonster->GetPosition();
-		mMonster->MoveTo(dir);
+
+		if (mUseNav && dir.Length() > 32) {
+			dir = mMM->GetNextPath(mMonster->GetPosition()) - mMonster->GetPosition();
+		}
+		
+		mMonster->MoveDir(dir);
 	}
 }
 

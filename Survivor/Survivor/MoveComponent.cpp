@@ -1,12 +1,15 @@
 #include "MoveComponent.h"
 #include "Math.h"
 #include "Actor.h"
+#include "Game.h"
+#include "MapManager.h"
 
 MoveComponent::MoveComponent(Actor* owner, int updateOrder) :
 	Component(owner, updateOrder),
 	mAngularSpeed(0.0f),
 	mDirection(),
-	mSpeed(0.0f)
+	mSpeed(0.0f),
+	mGroundCheck(true)
 {
 
 }
@@ -26,6 +29,9 @@ void MoveComponent::Update(float deltaTime)
 	if (mDirection != Vector2::Zero) {
 		mDirection.Normalize();
 		Vector2 velocity = mDirection * mSpeed;
-		mOwner->SetPosition(mOwner->GetPosition() + velocity * deltaTime);
+		Vector2 nextPos = mOwner->GetPosition() + velocity * deltaTime;
+		
+		if(!mGroundCheck || mOwner->GetGame()->GetMapManager()->IsGround(nextPos))
+			mOwner->SetPosition(nextPos);
 	}
 }

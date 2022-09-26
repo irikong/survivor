@@ -24,6 +24,8 @@ private:
 	class AnimComponent* mAC;
 	class BoxComponent* mBC;
 
+	std::pair<int, int> mCurrRowCol;
+
 	bool mIsInvincible;
 	const float mITime;
 	float mCurrITime;
