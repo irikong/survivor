@@ -39,6 +39,11 @@ namespace Math {
 		return tanf(theta);
 	}
 
+	inline float Acos(float value)
+	{
+		return acosf(value);
+	}
+
 	inline float Sqrt(float value)
 	{
 		return sqrtf(value);

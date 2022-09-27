@@ -6,6 +6,7 @@ class MonsterSpawner : public Actor
 {
 public:
 	MonsterSpawner(class Game* game);
+	~MonsterSpawner() = default;
 
 	void UpdateActor(float deltaTime) override;
 
@@ -15,7 +16,9 @@ public:
 	}
 
 private:
+	Vector2 GetRandomSpawnPos();
+
 	//bool mIsActive;
-	//float mSpawnInterval;
-	//float mNextSpawn;
+	float mSpawnInterval;
+	float mNextSpawn;
 };
