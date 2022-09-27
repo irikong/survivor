@@ -5,6 +5,7 @@
 #include "Game.h"
 #include "Math.h"
 #include "MapManager.h"
+#include "Random.h"
 
 MonsterState::MonsterState(StateComponent* sc) : 
 	mSC(sc)
@@ -14,7 +15,11 @@ MonsterState::MonsterState(StateComponent* sc) :
 // MonsterPatrol
 MonsterPatrol::MonsterPatrol(StateComponent* sc, Monster* monster, float aggroRange) :
 	MonsterState(sc),
-	mMonster(monster)
+	mMonster(monster),
+	PATROL_TIME(1.0f),
+	REST_STACK(3),
+	mPatrolTime(0.0f),
+	mRestStack(0)
 {
 	mTarget = monster->GetGame()->GetPlayer();
 	mAggroRangeSq = aggroRange * aggroRange;
@@ -25,6 +30,22 @@ void MonsterPatrol::Update(float deltaTime)
 	Vector2 dir = mTarget->GetPosition() - mMonster->GetPosition();
 	if (dir.LengthSq() < mAggroRangeSq) {
 		mSC->ChangeState("Follow");
+	}
+	else {
+		mPatrolTime += deltaTime;
+		if (mPatrolTime > PATROL_TIME) {
+			mPatrolTime -= PATROL_TIME;
+
+			if(!mRestStack) {
+				int rand = Random::GetIntRange(0, 4);
+				mMonster->MoveDir(Vector2(dx[rand], dy[rand]));
+				mRestStack = REST_STACK;
+			}
+			else {
+				mRestStack--;
+				mMonster->MoveDir(Vector2::Zero);
+			}
+		}
 	}
 }
 

@@ -23,9 +23,16 @@ public:
 	const char* GetName() const override { return "Patrol"; }
 
 private:
+	const int dx[5] = { 0, 0, 1, 0, -1 };
+	const int dy[5] = { 0, 1, 0, -1, 0 };
+	const float PATROL_TIME;
+	const int REST_STACK;
+
 	class Player* mTarget;
 	class Monster* mMonster;
 	float mAggroRangeSq;
+	float mPatrolTime;
+	int mRestStack;
 };
 
 class MonsterFollow : public MonsterState {
