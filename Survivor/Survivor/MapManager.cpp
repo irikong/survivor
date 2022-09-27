@@ -163,7 +163,7 @@ Vector2 MapManager::GetNextPath(const Vector2& worldPos)
 std::pair<int, int> MapManager::GetRowCol(const Vector2& worldPos)
 {
 	Vector2 pixelPos = WorldToPixel(worldPos);
-	return std::pair<int, int>(pixelPos.y / mTileHeight, pixelPos.x / mTileWidth);
+	return std::pair<int, int>(pixelPos.y / mTileHeight - (pixelPos.y < 0), pixelPos.x / mTileWidth - (pixelPos.x < 0));
 }
 
 void MapManager::PrintMap()
