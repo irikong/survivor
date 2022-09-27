@@ -41,14 +41,15 @@ public:
 	void PrintMap(); // For Test
 
 private:
-	const int dr[4] = { -1, 0, 1, 0 };
-	const int dc[4] = { 0, 1, 0, -1 };
+	const int dr[8] = { -1, 0, 1, 0, -1, 1, 1, -1 };
+	const int dc[8] = { 0, 1, 0, -1, 1, 1, -1, -1 };
 
 	void MakeWall(float fWidth, float fHeight, float mapRow, float mapCol);
 	void MakeLight();
 	int CalcHeuristic(int r, int c, int fr, int fc);
 	bool IsValidCell(int r, int c);
 	void SavePath(const std::vector<std::vector<Cell>>& cellMap, int sr, int sc, int fr, int fc);
+	bool CheckWall(int r, int c);
 
 	int mTileWidth;
 	int mTileHeight;
