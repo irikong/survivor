@@ -7,7 +7,7 @@
 
 MonsterSpawner::MonsterSpawner(Game* game) :
 	Actor(game),
-	mSpawnInterval(1.0f),
+	mSpawnInterval(2.0f),
 	mNextSpawn(0.0f)
 {
 
@@ -30,7 +30,8 @@ void MonsterSpawner::UpdateActor(float deltaTime)
 Vector2 MonsterSpawner::GetRandomSpawnPos()
 {
 	Vector2 playerDir = GetGame()->GetPlayer()->GetPosition() - Vector2::Zero;
-	playerDir.Normalize();
+	if (playerDir == Vector2::Zero) playerDir = Vector2::Right;
+	else playerDir.Normalize();
 
 	float theta = Math::Acos(Vector2::Dot(Vector2::Right, playerDir));
 	if (playerDir.y < 0) theta = Math::TWOPI - theta;
