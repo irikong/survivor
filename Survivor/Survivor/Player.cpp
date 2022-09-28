@@ -70,27 +70,29 @@ void Player::UpdateActor(float deltaTime)
 			MM->PathFinding(m->GetPosition(), GetPosition());
 		}
 	}
+
+	if (mIC->GetDirection() != Vector2::Zero)
+		mFace = mIC->GetDirection();
 }
 
 void Player::ActorInput(const uint8_t* keyState)
 {
-	// 임시 코드
 	if (keyState[SDL_SCANCODE_UP]) {
 		mAC->SetCurrAnim("Up");
-		mFace = Vector2::Up;
+		//mFace = Vector2::Up;
 	}
 	if (keyState[SDL_SCANCODE_DOWN]) {
 		mAC->SetCurrAnim("Down");
-		mFace = Vector2::Down;
+		//mFace = Vector2::Down;
 	}
 
 	if (keyState[SDL_SCANCODE_LEFT]) {
 		mAC->SetCurrAnim("Left");
-		mFace = Vector2::Left;
+		//mFace = Vector2::Left;
 	}
 	if (keyState[SDL_SCANCODE_RIGHT]) {
 		mAC->SetCurrAnim("Right");
-		mFace = Vector2::Right;
+		//mFace = Vector2::Right;
 	}
 
 	if (keyState[SDL_SCANCODE_SPACE]) {
