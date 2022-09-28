@@ -8,13 +8,14 @@
 #include "Player.h"
 #include "Physics2D.h"
 #include "Monster.h"
-#include "FiniteState.h"
 #include "StateComponent.h"
 
 Weapon::Weapon(Game* game, Player* player) :
 	Actor(game),
 	mDamage(50.0f),
-	mLifeTime(2.0f)
+	mLifeTime(2.0f),
+	mIsReady(true),
+	mOwner(player)
 {
 	SetPosition(player->GetPosition());
 
@@ -31,7 +32,8 @@ Weapon::Weapon(Game* game, Player* player) :
 	mFSM->AddState(new WeaponFly(mFSM, this));
 	mFSM->AddState(new WeaponStay(mFSM, this));
 	mFSM->AddState(new WeaponComeBack(mFSM, this));
-	mFSM->ChangeState("Fly");
+	mFSM->AddState(new WeaponMissing(mFSM, this));
+	mFSM->ChangeState("Ready");
 }
 
 void Weapon::UpdateActor(float deltaTime)
@@ -43,5 +45,26 @@ void Weapon::OnCollision(ColliderComponent* other)
 {
 	if (other->GetOwner()->GetLayer() == EMonster) {
 		static_cast<Monster*>(other->GetOwner())->Hit(mDamage);
+	}
+	if (other->GetOwner()->GetLayer() == EPlayer) {
+		if(mFSM->GetCurrState()->GetName() == "Stay" || mFSM->GetCurrState()->GetName() == "ComeBack")
+			mFSM->ChangeState("Ready");
+	}
+}
+
+void Weapon::Ready()
+{
+	mIsReady = true;
+	mSC->SetAlpha(0.0f);
+	SetState(EPaused);
+}
+
+void Weapon::Use()
+{
+	if (mIsReady) {
+		mIsReady = false;
+		mSC->SetAlpha(1.0f);
+		SetState(EActive);
+		mFSM->ChangeState("Fly");
 	}
 }

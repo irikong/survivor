@@ -18,8 +18,6 @@ Player::Player(Game* game, float hp, float speed) :
 	mIsInvincible(false),
 	mITime(0.5f),
 	mCurrITime(0.0f),
-	mAttackCoolTime(1.0f),
-	mCurrCoolTime(0.0f),
 	mFace(Vector2::Down)
 {
 	SetLayer(EPlayer);
@@ -42,6 +40,8 @@ Player::Player(Game* game, float hp, float speed) :
 
 	AABB box(Vector2(-16, -16), Vector2(16, 16));
 	mBC = new BoxComponent(this, box);
+
+	mWeapon = new Weapon(game, this);
 }
 
 void Player::UpdateActor(float deltaTime)
@@ -70,8 +70,6 @@ void Player::UpdateActor(float deltaTime)
 			MM->PathFinding(m->GetPosition(), GetPosition());
 		}
 	}
-	mCurrCoolTime -= deltaTime;
-	Attack();
 }
 
 void Player::ActorInput(const uint8_t* keyState)
@@ -93,6 +91,10 @@ void Player::ActorInput(const uint8_t* keyState)
 	if (keyState[SDL_SCANCODE_RIGHT]) {
 		mAC->SetCurrAnim("Right");
 		mFace = Vector2::Right;
+	}
+
+	if (keyState[SDL_SCANCODE_SPACE]) {
+		Attack();
 	}
 }
 
@@ -134,10 +136,7 @@ void Player::ResolveCollision(const AABB& other)
 
 void Player::Attack()
 {
-	if (mCurrCoolTime < 0.0f) {
-		mCurrCoolTime = mAttackCoolTime;
-		Weapon* w = new Weapon(GetGame(), this);
-	}
+	mWeapon->Use();
 }
 
 void Player::Hit(float damage)

@@ -107,7 +107,7 @@ private:
 	class Weapon* mWeapon;
 	class Player* mPlayer;
 	Vector2 mInitPos;
-	float mFlyTime;
+	float mStayTime;
 };
 
 class WeaponComeBack : public FiniteState {
@@ -122,5 +122,19 @@ public:
 private:
 	class Weapon* mWeapon;
 	class MoveComponent* mMC;
-	float mFlyTime;
+	float mComeBackTime;
+};
+
+class WeaponMissing : public FiniteState {
+public:
+	WeaponMissing(class StateComponent* sc, class Weapon* weapon);
+
+	void Update(float deltaTime);
+	void Enter();
+	void Exit();
+	const char* GetName() const override { return "Missing"; }
+
+private:
+	class Weapon* mWeapon;
+	float mReloadTime;
 };

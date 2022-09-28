@@ -123,10 +123,12 @@ void WeaponReady::Update(float deltaTime)
 
 void WeaponReady::Enter()
 {
+	mWeapon->Ready();
 }
 
 void WeaponReady::Exit()
 {
+	
 }
 
 // WeaponFly
@@ -150,9 +152,12 @@ void WeaponFly::Update(float deltaTime)
 
 void WeaponFly::Enter()
 {
-	mMC->SetDirection(mWeapon->GetGame()->GetPlayer()->GetFace());
+	mWeapon->SetPosition(mWeapon->GetOwner()->GetPosition());
+	mMC->SetDirection(mWeapon->GetOwner()->GetFace());
 	mMC->SetSpeed(400.0f);
 	mMC->SetAngularSpeed(Math::TWOPI);
+	
+	mFlyTime = 1.0f;
 }
 
 void WeaponFly::Exit()
@@ -164,22 +169,23 @@ void WeaponFly::Exit()
 WeaponStay::WeaponStay(StateComponent* sc, Weapon* weapon) : 
 	FiniteState(sc),
 	mWeapon(weapon),
-	mFlyTime(0.5f)
+	mStayTime(0.5f)
 {
-	mPlayer = mWeapon->GetGame()->GetPlayer();
+	mPlayer = mWeapon->GetOwner();
 }
 
 void WeaponStay::Update(float deltaTime)
 {
-	mFlyTime -= deltaTime;
+	mStayTime -= deltaTime;
 
-	if (mFlyTime < 0)
+	if (mStayTime < 0)
 		mSC->ChangeState("ComeBack");
 }
 
 void WeaponStay::Enter()
 {
 	mInitPos = mPlayer->GetPosition();
+	mStayTime = 0.5f;
 }
 
 void WeaponStay::Exit()
@@ -192,19 +198,19 @@ void WeaponStay::Exit()
 WeaponComeBack::WeaponComeBack(StateComponent* sc, Weapon* weapon) :
 	FiniteState(sc),
 	mWeapon(weapon),
-	mFlyTime(1.0f)
+	mComeBackTime(1.0f)
 {
 	mMC = mWeapon->GetMoveComponent();
 }
 
 void WeaponComeBack::Update(float deltaTime)
 {
-	mFlyTime -= deltaTime;
+	mComeBackTime -= deltaTime;
 
-	if (mFlyTime < 0)
-		mWeapon->SetState(Actor::EDead);
+	if (mComeBackTime < 0)
+		mSC->ChangeState("Missing");
 	else
-		mMC->SetSpeed(-500.0f * Math::Sin((1 - mFlyTime) * Math::PIDIV2));
+		mMC->SetSpeed(-500.0f * Math::Sin((1 - mComeBackTime) * Math::PIDIV2));
 }
 
 void WeaponComeBack::Enter()
@@ -212,8 +218,35 @@ void WeaponComeBack::Enter()
 	mMC->SetDirection(mWeapon->GetPosition() - mWeapon->GetEstimatedPos());
 	mMC->SetSpeed(0.0f);
 	mMC->SetAngularSpeed(Math::TWOPI);
+
+	mComeBackTime = 1.0f;
 }
 
 void WeaponComeBack::Exit()
+{
+}
+
+// WeaponMissing
+WeaponMissing::WeaponMissing(StateComponent* sc, Weapon* weapon) :
+	FiniteState(sc),
+	mWeapon(weapon),
+	mReloadTime(2.0f)
+{
+}
+
+void WeaponMissing::Update(float deltaTime)
+{
+	mReloadTime -= deltaTime;
+	
+	if (mReloadTime < 0)
+		mSC->ChangeState("Ready");
+}
+
+void WeaponMissing::Enter()
+{
+	mReloadTime = 2.0f;
+}
+
+void WeaponMissing::Exit()
 {
 }

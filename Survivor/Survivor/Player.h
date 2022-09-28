@@ -30,9 +30,8 @@ private:
 	const float mITime;
 	float mCurrITime;
 
-	const float mAttackCoolTime;
-	float mCurrCoolTime;
-
 	Vector2 mFace;
+
+	class Weapon* mWeapon;
 };
 
