@@ -81,7 +81,7 @@ private:
 
 class WeaponFly : public FiniteState {
 public:
-	WeaponFly(class StateComponent* sc, class Weapon* weapon);
+	WeaponFly(class StateComponent* sc, class Weapon* weapon, float speed);
 
 	void Update(float deltaTime);
 	void Enter();
@@ -91,6 +91,7 @@ public:
 private:
 	class Weapon* mWeapon;
 	class MoveComponent* mMC;
+	float mFlySpeed;
 	float mFlyTime;
 };
 
@@ -112,7 +113,7 @@ private:
 
 class WeaponComeBack : public FiniteState {
 public:
-	WeaponComeBack(class StateComponent* sc, class Weapon* weapon);
+	WeaponComeBack(class StateComponent* sc, class Weapon* weapon, float speed);
 
 	void Update(float deltaTime);
 	void Enter();
@@ -122,6 +123,7 @@ public:
 private:
 	class Weapon* mWeapon;
 	class MoveComponent* mMC;
+	float mFlySpeed;
 	float mComeBackTime;
 };
 

@@ -132,9 +132,10 @@ void WeaponReady::Exit()
 }
 
 // WeaponFly
-WeaponFly::WeaponFly(StateComponent* sc, Weapon* weapon) :
+WeaponFly::WeaponFly(StateComponent* sc, Weapon* weapon, float speed) :
 	FiniteState(sc),
 	mWeapon(weapon),
+	mFlySpeed(speed),
 	mFlyTime(1.0f)
 {
 	mMC = mWeapon->GetMoveComponent();
@@ -147,15 +148,15 @@ void WeaponFly::Update(float deltaTime)
 	if (mFlyTime < 0)
 		mSC->ChangeState("Stay");
 	else
-		mMC->SetSpeed(300.0f * Math::Sin(mFlyTime * Math::PIDIV2));
+		mMC->SetSpeed(mFlySpeed * Math::Sin(mFlyTime * Math::PIDIV2));
 }
 
 void WeaponFly::Enter()
 {
 	mWeapon->SetPosition(mWeapon->GetOwner()->GetPosition());
 	mMC->SetDirection(mWeapon->GetOwner()->GetFace());
-	mMC->SetSpeed(400.0f);
-	mMC->SetAngularSpeed(Math::TWOPI);
+	mMC->SetSpeed(mFlySpeed);
+	mMC->SetAngularSpeed(2 * Math::TWOPI);
 	
 	mFlyTime = 1.0f;
 }
@@ -195,9 +196,10 @@ void WeaponStay::Exit()
 }
 
 // WeaponComeBack
-WeaponComeBack::WeaponComeBack(StateComponent* sc, Weapon* weapon) :
+WeaponComeBack::WeaponComeBack(StateComponent* sc, Weapon* weapon, float speed) :
 	FiniteState(sc),
 	mWeapon(weapon),
+	mFlySpeed(speed),
 	mComeBackTime(1.0f)
 {
 	mMC = mWeapon->GetMoveComponent();
@@ -207,23 +209,24 @@ void WeaponComeBack::Update(float deltaTime)
 {
 	mComeBackTime -= deltaTime;
 
-	if (mComeBackTime < 0)
+	if (mComeBackTime > 0)
+		mMC->SetSpeed(-mFlySpeed * Math::Sin((1 - mComeBackTime) * Math::PIDIV2));
+	else if(mComeBackTime < -1.0f)
 		mSC->ChangeState("Missing");
-	else
-		mMC->SetSpeed(-500.0f * Math::Sin((1 - mComeBackTime) * Math::PIDIV2));
 }
 
 void WeaponComeBack::Enter()
 {
 	mMC->SetDirection(mWeapon->GetPosition() - mWeapon->GetEstimatedPos());
 	mMC->SetSpeed(0.0f);
-	mMC->SetAngularSpeed(Math::TWOPI);
+	mMC->SetAngularSpeed(2 * Math::TWOPI);
 
 	mComeBackTime = 1.0f;
 }
 
 void WeaponComeBack::Exit()
 {
+	mMC->SetSpeed(-mFlySpeed);
 }
 
 // WeaponMissing

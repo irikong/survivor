@@ -29,9 +29,9 @@ Weapon::Weapon(Game* game, Player* player) :
 
 	mFSM = new StateComponent(this);
 	mFSM->AddState(new WeaponReady(mFSM, this));
-	mFSM->AddState(new WeaponFly(mFSM, this));
+	mFSM->AddState(new WeaponFly(mFSM, this, 250.0f));
 	mFSM->AddState(new WeaponStay(mFSM, this));
-	mFSM->AddState(new WeaponComeBack(mFSM, this));
+	mFSM->AddState(new WeaponComeBack(mFSM, this, 500.0f));
 	mFSM->AddState(new WeaponMissing(mFSM, this));
 	mFSM->ChangeState("Ready");
 }
@@ -47,7 +47,9 @@ void Weapon::OnCollision(ColliderComponent* other)
 		static_cast<Monster*>(other->GetOwner())->Hit(mDamage);
 	}
 	if (other->GetOwner()->GetLayer() == EPlayer) {
-		if(mFSM->GetCurrState()->GetName() == "Stay" || mFSM->GetCurrState()->GetName() == "ComeBack")
+		const char* stateName = mFSM->GetCurrState()->GetName();
+		
+		if(stateName == "Stay" || stateName == "ComeBack")
 			mFSM->ChangeState("Ready");
 	}
 }
