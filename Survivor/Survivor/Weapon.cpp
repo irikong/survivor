@@ -8,6 +8,8 @@
 #include "Player.h"
 #include "Physics2D.h"
 #include "Monster.h"
+#include "FiniteState.h"
+#include "StateComponent.h"
 
 Weapon::Weapon(Game* game, Player* player) :
 	Actor(game),
@@ -17,31 +19,29 @@ Weapon::Weapon(Game* game, Player* player) :
 	SetPosition(player->GetPosition());
 
 	mSC = new SpriteComponent(this);
-	mSC->SetTexture(game->GetRenderer()->GetTexture("Circle.png"));
+	mSC->SetTexture(game->GetRenderer()->GetTexture("Boomerang.png"));
 
 	mCC = new CircleComponent(this, Circle(Vector2::Zero, 16.f));
 	
 	mMC = new MoveComponent(this);
-	mMC->SetDirection(player->GetFace());
-	mMC->SetSpeed(300.0f);
+	mMC->SetGroundCheck(false);
+
+	mFSM = new StateComponent(this);
+	mFSM->AddState(new WeaponReady(mFSM, this));
+	mFSM->AddState(new WeaponFly(mFSM, this));
+	mFSM->AddState(new WeaponStay(mFSM, this));
+	mFSM->AddState(new WeaponComeBack(mFSM, this));
+	mFSM->ChangeState("Fly");
 }
 
 void Weapon::UpdateActor(float deltaTime)
 {
-	mLifeTime -= deltaTime;
-
-	if (mLifeTime < 0.0f) {
-		SetState(EDead);
-	}
-	else {
-		GetGame()->GetPhysics2D()->CollisionDetection(mCC);
-	}
+	GetGame()->GetPhysics2D()->CollisionDetection(mCC);
 }
 
 void Weapon::OnCollision(ColliderComponent* other)
 {
 	if (other->GetOwner()->GetLayer() == EMonster) {
 		static_cast<Monster*>(other->GetOwner())->Hit(mDamage);
-		SetState(EDead);
 	}
 }

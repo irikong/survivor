@@ -2,7 +2,7 @@
 #include "Collision.h"
 #include "BoxComponent.h"
 #include "StateComponent.h"
-#include "MonsterState.h"
+#include "FiniteState.h"
 #include "MoveComponent.h"
 #include "AnimComponent.h"
 #include "Player.h"

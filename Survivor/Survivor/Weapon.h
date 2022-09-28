@@ -11,11 +11,17 @@ public:
 
 	void OnCollision(class ColliderComponent* other) override;
 
+	class MoveComponent* GetMoveComponent() const { return mMC; }
+	Vector2 GetEstimatedPos() const { return mEstimatedPos; }
+	void SetEstimatedPos(Vector2 pos) { mEstimatedPos = pos; }
+
 private:
 	class SpriteComponent* mSC;
 	class CircleComponent* mCC;
 	class MoveComponent* mMC;
+	class StateComponent* mFSM;
 
+	Vector2 mEstimatedPos;
 	float mDamage;
 	float mLifeTime;
 };

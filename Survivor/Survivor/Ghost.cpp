@@ -6,7 +6,7 @@
 #include "MoveComponent.h"
 #include "BoxComponent.h"
 #include "StateComponent.h"
-#include "MonsterState.h"
+#include "FiniteState.h"
 
 Ghost::Ghost(Game* game) :
 	Monster(game, 100.0f, 50.0f)

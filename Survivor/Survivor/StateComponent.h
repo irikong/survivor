@@ -10,12 +10,12 @@ public:
 
 	void Update(float deltaTime) override;
 	void ChangeState(const std::string& name);
-	void AddState(class MonsterState* state);
+	void AddState(class FiniteState* state);
 
 	Type GetType() const override { return kStateComponent; }
 
 private:
-	std::unordered_map<std::string, class MonsterState*> mStates;
-	class MonsterState* mCurrState;
+	std::unordered_map<std::string, class FiniteState*> mStates;
+	class FiniteState* mCurrState;
 };
 
