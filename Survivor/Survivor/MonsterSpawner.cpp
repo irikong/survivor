@@ -4,13 +4,15 @@
 #include "Skeleton.h"
 #include "Random.h"
 #include "Player.h"
+#include "MapManager.h"
 
 MonsterSpawner::MonsterSpawner(Game* game) :
 	Actor(game),
 	mSpawnInterval(2.0f),
 	mNextSpawn(0.0f)
 {
-
+	MapManager* mm = game->GetMapManager();
+	mSpawnDistance = mm->GetTileWidth() * (mm->GetMapRow() / 2 - 1);
 }
 
 void MonsterSpawner::UpdateActor(float deltaTime)
@@ -38,7 +40,7 @@ Vector2 MonsterSpawner::GetRandomSpawnPos()
 
 	theta += Random::GetFloatRange(0, Math::PI) + Math::PIDIV2;
 
-	Vector2 pos(240 * Math::Cos(theta), 240 * Math::Sin(theta));
+	Vector2 pos(mSpawnDistance * Math::Cos(theta), mSpawnDistance * Math::Sin(theta));
 
 	return pos;
 }

@@ -21,4 +21,6 @@ private:
 	//bool mIsActive;
 	float mSpawnInterval;
 	float mNextSpawn;
+
+	float mSpawnDistance;
 };
