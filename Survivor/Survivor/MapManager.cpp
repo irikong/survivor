@@ -15,7 +15,7 @@ MapManager::MapManager(Game* game) :
 
 	Renderer* renderer = GetGame()->GetRenderer();
 	float fWidth = 32, fHeight = 32;
-	float mapRow = 16, mapCol = 16;
+	float mapRow = 24, mapCol = 24;
 	mMap = std::vector<std::vector<int>>(mapRow, std::vector<int>(mapCol, Math::INF));
 	mTileWidth = fWidth;
 	mTileHeight = fHeight;
@@ -30,13 +30,13 @@ MapManager::MapManager(Game* game) :
 
 	TileMapComponent* tm1 = new TileMapComponent(this, fWidth, fHeight);
 	tm1->SetTexture(renderer->GetTexture("Grass1.png"));
-	tm1->LoadTileMap(std::string(Path::ASSETS) + "Grass.csv", mapRow, mapCol);
+	tm1->LoadTileMap(std::string(Path::ASSETS) + "Grass24.csv", mapRow, mapCol);
 	TileMapComponent* tm2 = new TileMapComponent(this, fWidth, fHeight);
 	tm2->SetTexture(renderer->GetTexture("Dirt2.png"));
-	tm2->LoadTileMap(std::string(Path::ASSETS) + "Dirt.csv", mapRow, mapCol);
+	tm2->LoadTileMap(std::string(Path::ASSETS) + "Dirt24.csv", mapRow, mapCol);
 	TileMapComponent* tm3 = new TileMapComponent(this, fWidth, fHeight);
 	tm3->SetTexture(renderer->GetTexture("Water2.png"));
-	tm3->LoadTileMap(std::string(Path::ASSETS) + "Water.csv", mapRow, mapCol);
+	tm3->LoadTileMap(std::string(Path::ASSETS) + "Water24.csv", mapRow, mapCol);
 	tm3->UpdateUnwalkable(mMap);
 
 	MakeLight();
