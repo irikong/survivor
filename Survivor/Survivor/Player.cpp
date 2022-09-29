@@ -12,6 +12,7 @@
 #include "Monster.h"
 #include "Weapon.h"
 #include "MapManager.h"
+#include "PointLightComponent.h"
 
 Player::Player(Game* game, float hp, float speed) :
 	Creature(game, hp, speed),
@@ -40,6 +41,9 @@ Player::Player(Game* game, float hp, float speed) :
 
 	AABB box(Vector2(-16, -16), Vector2(16, 16));
 	mBC = new BoxComponent(this, box);
+
+	mPointLightC = new PointLightComponent(this);
+	mPointLightC->SetLightColor(Vector3(0.5f, 0.5f, 0.5f));
 
 	mWeapon = new Weapon(game, this);
 }

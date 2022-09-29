@@ -23,6 +23,7 @@ private:
 	class InputComponent* mIC;
 	class AnimComponent* mAC;
 	class BoxComponent* mBC;
+	class PointLightComponent* mPointLightC;
 
 	std::pair<int, int> mCurrRowCol;
 
