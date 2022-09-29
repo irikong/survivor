@@ -42,8 +42,8 @@ public:
 
 	int GetTileWidth() const { return mTileWidth; }
 	int GetTileHeight() const { return mTileHeight; }
-	float GetMapRow() const { return mMapRow; }
-	float GetMapCol() const { return mMapCol; }
+	int GetMapRow() const { return mMapRow; }
+	int GetMapCol() const { return mMapCol; }
 
 private:
 	const int dr[8] = { -1, 0, 1, 0, -1, 1, 1, -1 };

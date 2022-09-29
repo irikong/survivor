@@ -14,15 +14,15 @@ MapManager::MapManager(Game* game) :
 	SetLayer(EProp);
 
 	Renderer* renderer = GetGame()->GetRenderer();
-	float fWidth = 32, fHeight = 32;
-	float mapRow = 24, mapCol = 24;
+	int fWidth = 32, fHeight = 32;
+	int mapRow = 24, mapCol = 24;
 	mMap = std::vector<std::vector<int>>(mapRow, std::vector<int>(mapCol, Math::INF));
 	mTileWidth = fWidth;
 	mTileHeight = fHeight;
 	mMapRow = mapRow;
 	mMapCol = mapCol;
-	mMapWidth = fWidth * mapRow;
-	mMapHeight = fHeight * mapCol;
+	mMapWidth = static_cast<float>(fWidth * mapRow);
+	mMapHeight = static_cast<float>(fHeight * mapCol);
 	mPixelOffset.x = mMapWidth / 2;
 	mPixelOffset.y = -mMapHeight / 2;
 
@@ -134,8 +134,8 @@ bool MapManager::PathFinding(const Vector2& src, const Vector2& dst) // A* searc
 Vector2 MapManager::GetNextPath(const Vector2& worldPos)
 {
 	Vector2 pixelPos = WorldToPixel(worldPos);
-	int r = pixelPos.y / mTileHeight;
-	int c = pixelPos.x / mTileWidth;
+	int r = static_cast<int>(pixelPos.y / mTileHeight);
+	int c = static_cast<int>(pixelPos.x / mTileWidth);
 
 	if (IsValidCell(r, c)) {
 		int nr, nc, min = Math::INF, minDir = -1;
@@ -216,17 +216,11 @@ void MapManager::MakeLight()
 {
 	Renderer* renderer = GetGame()->GetRenderer();
 
-	renderer->SetAmbientLight(Vector3(1.0f, 1.0f, 1.0f));
-
-	//PointLight* pt = new PointLight{ Vector3(40, 10, 0), Vector3(1, 1, 1), 50 };
-	//renderer->AddPointLight(pt);
-	//pt = new PointLight{ Vector3(-100, -100, 0), Vector3(1, 1, 1), 100 };
-	//renderer->AddPointLight(pt);
 }
 
 int MapManager::CalcHeuristic(int r, int c, int fr, int fc)
 {
-	return Math::Abs(fr - r) + Math::Abs(fc - c);
+	return static_cast<int>(Math::Abs(fr - r) + Math::Abs(fc - c));
 }
 
 bool MapManager::IsValidCell(int r, int c)
