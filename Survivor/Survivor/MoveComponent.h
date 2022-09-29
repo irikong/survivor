@@ -12,6 +12,7 @@ public:
 
 	Type GetType() const override { return kMoveComponent; }
 	float GetAngularSpeed() const { return mAngularSpeed; }
+	Vector2 GetDirection() const { return mDirection; }
 	void SetAngularSpeed(float speed) { mAngularSpeed = speed; }
 	void SetDirection(Vector2 dir) { mDirection = dir; }
 	void SetSpeed(float speed) { mSpeed = speed; }

@@ -1,5 +1,5 @@
 #include "StateComponent.h"
-#include "MonsterState.h"
+#include "FiniteState.h"
 
 StateComponent::StateComponent(Actor* owner, int updateOrder) :
 	Component(owner, updateOrder),
@@ -26,7 +26,7 @@ void StateComponent::ChangeState(const std::string& name)
 	}
 }
 
-void StateComponent::AddState(MonsterState* state)
+void StateComponent::AddState(FiniteState* state)
 {
 	mStates.emplace(state->GetName(), state);
 }

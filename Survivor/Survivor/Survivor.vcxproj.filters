@@ -84,7 +84,7 @@
     <ClCompile Include="Monster.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="MonsterState.cpp">
+    <ClCompile Include="FiniteState.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="StateComponent.cpp">
@@ -179,7 +179,7 @@
     <ClInclude Include="Monster.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="MonsterState.h">
+    <ClInclude Include="FiniteState.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="StateComponent.h">
