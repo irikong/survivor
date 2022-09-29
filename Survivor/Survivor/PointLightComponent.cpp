@@ -2,12 +2,17 @@
 #include "Renderer.h"
 #include "Actor.h"
 #include "Game.h"
+#include "Random.h"
 
 PointLightComponent::PointLightComponent(Actor* owner, int updateOrder) :
 	Component(owner, updateOrder),
-	mFollowState(true)
+	mColorOrigin(Vector3(1, 1, 1)),
+	mRangeOrigin(50),
+	mFollowState(true),
+	mFlickState(false),
+	mDT(0.0f)
 {
-	mPointLight = new PointLight{ Vector3(0, 0, 0), Vector3(1, 1, 1), 50 };
+	mPointLight = new PointLight{ Vector3::Zero, mColorOrigin, mRangeOrigin };
 	owner->GetGame()->GetRenderer()->AddPointLight(mPointLight);
 }
 
@@ -19,6 +24,12 @@ PointLightComponent::~PointLightComponent()
 
 void PointLightComponent::Update(float deltaTime)
 {
+	mDT += deltaTime;
+
+	if (mFlickState && mDT > 0.05f) {
+		Flick();
+		mDT = 0;
+	}
 }
 
 void PointLightComponent::OnUpdateWorldTransform()
@@ -27,13 +38,22 @@ void PointLightComponent::OnUpdateWorldTransform()
 		FollowOwner();
 }
 
+
+void PointLightComponent::SetActive(bool active)
+{
+	if (active) mPointLight->mColor = mColorOrigin;
+	else mPointLight->mColor = Vector3::Zero;
+}
+
 void PointLightComponent::FollowOwner()
 {
 	SetLightPosition(mOwner->GetPosition());
 }
 
-void PointLightComponent::SetActive(bool active)
+void PointLightComponent::Flick()
 {
-	if (active) mPointLight->mColor = mColor;
-	else mPointLight->mColor = Vector3::Zero;
+	float f = Random::GetFloatRange(0.01, 0.05);
+	mPointLight->mColor = Vector3(mColorOrigin.x + f, mColorOrigin.y + f, mColorOrigin.z + f);
+
+	mPointLight->mFallOffRange = mRangeOrigin * (1 + f);
 }
