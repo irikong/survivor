@@ -5,7 +5,7 @@
 #include "Renderer.h"
 #include "Texture.h"
 
-Bonfire::Bonfire(Game* game, float range) : 
+Bonfire::Bonfire(Game* game, float range, float fallOffRange) : 
 	Actor(game)
 {
 	mSC = new SpriteComponent(this);
@@ -13,10 +13,7 @@ Bonfire::Bonfire(Game* game, float range) :
 
 	mPointLightComp = new PointLightComponent(this);
 	mPointLightComp->SetLightColor(Vector3(0.9f, 0.6f, 0.1f));
-	mPointLightComp->SetLightFallOffRange(range);
+	mPointLightComp->SetLightRange(range);
+	mPointLightComp->SetLightFallOffRange(fallOffRange);
 	mPointLightComp->SetFlickState(true);
-
-	mOutLight = new PointLightComponent(this);
-	mOutLight->SetLightColor(Vector3(0.2f, 0.2f, 0.2f));
-	mOutLight->SetLightFallOffRange(1.5 * range);
 }

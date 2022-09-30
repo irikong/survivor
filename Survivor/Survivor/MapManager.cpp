@@ -44,7 +44,7 @@ MapManager::MapManager(Game* game) :
 
 	SetDaylight(Vector3(1.f, 1.f, 1.f));
 
-	Bonfire* bf = new Bonfire(game, 200);
+	Bonfire* bf = new Bonfire(game, 200, 100);
 }
 
 void MapManager::UpdateActor(float deltaTime)

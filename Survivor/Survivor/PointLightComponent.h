@@ -19,7 +19,8 @@ public:
 	Vector3 GetLightColor() { return mColorOrigin; }
 	void SetLightPosition(Vector2 pos) { mPointLight->mPosition = Vector3(pos.x, pos.y, 0); }
 	void SetLightColor(Vector3 color) { mColorOrigin = color; mPointLight->mColor = mColorOrigin; }
-	void SetLightFallOffRange(float range) { mRangeOrigin = range;  mPointLight->mFallOffRange = mRangeOrigin; }
+	void SetLightRange(float range) { mRangeOrigin = range; mPointLight->mRange = mRangeOrigin; }
+	void SetLightFallOffRange(float range) { mFallOffRangeOrigin = range;  mPointLight->mFallOffRange = mFallOffRangeOrigin; }
 	void SetFlickState(bool state) { mFlickState = state; }
 
 private:
@@ -29,6 +30,7 @@ private:
 	PointLight* mPointLight;
 	Vector3 mColorOrigin;
 	float mRangeOrigin;
+	float mFallOffRangeOrigin;
 
 	bool mFollowState;
 	bool mFlickState;

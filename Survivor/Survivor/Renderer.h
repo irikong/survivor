@@ -7,6 +7,7 @@
 struct PointLight {
 	Vector3 mPosition;
 	Vector3 mColor;
+	float mRange;
 	float mFallOffRange;
 };
 

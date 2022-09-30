@@ -42,9 +42,10 @@ Player::Player(Game* game, float hp, float speed) :
 	AABB box(Vector2(-16, -16), Vector2(16, 16));
 	mBC = new BoxComponent(this, box);
 
-	mPointLightC = new PointLightComponent(this);
-	mPointLightC->SetLightColor(Vector3(0.1f, 0.1f, 0.1f));
-	mPointLightC->SetLightFallOffRange(50.0f);
+	mPointLightComp = new PointLightComponent(this);
+	mPointLightComp->SetLightColor(Vector3(0.3f, 0.3f, 0.3f));
+	mPointLightComp->SetLightRange(50.0f);
+	mPointLightComp->SetLightFallOffRange(25.0f);
 
 	mWeapon = new Weapon(game, this);
 }

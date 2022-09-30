@@ -4,12 +4,10 @@
 class Bonfire : public Actor
 {
 public:
-	Bonfire(class Game* game, float range);
+	Bonfire(class Game* game, float range, float fallOffRange);
 	~Bonfire() = default;
 
 private:
 	class SpriteComponent* mSC;
 	class PointLightComponent* mPointLightComp;
-	class PointLightComponent* mOutLight;
 };
-
