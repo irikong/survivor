@@ -9,7 +9,9 @@
 #include <iostream>
 
 MapManager::MapManager(Game* game) :
-	Actor(game)
+	Actor(game),
+	DAY_CYCLE(120),
+	mTime(DAY_CYCLE / 4)
 {
 	SetLayer(EProp);
 
@@ -39,7 +41,13 @@ MapManager::MapManager(Game* game) :
 	tm3->LoadTileMap(std::string(Path::ASSETS) + "Water24.csv", mapRow, mapCol);
 	tm3->UpdateUnwalkable(mMap);
 
-	MakeLight();
+	SetDaylight(Vector3(1.f, 1.f, 1.f));
+}
+
+void MapManager::UpdateActor(float deltaTime)
+{
+	mTime += deltaTime;
+	UpdateDaylight();
 }
 
 Vector2 MapManager::WorldToPixel(const Vector2& worldPos)
@@ -212,10 +220,19 @@ void MapManager::MakeWall(float fWidth, float fHeight, float mapRow, float mapCo
 	bc = new BoxComponent(this, box);
 }
 
-void MapManager::MakeLight()
+void MapManager::SetDaylight(Vector3 color)
 {
 	Renderer* renderer = GetGame()->GetRenderer();
 
+	renderer->SetAmbientLight(color);
+}
+
+void MapManager::UpdateDaylight()
+{
+	float intensity = Math::Sin(Math::TWOPI * mTime / DAY_CYCLE) / 2 + 0.5f;
+	SetDaylight(Vector3(intensity, intensity, intensity));
+
+	if (mTime > DAY_CYCLE) mTime -= DAY_CYCLE;
 }
 
 int MapManager::CalcHeuristic(int r, int c, int fr, int fc)

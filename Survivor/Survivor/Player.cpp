@@ -43,7 +43,7 @@ Player::Player(Game* game, float hp, float speed) :
 	mBC = new BoxComponent(this, box);
 
 	mPointLightC = new PointLightComponent(this);
-	mPointLightC->SetLightColor(Vector3(0.5f, 0.5f, 0.5f));
+	mPointLightC->SetLightColor(Vector3(0.3f, 0.3f, 0.3f));
 	mPointLightC->SetLightFallOffRange(150.0f);
 
 	mWeapon = new Weapon(game, this);

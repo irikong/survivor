@@ -31,6 +31,8 @@ public:
 	MapManager(class Game* game);
 	~MapManager() = default;
 
+	void UpdateActor(float deltaTime) override;
+
 	Vector2 WorldToPixel(const Vector2& worldPos);
 	Vector2 PixelToWorld(const Vector2& pixelPos);
 	bool IsGround(const Vector2& worldPos);
@@ -48,9 +50,11 @@ public:
 private:
 	const int dr[8] = { -1, 0, 1, 0, -1, 1, 1, -1 };
 	const int dc[8] = { 0, 1, 0, -1, 1, 1, -1, -1 };
+	const float DAY_CYCLE;
 
 	void MakeWall(float fWidth, float fHeight, float mapRow, float mapCol);
-	void MakeLight();
+	void SetDaylight(Vector3 color);
+	void UpdateDaylight();
 	int CalcHeuristic(int r, int c, int fr, int fc);
 	bool IsValidCell(int r, int c);
 	void SavePath(const std::vector<std::vector<Cell>>& cellMap, int sr, int sc, int fr, int fc);
@@ -64,5 +68,7 @@ private:
 	float mMapHeight;
 	Vector2 mPixelOffset; // world to pixel
 	std::vector<std::vector<int>> mMap;
+
+	float mTime;
 };
 
