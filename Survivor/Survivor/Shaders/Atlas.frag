@@ -9,6 +9,7 @@ uniform float uAlpha;
 struct PointLight {
 	vec3 mPosition;
 	vec3 mColor;
+	float mRange;
 	float mFallOffRange;
 };
 
@@ -27,8 +28,11 @@ void main()
 	
 	for(int i = 0; i < uNumPointLight; i++){
 		float dist = length(uPointLight[i].mPosition - fragWorldPos);
-		if(dist < uPointLight[i].mFallOffRange){
-			light += vec3(uPointLight[i].mColor);
+		float range = uPointLight[i].mRange;
+
+		if(dist < range){
+			float rate = min(1.0, (range - dist) / (range - uPointLight[i].mFallOffRange));
+			light += rate * uPointLight[i].mColor;
 		}
 	}
 

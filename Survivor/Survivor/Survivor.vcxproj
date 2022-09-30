@@ -137,6 +137,7 @@
     <ClCompile Include="Actor.cpp" />
     <ClCompile Include="AnimComponent.cpp" />
     <ClCompile Include="AtlasComponent.cpp" />
+    <ClCompile Include="Bonfire.cpp" />
     <ClCompile Include="BoxComponent.cpp" />
     <ClCompile Include="CircleComponent.cpp" />
     <ClCompile Include="ColliderComponent.cpp" />
@@ -155,6 +156,7 @@
     <ClCompile Include="MoveComponent.cpp" />
     <ClCompile Include="Physics2D.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="PointLightComponent.cpp" />
     <ClCompile Include="Random.cpp" />
     <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="Shader.cpp" />
@@ -170,6 +172,7 @@
     <ClInclude Include="Actor.h" />
     <ClInclude Include="AnimComponent.h" />
     <ClInclude Include="AtlasComponent.h" />
+    <ClInclude Include="Bonfire.h" />
     <ClInclude Include="BoxComponent.h" />
     <ClInclude Include="CircleComponent.h" />
     <ClInclude Include="ColliderComponent.h" />
@@ -188,6 +191,7 @@
     <ClInclude Include="MoveComponent.h" />
     <ClInclude Include="Physics2D.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="PointLightComponent.h" />
     <ClInclude Include="Random.h" />
     <ClInclude Include="Renderer.h" />
     <ClInclude Include="Shader.h" />

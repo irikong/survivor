@@ -94,7 +94,7 @@ void Renderer::UnloadData()
 
 void Renderer::Draw()
 {
-	glClearColor(0.25f, 0.25f, 0.25f, 1.0f);
+	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT);
 
 	glEnable(GL_BLEND);
@@ -195,6 +195,8 @@ void Renderer::InitPointLight()
 		mSpriteShader->SetVector3Uniform(name, (*mPointLights[i]).mPosition);
 		snprintf(name, 50, "uPointLight[%d].mColor", i);
 		mSpriteShader->SetVector3Uniform(name, (*mPointLights[i]).mColor);
+		snprintf(name, 50, "uPointLight[%d].mRange", i);
+		mSpriteShader->SetFloatUniform(name, (*mPointLights[i]).mRange);
 		snprintf(name, 50, "uPointLight[%d].mFallOffRange", i);
 		mSpriteShader->SetFloatUniform(name, (*mPointLights[i]).mFallOffRange);
 	}
@@ -208,6 +210,8 @@ void Renderer::InitPointLight()
 		mTileShader->SetVector3Uniform(name, (*mPointLights[i]).mPosition);
 		snprintf(name, 50, "uPointLight[%d].mColor", i);
 		mTileShader->SetVector3Uniform(name, (*mPointLights[i]).mColor);
+		snprintf(name, 50, "uPointLight[%d].mRange", i);
+		mTileShader->SetFloatUniform(name, (*mPointLights[i]).mRange);
 		snprintf(name, 50, "uPointLight[%d].mFallOffRange", i);
 		mTileShader->SetFloatUniform(name, (*mPointLights[i]).mFallOffRange);
 	}

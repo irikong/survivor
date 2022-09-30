@@ -12,6 +12,7 @@
 #include "Monster.h"
 #include "Weapon.h"
 #include "MapManager.h"
+#include "PointLightComponent.h"
 
 Player::Player(Game* game, float hp, float speed) :
 	Creature(game, hp, speed),
@@ -22,7 +23,7 @@ Player::Player(Game* game, float hp, float speed) :
 {
 	SetLayer(EPlayer);
 
-	mAC = new AnimComponent(this, 32, 32);
+	mAC = new AnimComponent(this, 32, 32, 110);
 	mAC->SetTexture(game->GetRenderer()->GetTexture("Player.png"));
 	mAC->SetAnimFPS(3.0f);
 	mAC->AddAnim("Down", 0, 2);
@@ -40,6 +41,11 @@ Player::Player(Game* game, float hp, float speed) :
 
 	AABB box(Vector2(-16, -16), Vector2(16, 16));
 	mBC = new BoxComponent(this, box);
+
+	mPointLightComp = new PointLightComponent(this);
+	mPointLightComp->SetLightColor(Vector3(0.3f, 0.3f, 0.3f));
+	mPointLightComp->SetLightRange(50.0f);
+	mPointLightComp->SetLightFallOffRange(25.0f);
 
 	mWeapon = new Weapon(game, this);
 }

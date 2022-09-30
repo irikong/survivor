@@ -5,24 +5,27 @@
 #include "Renderer.h"
 #include "Texture.h"
 #include "BoxComponent.h"
+#include "Bonfire.h"
 #include <queue>
 #include <iostream>
 
 MapManager::MapManager(Game* game) :
-	Actor(game)
+	Actor(game),
+	DAY_CYCLE(120),
+	mTime(DAY_CYCLE / 4)
 {
 	SetLayer(EProp);
 
 	Renderer* renderer = GetGame()->GetRenderer();
-	float fWidth = 32, fHeight = 32;
-	float mapRow = 24, mapCol = 24;
+	int fWidth = 32, fHeight = 32;
+	int mapRow = 24, mapCol = 24;
 	mMap = std::vector<std::vector<int>>(mapRow, std::vector<int>(mapCol, Math::INF));
 	mTileWidth = fWidth;
 	mTileHeight = fHeight;
 	mMapRow = mapRow;
 	mMapCol = mapCol;
-	mMapWidth = fWidth * mapRow;
-	mMapHeight = fHeight * mapCol;
+	mMapWidth = static_cast<float>(fWidth * mapRow);
+	mMapHeight = static_cast<float>(fHeight * mapCol);
 	mPixelOffset.x = mMapWidth / 2;
 	mPixelOffset.y = -mMapHeight / 2;
 
@@ -39,7 +42,15 @@ MapManager::MapManager(Game* game) :
 	tm3->LoadTileMap(std::string(Path::ASSETS) + "Water24.csv", mapRow, mapCol);
 	tm3->UpdateUnwalkable(mMap);
 
-	MakeLight();
+	SetDaylight(Vector3(1.0f));
+
+	Bonfire* bf = new Bonfire(game, 200, 100);
+}
+
+void MapManager::UpdateActor(float deltaTime)
+{
+	mTime += deltaTime;
+	UpdateDaylight();
 }
 
 Vector2 MapManager::WorldToPixel(const Vector2& worldPos)
@@ -134,8 +145,8 @@ bool MapManager::PathFinding(const Vector2& src, const Vector2& dst) // A* searc
 Vector2 MapManager::GetNextPath(const Vector2& worldPos)
 {
 	Vector2 pixelPos = WorldToPixel(worldPos);
-	int r = pixelPos.y / mTileHeight;
-	int c = pixelPos.x / mTileWidth;
+	int r = static_cast<int>(pixelPos.y / mTileHeight);
+	int c = static_cast<int>(pixelPos.x / mTileWidth);
 
 	if (IsValidCell(r, c)) {
 		int nr, nc, min = Math::INF, minDir = -1;
@@ -212,21 +223,22 @@ void MapManager::MakeWall(float fWidth, float fHeight, float mapRow, float mapCo
 	bc = new BoxComponent(this, box);
 }
 
-void MapManager::MakeLight()
+void MapManager::SetDaylight(Vector3 color)
 {
-	Renderer* renderer = GetGame()->GetRenderer();
+	GetGame()->GetRenderer()->SetAmbientLight(color);
+}
 
-	renderer->SetAmbientLight(Vector3(1.0f, 1.0f, 1.0f));
+void MapManager::UpdateDaylight()
+{
+	float intensity = Math::Sin(Math::TWOPI * mTime / DAY_CYCLE) / 2 + 0.5f;
+	SetDaylight(Vector3(intensity));
 
-	//PointLight* pt = new PointLight{ Vector3(40, 10, 0), Vector3(1, 1, 1), 50 };
-	//renderer->AddPointLight(pt);
-	//pt = new PointLight{ Vector3(-100, -100, 0), Vector3(1, 1, 1), 100 };
-	//renderer->AddPointLight(pt);
+	if (mTime > DAY_CYCLE) mTime -= DAY_CYCLE;
 }
 
 int MapManager::CalcHeuristic(int r, int c, int fr, int fc)
 {
-	return Math::Abs(fr - r) + Math::Abs(fc - c);
+	return static_cast<int>(Math::Abs(fr - r) + Math::Abs(fc - c));
 }
 
 bool MapManager::IsValidCell(int r, int c)
