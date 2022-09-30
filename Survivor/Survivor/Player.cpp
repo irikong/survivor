@@ -23,7 +23,7 @@ Player::Player(Game* game, float hp, float speed) :
 {
 	SetLayer(EPlayer);
 
-	mAC = new AnimComponent(this, 32, 32);
+	mAC = new AnimComponent(this, 32, 32, 110);
 	mAC->SetTexture(game->GetRenderer()->GetTexture("Player.png"));
 	mAC->SetAnimFPS(3.0f);
 	mAC->AddAnim("Down", 0, 2);
@@ -43,8 +43,8 @@ Player::Player(Game* game, float hp, float speed) :
 	mBC = new BoxComponent(this, box);
 
 	mPointLightC = new PointLightComponent(this);
-	mPointLightC->SetLightColor(Vector3(0.3f, 0.3f, 0.3f));
-	mPointLightC->SetLightFallOffRange(150.0f);
+	mPointLightC->SetLightColor(Vector3(0.1f, 0.1f, 0.1f));
+	mPointLightC->SetLightFallOffRange(50.0f);
 
 	mWeapon = new Weapon(game, this);
 }

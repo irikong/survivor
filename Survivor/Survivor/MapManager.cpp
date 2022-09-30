@@ -5,6 +5,7 @@
 #include "Renderer.h"
 #include "Texture.h"
 #include "BoxComponent.h"
+#include "Bonfire.h"
 #include <queue>
 #include <iostream>
 
@@ -42,6 +43,8 @@ MapManager::MapManager(Game* game) :
 	tm3->UpdateUnwalkable(mMap);
 
 	SetDaylight(Vector3(1.f, 1.f, 1.f));
+
+	Bonfire* bf = new Bonfire(game, 200);
 }
 
 void MapManager::UpdateActor(float deltaTime)

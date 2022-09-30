@@ -19,7 +19,7 @@ Weapon::Weapon(Game* game, Player* player) :
 {
 	SetPosition(player->GetPosition());
 
-	mSC = new SpriteComponent(this);
+	mSC = new SpriteComponent(this, 120);
 	mSC->SetTexture(game->GetRenderer()->GetTexture("Boomerang.png"));
 
 	mCC = new CircleComponent(this, Circle(Vector2::Zero, 16.f));
