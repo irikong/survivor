@@ -116,10 +116,19 @@ const Vector2 Vector2::Right(1.0f, 0.0f);
 const Vector2 Vector2::Up(0.0f, 1.0f);
 const Vector2 Vector2::Down(0.0f, -1.0f);
 
+// Vector3
 Vector3::Vector3() :
 	x(0.0f),
 	y(0.0f),
 	z(0.0f)
+{
+
+}
+
+Vector3::Vector3(float scalar) : 
+	x(scalar),
+	y(scalar),
+	z(scalar)
 {
 
 }
@@ -142,6 +151,48 @@ void Vector3::Set(float px, float py, float pz)
 	x = px;
 	y = py;
 	z = pz;
+}
+
+Vector3 operator+(const Vector3& lhs, const Vector3& rhs)
+{
+	return Vector3(lhs.x + rhs.x, lhs.y + rhs.y, lhs.z + rhs.z);
+}
+
+Vector3 operator-(const Vector3& lhs, const Vector3& rhs)
+{
+	return Vector3(lhs.x - rhs.x, lhs.y - rhs.y, lhs.z - rhs.z);
+}
+
+Vector3 operator*(const Vector3& vec, float scalar)
+{
+	return Vector3(vec.x * scalar, vec.y * scalar, vec.z * scalar);
+}
+
+Vector3& Vector3::operator+=(const Vector3& rhs)
+{
+	x += rhs.x;
+	y += rhs.y;
+	z += rhs.z;
+
+	return *this;
+}
+
+Vector3& Vector3::operator-=(const Vector3& rhs)
+{
+	x -= rhs.x;
+	y -= rhs.y;
+	z -= rhs.z;
+
+	return *this;
+}
+
+Vector3& Vector3::operator*=(float scalar)
+{
+	x *= scalar;
+	y *= scalar;
+	z *= scalar;
+
+	return *this;
 }
 
 const Vector3 Vector3::Zero(0.0f, 0.0f, 0.0f);

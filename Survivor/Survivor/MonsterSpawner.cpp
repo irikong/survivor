@@ -12,7 +12,7 @@ MonsterSpawner::MonsterSpawner(Game* game) :
 	mNextSpawn(0.0f)
 {
 	MapManager* mm = game->GetMapManager();
-	mSpawnDistance = mm->GetTileWidth() * (mm->GetMapRow() / 2 - 1);
+	mSpawnDistance = mm->GetTileWidth() * (static_cast<float>(mm->GetMapRow()) / 2 - 1);
 }
 
 void MonsterSpawner::UpdateActor(float deltaTime)

@@ -42,7 +42,7 @@ MapManager::MapManager(Game* game) :
 	tm3->LoadTileMap(std::string(Path::ASSETS) + "Water24.csv", mapRow, mapCol);
 	tm3->UpdateUnwalkable(mMap);
 
-	SetDaylight(Vector3(1.f, 1.f, 1.f));
+	SetDaylight(Vector3(1.0f));
 
 	Bonfire* bf = new Bonfire(game, 200, 100);
 }
@@ -225,15 +225,13 @@ void MapManager::MakeWall(float fWidth, float fHeight, float mapRow, float mapCo
 
 void MapManager::SetDaylight(Vector3 color)
 {
-	Renderer* renderer = GetGame()->GetRenderer();
-
-	renderer->SetAmbientLight(color);
+	GetGame()->GetRenderer()->SetAmbientLight(color);
 }
 
 void MapManager::UpdateDaylight()
 {
 	float intensity = Math::Sin(Math::TWOPI * mTime / DAY_CYCLE) / 2 + 0.5f;
-	SetDaylight(Vector3(intensity, intensity, intensity));
+	SetDaylight(Vector3(intensity));
 
 	if (mTime > DAY_CYCLE) mTime -= DAY_CYCLE;
 }

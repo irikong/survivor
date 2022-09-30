@@ -100,10 +100,19 @@ public:
 	float z;
 
 	Vector3();
+	explicit Vector3(float scalar);
 	explicit Vector3(float px, float py, float pz);
 
 	const float* GetAsFloatPtr() const;
 	void Set(float px, float py, float pz);
+
+	friend Vector3 operator+(const Vector3& lhs, const Vector3& rhs);
+	friend Vector3 operator-(const Vector3& lhs, const Vector3& rhs);
+	friend Vector3 operator*(const Vector3& vec, float scalar);
+
+	Vector3& operator+=(const Vector3& rhs);
+	Vector3& operator-=(const Vector3& rhs);
+	Vector3& operator*=(float scalar);
 
 	static const Vector3 Zero;
 };

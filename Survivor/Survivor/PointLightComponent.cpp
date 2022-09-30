@@ -54,7 +54,7 @@ void PointLightComponent::FollowOwner()
 void PointLightComponent::Flick()
 {
 	float f = Random::GetFloatRange(0.01, 0.05);
-	mPointLight->mColor = Vector3(mColorOrigin.x + f, mColorOrigin.y + f, mColorOrigin.z + f);
 
+	mPointLight->mColor = mColorOrigin + Vector3(f);
 	mPointLight->mFallOffRange = mFallOffRangeOrigin * (1 + f);
 }
