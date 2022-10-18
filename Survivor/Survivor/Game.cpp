@@ -109,6 +109,11 @@ void Game::RemoveMonster(Monster* monster)
 	}
 }
 
+void Game::GameOver()
+{
+	mIsRunning = false;
+}
+
 void Game::ProcessInput()
 {
 	SDL_Event event;
@@ -172,7 +177,7 @@ void Game::GenerateOutput()
 
 void Game::LoadTestData()
 {
-	mPlayer = new Player(this, 100.0f, 200.0f);
+	mPlayer = new Player(this, 5, 200.0f);
 	mMapManager = new MapManager(this);
 
 	MonsterSpawner* monsterSpawner = new MonsterSpawner(this);

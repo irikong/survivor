@@ -4,7 +4,7 @@
 class Player : public Creature
 {
 public:
-	Player(class Game* game, float hp, float speed);
+	Player(class Game* game, int hp, float speed);
 	~Player() = default;
 
 	void UpdateActor(float deltaTime) override;
@@ -14,7 +14,7 @@ public:
 	void ResolveCollision(const struct AABB& other);
 
 	void Attack() override;
-	void Hit(float damage) override;
+	void Hit(int damage) override;
 	void Death() override;
 
 	Vector2 GetFace() { return mFace; }

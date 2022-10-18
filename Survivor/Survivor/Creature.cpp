@@ -1,6 +1,6 @@
 #include "Creature.h"
 
-Creature::Creature(Game* game, float hp, float speed) : 
+Creature::Creature(Game* game, int hp, float speed) : 
 	Actor(game),
 	mHP(hp),
 	mSpeed(speed)
@@ -17,7 +17,7 @@ void Creature::Attack()
 {
 }
 
-void Creature::Hit(float damage)
+void Creature::Hit(int damage)
 {
 }
 

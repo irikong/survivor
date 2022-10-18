@@ -9,7 +9,7 @@
 #include "FiniteState.h"
 
 Ghost::Ghost(Game* game) :
-	Monster(game, 100.0f, 50.0f)
+	Monster(game, 1, 50.0f)
 {
 	mMC->SetGroundCheck(false);
 

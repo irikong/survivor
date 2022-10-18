@@ -11,7 +11,7 @@
 #include "Game.h"
 #include "Math.h"
 
-Monster::Monster(Game* game, float hp, float speed) : 
+Monster::Monster(Game* game, int hp, float speed) : 
 	Creature(game, hp, speed),
 	mAC(),
 	mMC(),
@@ -40,11 +40,11 @@ void Monster::Attack()
 {
 }
 
-void Monster::Hit(float damage)
+void Monster::Hit(int damage)
 {
 	mHP -= damage;
 
-	if (mHP <= 0.0f) {
+	if (mHP <= 0) {
 		mSC->ChangeState("Death");
 	}
 }

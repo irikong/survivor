@@ -14,10 +14,10 @@
 #include "MapManager.h"
 #include "PointLightComponent.h"
 
-Player::Player(Game* game, float hp, float speed) :
+Player::Player(Game* game, int hp, float speed) :
 	Creature(game, hp, speed),
 	mIsInvincible(false),
-	mITime(0.5f),
+	mITime(1.0f),
 	mCurrITime(0.0f),
 	mFace(Vector2::Down)
 {
@@ -110,7 +110,7 @@ void Player::OnCollision(ColliderComponent* other)
 {
 	switch (other->GetOwner()->GetLayer()){
 	case EMonster:
-		Hit(5);
+		Hit(1);
 		break;
 	case EProp:
 		if(other->GetType() == Component::kBoxComponent)
@@ -147,10 +147,11 @@ void Player::Attack()
 	mWeapon->Use();
 }
 
-void Player::Hit(float damage)
+void Player::Hit(int damage)
 {
 	if (!mIsInvincible) {
 		mHP -= damage;
+		if (mHP <= 0) Death();
 		mCurrITime = 0.0f;
 		mIsInvincible = true;
 	}
@@ -158,5 +159,6 @@ void Player::Hit(float damage)
 
 void Player::Death()
 {
+	GetGame()->GameOver();
 }
 

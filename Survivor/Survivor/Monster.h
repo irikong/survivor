@@ -4,13 +4,13 @@
 class Monster : public Creature
 {
 public:
-	Monster(class Game* game, float hp, float speed);
+	Monster(class Game* game, int hp, float speed);
 	~Monster();
 
 	void UpdateActor(float deltaTime) override;
 
 	void Attack() override;
-	void Hit(float damage) override;
+	void Hit(int damage) override;
 	void Death() override;
 	void MoveDir(class Vector2 dir);
 

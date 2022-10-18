@@ -15,6 +15,8 @@ public:
 	void AddMonster(class Monster* monster);
 	void RemoveMonster(class Monster* monster);
 
+	void GameOver();
+
 	class Renderer* GetRenderer() { return mRenderer; }
 	class Physics2D* GetPhysics2D() { return mPhysics2D; }
 	class Player* GetPlayer() { return mPlayer; }

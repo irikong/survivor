@@ -27,7 +27,7 @@ private:
 	class StateComponent* mFSM;
 
 	Vector2 mEstimatedPos;
-	float mDamage;
+	int mDamage;
 	float mLifeTime;
 
 	bool mIsReady;

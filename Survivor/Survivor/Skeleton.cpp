@@ -9,7 +9,7 @@
 #include "FiniteState.h"
 
 Skeleton::Skeleton(Game* game) :
-	Monster(game, 100.0f, 100.0f)
+	Monster(game, 1, 100.0f)
 {
 	mAC = new AnimComponent(this, 32, 32);
 	mAC->SetTexture(game->GetRenderer()->GetTexture("Skeleton.png"));

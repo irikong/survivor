@@ -3,17 +3,17 @@
 class Creature : public Actor
 {
 public:
-	Creature(class Game* game, float hp, float speed);
+	Creature(class Game* game, int hp, float speed);
 	~Creature() = default;
 
 	void UpdateActor(float deltaTime) override;
 
 	virtual void Attack();
-	virtual void Hit(float damage);
+	virtual void Hit(int damage);
 	virtual void Death();
 
 protected:
-	float mHP;
+	int mHP;
 	float mSpeed;
 };
 

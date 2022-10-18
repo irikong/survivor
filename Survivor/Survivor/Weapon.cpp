@@ -12,7 +12,7 @@
 
 Weapon::Weapon(Game* game, Player* player) :
 	Actor(game),
-	mDamage(50.0f),
+	mDamage(5),
 	mLifeTime(2.0f),
 	mIsReady(true),
 	mOwner(player)
